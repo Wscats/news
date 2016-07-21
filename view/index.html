@@ -1,0 +1,103 @@
+<header>
+	日日头条
+</header>
+<aside>
+	<p>
+		<span>推荐</span>
+		<span>视频</span>
+		<span>热点</span>
+		<span>社会</span>
+	</p>
+</aside>
+<article>
+	<section ng-repeat="new in news">
+		<a ng-href="{{new.url}}">
+			<!--Title简述-->
+			<p>{{new.title}}</p>
+			<!--新闻图片-->
+			<img ng-src="{{new.image_url}}" />
+			<!--文章来源，评论和发表事件-->
+			<p class="content">
+				{{new.abstract}}
+			</p>
+		</a>
+	</section>
+</article>
+<style>
+	
+	article section a {
+		text-decoration: none;
+		color: black;
+	}
+	
+	aside {
+		position: fixed;
+		top: 50px;
+		width: 100%;
+		z-index: 9;
+		padding: 10px;
+	}
+	
+	header {
+		background-color: #d43d3d;
+		position: fixed;
+		z-index: 10;
+		width: 100%;
+		text-align: center;
+		color: white;
+		height: 50px;
+		line-height: 50px;
+		top: 0px;
+	}
+	
+	aside {
+		/*padding-top: 50px;*/
+		background: #f4f5f6;
+	}
+	
+	aside p {
+		/*padding: 10px;*/
+	}
+	
+	article {
+		position: relative;
+		margin-top: 100px;
+	}
+	
+	article section {
+		position: relative;
+		height: 150px;
+		border-bottom: 1px solid #e8e8e8;
+	}
+	
+	article section p {
+		/*text-align: center;*/
+		margin-top: 10px;
+		margin-left: 10px;
+	}
+	
+	article section img {
+		/*text-align: center;*/
+		float: left;
+		margin-top: 10px;
+		margin-left: 10px;
+		height: 80px;
+	}
+	
+	article section span {
+		font-size: 10px;
+		color: #999;
+	}
+	
+	.content {
+		float: right;
+		height: 72px;
+		/*position: absolute;
+		top: 5px;
+		right: 10px;*/
+		width: 50%;
+		overflow: hidden;
+		color: darkslategrey;
+		margin-right: 10px;
+	}
+</style>

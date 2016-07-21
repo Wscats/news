@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html ng-app="wsscat">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no">
+		<title></title>
+	</head>
+	<link rel="stylesheet" href="dist/css/base.css" />
+	<!--angular框架-->
+	<script type="text/javascript" src="dist/js/angular.js"></script>
+	<!--angular路由支持文件-->
+	<script type="text/javascript" src="dist/js/angular-route.js"></script>
+
+	<body>
+		<!--渲染视图-->
+		<div ng-view=""></div>
+	</body>
+	<script>
+		var app = angular.module('wsscat', ['ngRoute']);
+		app.config(function($routeProvider) {
+			$routeProvider.when('/index', {
+				controller: 'indexCtrl',
+				templateUrl: 'view/index.html'
+			})
+			//如果找不到对应的路由那就跳到index模版文件
+			.otherwise({
+				redirectTo: '/index'
+			})
+		})
+		//定义了一个主页控制器
+		app.controller('indexCtrl',['$scope','$http',function($scope,$http){
+			$http.get('http://10.16.151.25/news/baiduApi.php').success(function(data){
+				console.log(data);
+				$scope.news = data.retData;
+				console.log($scope.news);
+			})
+		}])
+	</script>
+</html>
