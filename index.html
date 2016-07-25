@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html ng-app="wsscat">
+
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no">
@@ -18,22 +19,54 @@
 	<script>
 		var app = angular.module('wsscat', ['ngRoute']);
 		app.config(function($routeProvider) {
-			$routeProvider.when('/index', {
-				controller: 'indexCtrl',
-				templateUrl: 'view/index.html'
+				$routeProvider.when('/index', {
+						controller: 'indexCtrl',
+						templateUrl: 'view/index.html'
+					})
+					//如果找不到对应的路由那就跳到index模版文件
+					.otherwise({
+						redirectTo: '/index'
+					})
 			})
-			//如果找不到对应的路由那就跳到index模版文件
-			.otherwise({
-				redirectTo: '/index'
-			})
-		})
-		//定义了一个主页控制器
-		app.controller('indexCtrl',['$scope','$http',function($scope,$http){
-			$http.get('http://10.16.151.25/news/baiduApi.php').success(function(data){
-				console.log(data);
-				$scope.news = data.retData;
-				console.log($scope.news);
-			})
+			//定义了一个主页控制器
+		app.controller('indexCtrl', ['$scope', '$http', function($scope, $http) {
+			//http://10.16.151.25/news/baiduApi2.php?num=10&page=1
+			//开始显示的条数
+			$scope.offset = 5;
+			//这个是刚进入页面时候，数据没请求回来前出现一个loading
+			$scope.loading = true;
+			var loadMoreData = function() {
+				$http.get('http://10.16.151.25/news/baiduApi2.php', {
+						params: {
+							num: $scope.offset,
+							page: '1',
+						}
+					})
+					/*$http({
+						method:'get',
+						url:'http://10.16.151.25/news/baiduApi2.php',
+						params:{
+							num:10,
+						}
+					})*/
+					.success(function(data) {
+						//这个是请求完数据之后让loading消失
+						$scope.loading = false;
+						console.log(data);
+						$scope.news = data.newslist;
+						console.log($scope.news);
+					})
+			}
+
+			loadMoreData($scope.offset);
+			$scope.loadMore = function() {
+				$scope.loading = true;
+				//自定义偏移量（点击查看更多增加的条数）
+				$scope.offset += 5;
+				//$scope.offset++;
+				loadMoreData($scope.offset);
+			}
 		}])
 	</script>
+
 </html>
