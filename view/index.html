@@ -1,17 +1,5 @@
-<header>
-	日日头条
-</header>
-
-<aside>
-	<p>
-		<span>推荐</span>
-		<span>视频</span>
-		<span>热点</span>
-		<span>社会</span>
-	</p>
-</aside>
 <article>
-	<section ng-repeat="new in news">
+<section ng-repeat="new in news">
 		<a ng-href="{{new.url}}">
 			<!--Title简述-->
 			<p>{{new.title}}</p>
@@ -71,35 +59,6 @@
 	article section a {
 		text-decoration: none;
 		color: black;
-	}
-	
-	aside {
-		position: fixed;
-		top: 50px;
-		width: 100%;
-		z-index: 9;
-		padding: 10px;
-	}
-	
-	header {
-		background-color: #d43d3d;
-		position: fixed;
-		z-index: 10;
-		width: 100%;
-		text-align: center;
-		color: white;
-		height: 50px;
-		line-height: 50px;
-		top: 0px;
-	}
-	
-	aside {
-		/*padding-top: 50px;*/
-		background: #f4f5f6;
-	}
-	
-	aside p {
-		/*padding: 10px;*/
 	}
 	
 	article {

@@ -13,6 +13,20 @@
 	<script type="text/javascript" src="dist/js/angular-route.js"></script>
 
 	<body>
+		<!--header头-->
+		<header>
+			日日头条
+		</header>
+		<aside>
+			<p id="nav">
+				<!--ng-class="isNavRed1?'isNavRed':''"-->
+				<a ng-href="#/index" class="isNavRed"><span>推荐</span></a>
+				<a ng-href="#/game"><span>游戏</span></a>
+				<span>热点</span>
+				<span>社会</span>
+			</p>
+			<isnavred></isnavred>
+		</aside>
 		<!--渲染视图-->
 		<div ng-view=""></div>
 	</body>
@@ -23,13 +37,23 @@
 						controller: 'indexCtrl',
 						templateUrl: 'view/index.html'
 					})
+					//游戏焦点的路由
+					.when('/game', {
+						controller: 'gameCtrl',
+						templateUrl: 'view/game.html'
+					})
 					//如果找不到对应的路由那就跳到index模版文件
 					.otherwise({
 						redirectTo: '/index'
 					})
 			})
 			//定义了一个主页控制器
-		app.controller('indexCtrl', ['$scope', '$http', function($scope, $http) {
+		app.controller('indexCtrl', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
+			//进来navbar的状态
+			//推荐页的状态
+			//$rootScope.isNavRed1 = true;
+			//游戏页的状态
+			//$rootScope.isNavRed2 = false;
 			//http://10.16.151.25/news/baiduApi2.php?num=10&page=1
 			//开始显示的条数
 			$scope.offset = 5;
@@ -43,12 +67,18 @@
 						}
 					})
 					/*$http({
-						method:'get',
-						url:'http://10.16.151.25/news/baiduApi2.php',
-						params:{
-							num:10,
-						}
-					})*/
+							method: 'post',
+							url: 'http://10.16.151.25/news/baiduApi3.php',
+							params: {
+								num: $scope.offset,
+								page: '1',
+							},
+
+							data:{
+								num: $scope.offset,
+								page:'1',
+							}
+						})*/
 					.success(function(data) {
 						//这个是请求完数据之后让loading消失
 						$scope.loading = false;
@@ -67,6 +97,47 @@
 				loadMoreData($scope.offset);
 			}
 		}])
+
+		app.controller('gameCtrl', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
+			//推荐页的状态
+			//$rootScope.isNavRed1 = false;
+			//游戏页的状态
+			//$rootScope.isNavRed2 = true;
+		}])
+
+		app.directive('isnavred', [function() {
+			return {
+				restrict: 'EA', //标签和属性的写法激活此组件
+				link: function(scope, element, attrs) {
+					var nav = document.getElementById('nav')
+					var navs = nav.getElementsByTagName('a')
+					console.log(angular);
+					angular.element(navs).on('click', function() {
+						//做全局的清楚
+						angular.element(navs).removeClass('isNavRed');
+						angular.element(this).addClass('isNavRed');
+					})
+				}
+			}
+		}])
+	</script>
+	<script>
+		/*var nav = document.getElementById('nav')
+		var navs = nav.getElementsByTagName('a')
+		var i, j;
+		for(i = 0; i < navs.length; i++) {
+			navs[i].onclick = function() {
+				for(j = 0; j < navs.length; j++) {
+					navs[j].className = '';
+				}
+				this.className = 'isNavRed';
+			}
+		}*/
+
+		/*nav.addEventListener('click',function(e){
+			console.log(e.target);
+			e.target.className = 'isNavRed';
+		})*/
 	</script>
 
 </html>
