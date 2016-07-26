@@ -1,0 +1,40 @@
+<article>
+	<h2>{{new.title}}</h2>
+	<p class="header"><span>{{new.source}}</span> <span>{{new.pubDate}}</span> <a ng-href="{{new.link}}"><span>查看原文</span></a></p>
+	<img ng-src="{{new.imageurls[0].url}}" />
+	<section>
+		<p>
+			{{new.desc}}
+		</p>
+	</section>
+</article>
+<style>
+	.header{
+		height: 30px;
+		line-height: 30px;
+		color: #999999;
+		font-size: 10px;
+	}
+	
+	.header a{
+		text-decoration: none;
+		color: #999999;
+		font-size: 10px;
+	}
+	
+	article {
+		margin-top: 100px;
+		margin-left: 15px;
+		margin-right: 15px;
+	}
+	
+	section p {
+		line-height: 30px;
+	}
+	
+	img {
+		margin-left: 10%;
+		margin-right: 10%;
+		width: 80%;
+	}
+</style>

@@ -18,13 +18,6 @@
 			日日头条
 		</header>
 		<aside>
-			<p id="nav">
-				<!--ng-class="isNavRed1?'isNavRed':''"-->
-				<a ng-href="#/index" class="isNavRed"><span>推荐</span></a>
-				<a ng-href="#/game"><span>游戏</span></a>
-				<span>热点</span>
-				<span>社会</span>
-			</p>
 			<isnavred></isnavred>
 		</aside>
 		<!--渲染视图-->
@@ -42,6 +35,10 @@
 						controller: 'gameCtrl',
 						templateUrl: 'view/game.html'
 					})
+					.when('/game/:id', {
+						controller: 'gameDetailCtrl',
+						templateUrl: 'view/gameDetail.html'
+					})
 					//如果找不到对应的路由那就跳到index模版文件
 					.otherwise({
 						redirectTo: '/index'
@@ -49,13 +46,35 @@
 			})
 			//定义了一个主页控制器
 		app.controller('indexCtrl', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
-			//进来navbar的状态
-			//推荐页的状态
-			//$rootScope.isNavRed1 = true;
-			//游戏页的状态
-			//$rootScope.isNavRed2 = false;
-			//http://10.16.151.25/news/baiduApi2.php?num=10&page=1
-			//开始显示的条数
+			var getCookie = function(name) {
+				var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+				if(arr = document.cookie.match(reg))
+					return unescape(arr[2]);
+				else
+					return null;
+			}
+
+			var setCookie = function(name, value) {
+				var Days = 30;
+				var exp = new Date();
+				exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+				document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
+				$cookies[name] = value;
+			};
+
+			/*var isLogin = function() {
+					var cookie = true;
+					if(cookie) {
+
+					}
+				}*/
+				//进来navbar的状态
+				//推荐页的状态
+				//$rootScope.isNavRed1 = true;
+				//游戏页的状态
+				//$rootScope.isNavRed2 = false;
+				//http://10.16.151.25/news/baiduApi2.php?num=10&page=1
+				//开始显示的条数
 			$scope.offset = 5;
 			//这个是刚进入页面时候，数据没请求回来前出现一个loading
 			$scope.loading = true;
@@ -103,12 +122,54 @@
 			//$rootScope.isNavRed1 = false;
 			//游戏页的状态
 			//$rootScope.isNavRed2 = true;
+			$scope.loading = true;
+			var loadMoreData = function() {
+				$http.get('http://10.16.151.25/news/baiduApi3.php', {
+						params: {
+							channelId: '5572a108b3cdc86cf39001d6',
+						}
+					})
+					.success(function(data) {
+						$scope.loading = false;
+						console.log(data);
+						$scope.news = data.showapi_res_body.pagebean.contentlist;
+						console.log($scope.news);
+					})
+			}
+
+			loadMoreData($scope.offset);
+			$scope.loadMore = function() {
+				$scope.loading = true;
+				loadMoreData($scope.offset);
+			}
 		}])
 
-		app.directive('isnavred', [function() {
+		app.controller('gameDetailCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams) {
+			$http({
+				method: 'get',
+				url: 'http://10.16.151.25/news/baiduApi3.php',
+				params: {
+					channelId: '5572a108b3cdc86cf39001d6',
+				},
+			}).success(function(data) {
+				console.log(data);
+				$scope.new = data.showapi_res_body.pagebean.contentlist[$routeParams.id];
+			})
+		}])
+
+		app.directive('isnavred', ['$location', function($location) {
 			return {
 				restrict: 'EA', //标签和属性的写法激活此组件
+				replace: true,
+				transclude: true,
+				template: '<p id="nav">' +
+					'<a ng-href="#/index" class="isNavRed"><span>推荐</span></a>' +
+					'<a ng-href="#/game"><span>游戏</span></a>' +
+					'<span>热点</span>' +
+					'<span>社会</span>' +
+					'</p>',
 				link: function(scope, element, attrs) {
+					console.log(location.hash);
 					var nav = document.getElementById('nav')
 					var navs = nav.getElementsByTagName('a')
 					console.log(angular);
@@ -123,16 +184,16 @@
 	</script>
 	<script>
 		/*var nav = document.getElementById('nav')
-		var navs = nav.getElementsByTagName('a')
-		var i, j;
-		for(i = 0; i < navs.length; i++) {
-			navs[i].onclick = function() {
-				for(j = 0; j < navs.length; j++) {
-					navs[j].className = '';
-				}
-				this.className = 'isNavRed';
-			}
-		}*/
+										var navs = nav.getElementsByTagName('a')
+										var i, j;
+										for(i = 0; i < navs.length; i++) {
+											navs[i].onclick = function() {
+												for(j = 0; j < navs.length; j++) {
+													navs[j].className = '';
+												}
+												this.className = 'isNavRed';
+											}
+										}*/
 
 		/*nav.addEventListener('click',function(e){
 			console.log(e.target);

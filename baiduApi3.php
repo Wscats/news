@@ -1,7 +1,12 @@
 <?php
 	header('Access-Control-Allow-Origin:*');
+	if($_GET['channelId']){
+		$_GET['channelId']?$_GET['channelId']:'';
+	}else{
+		$_GET['channelId'] = '5572a109b3cdc86cf39001db';
+	}
     $ch = curl_init();
-    $url = 'http://apis.baidu.com/showapi_open_bus/channel_news/search_news?channelId=5572a109b3cdc86cf39001db&channelName=%E5%9B%BD%E5%86%85%E6%9C%80%E6%96%B0&title=%E4%B8%8A%E5%B8%82&page=1&needContent=0&needHtml=0';
+    $url = 'http://apis.baidu.com/showapi_open_bus/channel_news/search_news?channelId='.$_GET['channelId'].'&channelName=%E5%9B%BD%E5%86%85%E6%9C%80%E6%96%B0&title=%E4%B8%8A%E5%B8%82&page=1&needContent=0&needHtml=0';
     
     
     
