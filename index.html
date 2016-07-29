@@ -54,8 +54,11 @@
 					})
 			})
 			//定义了一个主页控制器
-		app.controller('indexCtrl', ['$scope', '$http', '$rootScope', '$ionicLoading', '$timeout', function($scope, $http, $rootScope, $ionicLoading, $timeout) {
-			console.log($ionicLoading);
+		app.controller('indexCtrl', ['$scope', '$http', '$rootScope', '$ionicLoading', '$timeout', 'swipe', function($scope, $http, $rootScope, $ionicLoading, $timeout, swipe) {
+			console.log(swipe);
+			swipe.method(function(){
+				alert("123");
+			})
 			//用ionic的菊花效果
 			//出现
 			$ionicLoading.show({
@@ -72,7 +75,37 @@
 			$scope.offset = 5;
 			//这个是刚进入页面时候，数据没请求回来前出现一个loading
 			$scope.loading = true;
-			var loadMoreData = function() {
+			$scope.downRefresh = true;
+
+			/*var swipe = function(callback) {
+				var touch = {}
+				document.getElementsByTagName('body')[0].addEventListener('touchstart', function(e) {
+					touch.x1 = e.targetTouches[0].pageX;
+					//点击的时候所在的y坐标
+					touch.y1 = e.targetTouches[0].pageY;
+				})
+
+				var abc = function(e) {
+					touch.x2 = e.changedTouches[0].pageX;
+					//点击滑动后所在的y坐标
+					touch.y2 = e.changedTouches[0].pageY;
+					var swiDirection = direction(touch.x1, touch.x2, touch.y1, touch.y2)
+					if(swiDirection == 'top') {
+						console.log(callback);
+						callback();
+					} else if(swiDirection == 'left') {
+						window.location.href = "#/game";
+					}
+				}
+				document.getElementsByTagName('body')[0].addEventListener('touchend', abc)
+			}*/
+			/*swipe(function() {
+				alert('123');
+			});*/
+
+			//swipe.method("left", function() {})
+
+			$scope.doRefresh = loadMoreData = function() {
 				$http.get('baiduApi2.php', {
 						params: {
 							num: $scope.offset,
@@ -96,7 +129,11 @@
 					.success(function(data) {
 						//这个是请求完数据之后让loading消失
 						$scope.loading = false;
+						$scope.downRefresh = false;
 						$ionicLoading.hide();
+						if($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
+							$scope.$apply();
+						}
 						console.log(data);
 						$scope.news = data.newslist;
 						console.log($scope.news);
@@ -194,6 +231,67 @@
 				}
 			}
 		}])
+
+		app.service('swipe', [function() {
+			return {
+				method: function(direct, callback) {
+					var callbackTop, callbackdown, callbackLeft, callbackRight;
+					//判断方向，执行回调
+					switch(direct) {
+						case 'top':
+							callbackTop = callback;
+							break;
+						case 'bottom':
+							callbackBottom = callback;
+							break;
+						case 'left':
+							callbackLeft = callback;
+							break;
+						case 'right':
+							callbackRight = callback;
+							break;
+					}
+					var touch = {}
+					document.getElementsByTagName('body')[0].addEventListener('touchstart', function(e) {
+						console.log("点击滑动前");
+						touch.x1 = e.targetTouches[0].pageX;
+						touch.y1 = e.targetTouches[0].pageY;
+						console.log('X:' + e.targetTouches[0].pageX + ' Y:' + e.targetTouches[0].pageY);
+						//$scope.$apply();
+					})
+					var ab = function(e) {
+						console.log("点击滑动后");
+						touch.x2 = e.changedTouches[0].pageX;
+						touch.y2 = e.changedTouches[0].pageY;
+						console.log('X:' + e.changedTouches[0].pageX + ' Y:' + e.changedTouches[0].pageY)
+						console.log(direction(touch.x1, touch.x2, touch.y1, touch.y2));
+						var swiDirection = direction(touch.x1, touch.x2, touch.y1, touch.y2)
+						if(swiDirection == 'bottom') {
+							//手动刷新
+							callbackBottom();
+							//$scope.$apply();
+						} else if(swiDirection == 'top') {
+							//手动刷新
+							console.log(callbackTop)
+							callbackTop();
+							//$scope.$apply();
+						} else if(swiDirection == 'left') {
+							//手动刷新
+							console.log(callbackLeft)
+							callbackLeft();
+							//$scope.$apply();
+						}
+					}
+
+					function direction(xStart, xEnd, yStart, yEnd) {
+						return Math.abs(xStart - xEnd) >= Math.abs(yStart - yEnd) ? (xStart >= xEnd ? "left" : "right") : (yStart >= yEnd ? "top" : "bottom");
+					}
+					document.getElementsByTagName('body')[0].addEventListener('touchend', ab);
+				}
+			}
+		}])
+
+		
 	</script>
 
 </html>
