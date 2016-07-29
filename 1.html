@@ -1,0 +1,55 @@
+<html ng-app="ionicApp">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+		<title>菜鸟教程(runoob.com)</title>
+
+		<link href="dist/css/ionic.css" rel="stylesheet">
+		<script src="dist/js/ionic.bundle.js"></script>
+		<script>
+			angular.module('ionicApp', ['ionic'])
+				.controller('AppCtrl', function($scope, $timeout, $ionicLoading) {
+
+					// Setup the loader
+					$ionicLoading.show({
+						content: 'Loading',
+						animation: 'fade-in',
+						showBackdrop: true,
+						maxWidth: 200,
+						showDelay: 0
+					});
+
+					// Set a timeout to clear loader, however you would actually call the $ionicLoading.hide(); method whenever everything is ready or loaded.
+					$timeout(function() {
+						$ionicLoading.hide();
+						$scope.stooges = [{
+							name: 'Moe'
+						}, {
+							name: 'Larry'
+						}, {
+							name: 'Curly'
+						}];
+					}, 2000);
+
+				});
+		</script>
+	</head>
+
+	<body ng-controller="AppCtrl">
+
+		<ion-view title="Home">
+			<ion-header-bar>
+				<h1 class="title">The Stooges</h1>
+			</ion-header-bar>
+			<ion-content has-header="true">
+				<ion-list>
+					<ion-item ng-repeat="stooge in stooges" href="#">{{stooge.name}}</ion-item>
+				</ion-list>
+			</ion-content>
+		</ion-view>
+
+	</body>
+
+</html>
