@@ -1,0 +1,25 @@
+<article>
+	<section>
+	<div ng-click="show(1)" ng-class="{'border':page1}">我的信息</div>
+	<div ng-click="show(2)" ng-class="{'border':page2}">我的登記</div>
+	</section>
+	<section ng-if="page1">123</section>
+	<section ng-if="page2">456</section>
+</article>
+<style>
+	article{
+		margin-top: 100px;
+	}
+	section{
+		display: flex;
+	}
+	section div{
+		flex: 1;
+		text-align: center;
+		line-height: 30px;
+		height: 30px;
+	}
+	.border{
+		border-bottom: 2px solid #d43d3d;
+	}
+</style>
