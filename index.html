@@ -12,8 +12,8 @@
 	<script type="text/javascript" src="dist/js/ionic.bundle.js"></script>
 	<!--angular路由支持文件-->
 	<script type="text/javascript" src="dist/js/angular-route.js"></script>
-	<!--<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=jKaZX2RsTYAxYuq5wf2lCv6GaQfzYyin"></script>-->
-	<!--<link rel="stylesheet" type="text/css" href="dist/css/ionic.css" />-->
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=jKaZX2RsTYAxYuq5wf2lCv6GaQfzYyin"></script>
+	<link rel="stylesheet" type="text/css" href="dist/css/ionic.css" />
 	<link rel="stylesheet" href="dist/css/base.css" />
 
 	<body>
@@ -54,7 +54,14 @@
 					})
 			})
 			//定义了一个主页控制器
-		app.controller('indexCtrl', ['$scope', '$http', '$rootScope', '$ionicActionSheet', '$ionicBackdrop', '$timeout', function($scope, $http, $rootScope, $ionicActionSheet, $ionicBackdrop, $timeout) {
+		app.controller('indexCtrl', ['$scope', '$http', '$rootScope', '$ionicLoading', '$timeout', function($scope, $http, $rootScope, $ionicLoading, $timeout) {
+			console.log($ionicLoading);
+			//用ionic的菊花效果
+			//出现
+			$ionicLoading.show({
+				template: 'Loading',
+			});
+			//$ionicLoading.hide();
 			//进来navbar的状态
 			//推荐页的状态
 			//$rootScope.isNavRed1 = true;
@@ -89,6 +96,7 @@
 					.success(function(data) {
 						//这个是请求完数据之后让loading消失
 						$scope.loading = false;
+						$ionicLoading.hide();
 						console.log(data);
 						$scope.news = data.newslist;
 						console.log($scope.news);
