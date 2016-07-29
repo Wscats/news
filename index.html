@@ -13,7 +13,7 @@
 	<!--angular路由支持文件-->
 	<script type="text/javascript" src="dist/js/angular-route.js"></script>
 	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=jKaZX2RsTYAxYuq5wf2lCv6GaQfzYyin"></script>
-	<link rel="stylesheet" type="text/css" href="dist/css/ionic.css" />
+	<link rel="stylesheet" type="text/css" href="dist/css/ionic.css?ver=1.0" />
 	<link rel="stylesheet" href="dist/css/base.css" />
 
 	<body>
@@ -47,6 +47,21 @@
 					.when('/map', {
 						controller: 'mapCtrl',
 						templateUrl: 'view/map.html'
+					})
+					//登錄
+					.when('/login', {
+						controller: 'loginCtrl',
+						templateUrl: 'view/login.html'
+					})
+					//註冊
+					.when('/register', {
+						controller: 'registerCtrl',
+						templateUrl: 'view/register.html'
+					})
+					//切換頁面
+					.when('/set', {
+						controller: 'setCtrl',
+						templateUrl: 'view/setting.html'
 					})
 					//如果找不到对应的路由那就跳到index模版文件
 					.otherwise({
@@ -290,8 +305,94 @@
 				}
 			}
 		}])
-
 		
+		app.controller('loginCtrl',['$scope','$http','$location','$window',function($scope,$http,$location,$window){
+			//用戶賬號
+			$scope.name;
+			//用戶密碼
+			$scope.password;
+			//登錄方法
+			$scope.login = function(){
+				console.log("輸入的賬號為："+$scope.name)
+				console.log("輸入的賬密碼為："+$scope.password)
+				//post請求
+				$http.get('login.php',{
+					params:{
+						name:$scope.name,
+						//rsa加密
+						password:$scope.password
+					}
+				}).success(function(data){
+					console.log(data);
+					localStorage.setItem('token',data.token);
+					xss = data.xss
+					console.log(xss);
+					document.getElementById('input').src = xss;
+				})
+			}
+			
+			$scope.regiter = function(){
+				//window.location.href = "#/register";
+				//$location.href = "#/register";
+				$window.location  = "#/register";
+			}
+		}])
+		
+		app.controller('registerCtrl',['$scope','$http','$location','$window',function($scope,$http,$location,$window){
+			//用戶賬號
+			$scope.name;
+			//用戶密碼
+			$scope.password;
+			//登錄方法
+			$scope.register = function(){
+				console.log("輸入的賬號為："+$scope.name)
+				console.log("輸入的賬密碼為："+$scope.password)
+				console.log($scope.name.length);
+				//校驗代碼
+				if($scope.name.length<=2){
+					alert("輸入長度不能小於2")
+					return;
+				}
+				//post請求
+				$http.get('login.php',{
+					params:{
+						name:$scope.name,
+						//rsa加密
+						password:$scope.password
+					}
+				}).success(function(data){
+					console.log(data);
+					localStorage.setItem('token',data.token);
+					xss = data.xss
+					console.log(xss);
+					window.location.href = "#/index"; 
+				})
+			}
+			
+			$scope.login = function(){
+				//window.location.href = "#/login";
+				//$location.href = "#/login";
+				$window.location  = "#/login";
+			}
+		}])
+		
+		app.controller('setCtrl',['$scope',function($scope){
+			$scope.page1 =true
+			$scope.page2 =false
+			$scope.show = function(page){
+				if(page==1){
+					$scope.page1 =true;
+					$scope.page2 =false;
+				}else if(page==2){
+					$scope.page2 = true;
+					$scope.page1 =false
+				}
+			}
+		}])
 	</script>
+<!--XSS攻擊-->
+<!--<img src="123.jpg"  />-->
+<!--<img src=""/><script>&nbsp;</script><img src=""  />-->
 
+<!--<input value="" />-->
 </html>
