@@ -6,11 +6,15 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no">
 		<title></title>
 	</head>
-	<link rel="stylesheet" href="dist/css/base.css" />
 	<!--angular框架-->
-	<script type="text/javascript" src="dist/js/angular.js"></script>
+	<!--<script type="text/javascript" src="dist/js/angular.js"></script>-->
+	<!--<script type="text/javascript" src="dist/js/ionic.js" ></script>-->
+	<script type="text/javascript" src="dist/js/ionic.bundle.js"></script>
 	<!--angular路由支持文件-->
 	<script type="text/javascript" src="dist/js/angular-route.js"></script>
+	<!--<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=jKaZX2RsTYAxYuq5wf2lCv6GaQfzYyin"></script>-->
+	<!--<link rel="stylesheet" type="text/css" href="dist/css/ionic.css" />-->
+	<link rel="stylesheet" href="dist/css/base.css" />
 
 	<body>
 		<!--header头-->
@@ -24,7 +28,7 @@
 		<div ng-view=""></div>
 	</body>
 	<script>
-		var app = angular.module('wsscat', ['ngRoute']);
+		var app = angular.module('wsscat', ['ngRoute', 'ionic']);
 		app.config(function($routeProvider) {
 				$routeProvider.when('/index', {
 						controller: 'indexCtrl',
@@ -39,50 +43,34 @@
 						controller: 'gameDetailCtrl',
 						templateUrl: 'view/gameDetail.html'
 					})
+					//地图
+					.when('/map', {
+						controller: 'mapCtrl',
+						templateUrl: 'view/map.html'
+					})
 					//如果找不到对应的路由那就跳到index模版文件
 					.otherwise({
 						redirectTo: '/index'
 					})
 			})
 			//定义了一个主页控制器
-		app.controller('indexCtrl', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope) {
-			var getCookie = function(name) {
-				var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
-				if(arr = document.cookie.match(reg))
-					return unescape(arr[2]);
-				else
-					return null;
-			}
-
-			var setCookie = function(name, value) {
-				var Days = 30;
-				var exp = new Date();
-				exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
-				document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
-				$cookies[name] = value;
-			};
-
-			/*var isLogin = function() {
-					var cookie = true;
-					if(cookie) {
-
-					}
-				}*/
-				//进来navbar的状态
-				//推荐页的状态
-				//$rootScope.isNavRed1 = true;
-				//游戏页的状态
-				//$rootScope.isNavRed2 = false;
-				//http://10.16.151.25/news/baiduApi2.php?num=10&page=1
-				//开始显示的条数
+		app.controller('indexCtrl', ['$scope', '$http', '$rootScope', '$ionicActionSheet', '$ionicBackdrop', '$timeout', function($scope, $http, $rootScope, $ionicActionSheet, $ionicBackdrop, $timeout) {
+			//进来navbar的状态
+			//推荐页的状态
+			//$rootScope.isNavRed1 = true;
+			//游戏页的状态
+			//$rootScope.isNavRed2 = false;
+			//http://10.16.151.25/news/baiduApi2.php?num=10&page=1
+			//开始显示的条数
 			$scope.offset = 5;
 			//这个是刚进入页面时候，数据没请求回来前出现一个loading
 			$scope.loading = true;
 			var loadMoreData = function() {
-				$http.get('http://10.16.151.25/news/baiduApi2.php', {
+				$http.get('baiduApi2.php', {
 						params: {
 							num: $scope.offset,
 							page: '1',
+							word: '广州',
 						}
 					})
 					/*$http({
@@ -124,7 +112,7 @@
 			//$rootScope.isNavRed2 = true;
 			$scope.loading = true;
 			var loadMoreData = function() {
-				$http.get('http://10.16.151.25/news/baiduApi3.php', {
+				$http.get('baiduApi3.php', {
 						params: {
 							channelId: '5572a108b3cdc86cf39001d6',
 						}
@@ -147,7 +135,7 @@
 		app.controller('gameDetailCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams) {
 			$http({
 				method: 'get',
-				url: 'http://10.16.151.25/news/baiduApi3.php',
+				url: 'baiduApi3.php',
 				params: {
 					channelId: '5572a108b3cdc86cf39001d6',
 				},
@@ -155,6 +143,12 @@
 				console.log(data);
 				$scope.new = data.showapi_res_body.pagebean.contentlist[$routeParams.id];
 			})
+		}])
+
+		app.controller('mapCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams) {
+			var map = new BMap.Map("allmap");
+			var point = new BMap.Point(116.331398, 39.897445);
+			map.centerAndZoom(point, 12);
 		}])
 
 		app.directive('isnavred', ['$location', function($location) {
@@ -170,9 +164,20 @@
 					'</p>',
 				link: function(scope, element, attrs) {
 					console.log(location.hash);
+					console.log(scope);
 					var nav = document.getElementById('nav')
 					var navs = nav.getElementsByTagName('a')
-					console.log(angular);
+					switch(location.hash) {
+						case '#/index':
+							angular.element(navs).removeClass('isNavRed');
+							angular.element(navs[0]).addClass('isNavRed');
+							break;
+						case '#/game':
+							angular.element(navs).removeClass('isNavRed');
+							angular.element(navs[1]).addClass('isNavRed');
+							break;
+					}
+
 					angular.element(navs).on('click', function() {
 						//做全局的清楚
 						angular.element(navs).removeClass('isNavRed');
@@ -181,24 +186,6 @@
 				}
 			}
 		}])
-	</script>
-	<script>
-		/*var nav = document.getElementById('nav')
-										var navs = nav.getElementsByTagName('a')
-										var i, j;
-										for(i = 0; i < navs.length; i++) {
-											navs[i].onclick = function() {
-												for(j = 0; j < navs.length; j++) {
-													navs[j].className = '';
-												}
-												this.className = 'isNavRed';
-											}
-										}*/
-
-		/*nav.addEventListener('click',function(e){
-			console.log(e.target);
-			e.target.className = 'isNavRed';
-		})*/
 	</script>
 
 </html>
