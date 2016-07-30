@@ -6,7 +6,7 @@
 
 | 存放控制器的文件 | 存放框架等文件 | 存放示例文件 | 存放图片素材| 存放视图文件 |
 | ------------- |:-------------:| :-------------:| :-------------:| -----:|
-| [control](https://github.com/Wscats/news/tree/master/control)|[dist](https://github.com/Wscats/news/tree/master/dist)|[gh-pages](https://github.com/Wscats/news/tree/master/ghpage) |[image](https://github.com/Wscats/news/tree/master/image)|[view](https://github.com/Wscats/news/tree/master/view) |
+|[control](https://github.com/Wscats/news/tree/master/control)|[dist](https://github.com/Wscats/news/tree/master/dist)|[gh-pages](https://github.com/Wscats/news/tree/master/ghpage) |[image](https://github.com/Wscats/news/tree/master/image)|[view](https://github.com/Wscats/news/tree/master/view) |
 
 
 [触摸滑动服务DEMO](https://wscats.github.io/news/ghpage/touch.html)
