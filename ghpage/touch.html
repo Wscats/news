@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html ng-app="wsscat">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no">
+		<title>Javascript事件监听</title>
+	</head>
+	<script type="text/javascript" src="../dist/js/angular.js"></script>
+
+	<body ng-controller="autumnsCtrl">
+		<article>
+			<section>上下左右滑动</section>
+		</article>
+	</body>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		
+		article {
+			width: 100%;
+			height: 300px;
+			line-height: 300px;
+			text-align: center;
+			font-size: 50px;
+			background-color: #007AFF;
+			color: #FFFFFF;
+		}
+	</style>
+	<script>
+		var app = angular.module('wsscat', []);
+		app.controller('autumnsCtrl', ['$scope', 'swipe', function($scope, swipe) {
+			console.log(swipe);
+			swipe.method("bottom",function(e){
+				console.log(e)
+			})
+		}])
+		app.service('swipe', [function() {
+			return {
+				method: function(direct, callback) {
+					var callbackTop, callbackdown, callbackLeft, callbackRight;
+					//判断方向，执行回调
+					switch(direct) {
+						case 'top':
+							callbackTop = callback;
+							break;
+						case 'bottom':
+							callbackBottom = callback;
+							break;
+						case 'left':
+							callbackLeft = callback;
+							break;
+						case 'right':
+							callbackRight = callback;
+							break;
+					}
+					var touch = {}
+					document.getElementsByTagName('body')[0].addEventListener('touchstart', function(e) {
+						console.log("点击滑动前");
+						touch.x1 = e.targetTouches[0].pageX;
+						touch.y1 = e.targetTouches[0].pageY;
+						console.log('X:' + e.targetTouches[0].pageX + ' Y:' + e.targetTouches[0].pageY);
+						//$scope.$apply();
+					})
+					var ab = function(e) {
+						console.log("点击滑动后");
+						touch.x2 = e.changedTouches[0].pageX;
+						touch.y2 = e.changedTouches[0].pageY;
+						console.log('X:' + e.changedTouches[0].pageX + ' Y:' + e.changedTouches[0].pageY)
+						console.log(direction(touch.x1, touch.x2, touch.y1, touch.y2));
+						var swiDirection = direction(touch.x1, touch.x2, touch.y1, touch.y2)
+						if(swiDirection == 'bottom') {
+							//手动刷新
+							//注意服务不能注入$scope，可以把服务输出的数据，放在对应控制器上的$scope对象上实现监听数据变化
+							touch.direction = 'bottom';
+							callbackBottom?callbackBottom(touch):'';
+							//用callback.call也可以在这里执行
+							//callback.call(this,'bottom');
+							//$scope.$apply();
+						} else if(swiDirection == 'top') {
+							//手动刷新
+							//console.log(callbackTop)
+							touch.direction = 'top';
+							callbackTop?callbackTop(touch):'';
+							//$scope.$apply();
+						} else if(swiDirection == 'left') {
+							//手动刷新
+							//console.log(callbackLeft)
+							touch.direction = 'left';
+							callbackLeft?callbackLeft(touch):'';
+							//$scope.$apply();
+						}
+					}
+
+					function direction(xStart, xEnd, yStart, yEnd) {
+						return Math.abs(xStart - xEnd) >= Math.abs(yStart - yEnd) ? (xStart >= xEnd ? "left" : "right") : (yStart >= yEnd ? "top" : "bottom");
+					}
+					document.getElementsByTagName('body')[0].addEventListener('touchend', ab);
+				}
+			}
+		}])
+	</script>
+
+</html>
