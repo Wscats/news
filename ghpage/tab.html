@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html ng-app="wsscat">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no">
+		<title>Angular选项卡</title>
+	</head>
+	<script type="text/javascript" src="../dist/js/angular.js"></script>
+
+	<body ng-controller="autumnsCtrl">
+		<article>
+			<section>
+				<div ng-click="show(1)" ng-class="{'border':page1}">我的信息</div>
+				<div ng-click="show(2)" ng-class="{'border':page2}">我的登記</div>
+			</section>
+			<section ng-if="page1">wsscat</section>
+			<section ng-if="page2">456</section>
+		</article>
+	</body>
+	<style>
+		section {
+			display: flex;
+		}
+		
+		section div {
+			flex: 1;
+			text-align: center;
+			line-height: 30px;
+			height: 30px;
+		}
+		
+		.border {
+			border-bottom: 2px solid #d43d3d;
+		}
+	</style>
+	<script>
+		var app = angular.module('wsscat', []);
+		app.controller('autumnsCtrl', ['$scope', function($scope) {
+			$scope.page1 = true
+			$scope.page2 = false
+			$scope.show = function(page) {
+				if(page == 1) {
+					$scope.page1 = true;
+					$scope.page2 = false;
+				} else if(page == 2) {
+					$scope.page2 = true;
+					$scope.page1 = false
+				}
+			}
+		}])
+	</script>
+
+</html>
