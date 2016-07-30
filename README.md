@@ -8,6 +8,7 @@
 | ------------- |:-------------:| :-------------:| :-------------:| -----:|
 |[control](https://github.com/Wscats/news/tree/master/control)|[dist](https://github.com/Wscats/news/tree/master/dist)|[gh-pages](https://github.com/Wscats/news/tree/master/ghpage) |[image](https://github.com/Wscats/news/tree/master/image)|[view](https://github.com/Wscats/news/tree/master/view) |
 
+[API来源](http://apistore.baidu.com/apiworks/servicedetail/688.html)
 
 [触摸滑动服务DEMO](https://wscats.github.io/news/ghpage/touch.html)
 
