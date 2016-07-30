@@ -36,6 +36,30 @@ loading动画在控制器进入前显示，ajax请求数据回调成功触发隐
 `$scope.loading = true;`
 ```
 $http.get(url).success(function(data) {
-$scope.loading = false;
+        $scope.loading = false;
 }
+```
+
+然后在视图view页面增加loading层，可以用gif也可以用图片配合css3动画
+```
+<div class="loading" ng-show="loading"><img src="image/loading.png" />
+.loading {
+		position: absolute;
+		z-index: 20;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		opacity: 0.5;
+	}
+	
+	.loading img {
+		position: fixed;
+		left: 50%;
+		top: 50%;
+		margin-left: -28px;
+		margin-top: -28px;
+		animation: mymove 2s infinite;
+		animation-timing-function: linear;
+		animation-direction: normal;
+	}
 ```
