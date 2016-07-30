@@ -1,0 +1,112 @@
+<ion-pane class="article">
+	<ion-content>
+		<!--<div ng-show="downRefresh" id="dr{{downRefresh}}" style="text-align: center;"><img class="refreshImg" src="image/loading_img_56@2x.png" /></div>-->
+		<!--<ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>-->
+		<section ng-repeat="new in news">
+			<a ng-href="{{new.url}}">
+				<p>{{new.title}}</p>
+				<img ng-src="{{new.picUrl}}" />
+				<p class="content">
+					{{new.description}}
+				</p>
+			</a>
+		</section>
+		<div class="loadMore" ng-show="!loading" ng-click="loadMore()">
+			<p>查看更多</p>
+		</div>
+	</ion-content>
+</ion-pane>
+
+<!--菊花 loading-->
+<!--<div class="loading2" ng-show="loading"><img src="image/loading_img_56@2x.png" /></div>-->
+<style>
+	.loading2 {
+		position: absolute;
+		z-index: 20;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		opacity: 0.5;
+	}
+	
+	.loading2 img {
+		position: fixed;
+		left: 50%;
+		top: 50%;
+		margin-left: -28px;
+		margin-top: -28px;
+		animation: mymove 2s infinite;
+		animation-timing-function: linear;
+		animation-direction: normal;
+	}
+	
+	.refreshImg {
+		width: 20px;
+		height: 20px;
+		animation: mymove 2s infinite;
+		animation-timing-function: linear;
+		animation-direction: normal;
+	}
+	
+	@keyframes mymove {
+		from {
+			transform: rotate(0deg)
+		}
+		to {
+			transform: rotate(360deg)
+		}
+	}
+	
+	.loadMore {
+		height: 50px;
+		line-height: 50px;
+		text-align: center;
+		color: #d43d3d;
+	}
+	
+	.article section a {
+		text-decoration: none;
+		color: black;
+	}
+	
+	.article {
+		margin-top: 100px;
+	}
+	
+	.article section {
+		position: relative;
+		height: 150px;
+		border-bottom: 1px solid #e8e8e8;
+	}
+	
+	.article section p {
+		/*text-align: center;*/
+		margin-top: 10px;
+		margin-left: 10px;
+	}
+	
+	.article section img {
+		/*text-align: center;*/
+		float: left;
+		margin-top: 10px;
+		margin-left: 10px;
+		height: 80px;
+	}
+	
+	.article section span {
+		font-size: 10px;
+		color: #999;
+	}
+	
+	.content {
+		float: right;
+		height: 72px;
+		/*position: absolute;
+		top: 5px;
+		right: 10px;*/
+		width: 50%;
+		overflow: hidden;
+		color: darkslategrey;
+		margin-right: 10px;
+	}
+</style>

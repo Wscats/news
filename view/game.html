@@ -1,0 +1,105 @@
+<article>
+<section ng-repeat="new in news">
+		<a ng-href="#/game/{{$index}}">
+			<!--Title简述-->
+			<p>{{new.title}}</p>
+			<!--新闻图片-->
+			<img ng-src="{{new.imageurls[0].url?new.imageurls[0].url:'image/1.jpg'}}" />
+			<!--文章来源，评论和发表事件-->
+			<p class="content">
+				{{new.desc}}
+			</p>
+		</a>
+	</section>
+	<!--懒加载-->
+	<!--<div class="loadMore" ng-show="!loading" ng-click="loadMore()">
+		<p>查看更多</p>
+	</div>-->
+</article>
+<!--菊花 loading-->
+<div class="loading" ng-show="loading"><img src="image/loading_img_56@2x.png" /></div>
+<style>
+	.loading{
+		position: absolute;
+		z-index: 20;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		/*background-color: #999999;*/
+		opacity: 0.5;
+	}
+	.loading img{
+		position: fixed;
+		left: 50%;
+		top: 50%;
+		margin-left: -28px;
+		margin-top: -28px;
+		/*transform: rotate(360deg);
+		transition-duration: ;
+		transition: 1s;*/
+		animation: mymove 2s infinite;
+		animation-timing-function: linear;
+		animation-direction: normal;
+	}
+	@keyframes mymove{
+		from{
+			transform: rotate(0deg)
+		}
+		to{
+			transform: rotate(360deg)
+		}
+	}
+	.loadMore {
+		height: 50px;
+		line-height: 50px;
+		text-align: center;
+		color: #d43d3d;
+	}
+	
+	article section a {
+		text-decoration: none;
+		color: black;
+	}
+	
+	article {
+		position: relative;
+		margin-top: 100px;
+	}
+	
+	article section {
+		position: relative;
+		height: 150px;
+		border-bottom: 1px solid #e8e8e8;
+	}
+	
+	article section p {
+		/*text-align: center;*/
+		margin-top: 10px;
+		margin-left: 10px;
+	}
+	
+	article section img {
+		/*text-align: center;*/
+		float: left;
+		margin-top: 10px;
+		margin-left: 10px;
+		height: 80px;
+	}
+	
+	article section span {
+		font-size: 10px;
+		color: #999;
+	}
+	
+	.content {
+		float: right;
+		height: 72px;
+		/*position: absolute;
+		top: 5px;
+		right: 10px;*/
+		width: 50%;
+		overflow: hidden;
+		color: darkslategrey;
+		margin-right: 10px;
+	}
+</style>

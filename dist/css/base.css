@@ -1,0 +1,38 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+header {
+	background-color: #d43d3d;
+	position: fixed;
+	z-index: 10;
+	width: 100%;
+	text-align: center;
+	color: white;
+	height: 50px;
+	line-height: 50px;
+	top: 0px;
+}
+
+aside {
+	position: fixed;
+	top: 50px;
+	width: 100%;
+	z-index: 9;
+	padding: 10px;
+	background: #f4f5f6;
+}
+
+aside p {
+	/*padding: 10px;*/
+}
+
+aside p a{
+	text-decoration: none;
+	color: black;
+}
+
+.isNavRed{
+	color: red;
+}

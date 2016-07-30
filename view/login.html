@@ -1,0 +1,44 @@
+<article>
+	<p class="ndy">信息登錄系統</p>
+	<input type="text" ng-model="name" placeholder="請輸入您的賬號" />
+	<input type="password" ng-model="password" placeholder="請輸入您的密碼" />
+	<button class="login" ng-click="login()">登錄</button>
+	<button class="regiter" ng-click="regiter()">註冊</button>
+</article>
+<style type="text/css">
+	.ndy {
+		font-size: 30px;
+		text-align: center;
+		padding: 20px;
+	}
+	
+	article {
+		margin-top: 100px;
+	}
+	
+	input {
+		width: 80%;
+		margin-left: 10%;
+		height: 50px;
+		margin-bottom: 20px;
+	}
+	
+	button{
+		width: 80%;
+		height: 50px;
+		margin-left: 10%;
+		margin-bottom: 20px;
+		background-color: #d43d3d;
+		color: #FFFFFF;
+	}
+	
+	.login{
+		border-radius: 5px;
+		border: none;
+	}
+	
+	.regiter{
+		border-radius: 5px;
+		border: none;
+	}
+</style>
