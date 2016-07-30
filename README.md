@@ -31,10 +31,11 @@ swipe.method("bottom",function(e){
 	console.log(e)
 })
 ```
+
+#Loading
 ![这里写图片描述](http://img.blog.csdn.net/20160730120815011)
 ![这里写图片描述](http://img.blog.csdn.net/20160730120815011)
 
-#Loading
 loading动画在控制器进入前显示，ajax请求数据回调成功触发隐藏
 `$scope.loading = true;`
 ```
