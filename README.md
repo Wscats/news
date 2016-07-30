@@ -6,6 +6,8 @@
 
 
 [触摸滑动服务DEMO](https://wscats.github.io/news/ghpage/touch.html)
+
+
 在对应控制器注入服务`swipe`
 ```
 app.controller('autumnsCtrl', ['$scope', 'swipe', function($scope, swipe) {}])
