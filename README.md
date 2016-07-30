@@ -67,3 +67,7 @@ $http.get(url).success(function(data) {
 		animation-direction: normal;
 	}
 ```
+
+#页内切换视图
+![这里写图片描述](http://img.blog.csdn.net/20160730122406705)
+![这里写图片描述](http://img.blog.csdn.net/20160730122406705)
