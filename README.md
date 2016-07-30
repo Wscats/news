@@ -4,6 +4,17 @@
 
 ![这里写图片描述](http://img.blog.csdn.net/20160721173253764)
 
+| 存放控制器的文件 | 存放框架等文件 | 
+| ------------- |:-------------:| :-------------:| :-------------:| -----:|
+| [control](https://github.com/Wscats/news/tree/master/control) | [dist](https://github.com/Wscats/news/tree/master/dist) |
+
+|存放示例文件 | 存放图片素材|
+| ------------- |-------------:|
+| [gh-pages](https://github.com/Wscats/news/tree/master/ghpage) |[image](https://github.com/Wscats/news/tree/master/image)|
+
+|存放视图文件 |
+| ------------- |-------------:|
+| [view](https://github.com/Wscats/news/tree/master/view) |
 
 [触摸滑动服务DEMO](https://wscats.github.io/news/ghpage/touch.html)
 
