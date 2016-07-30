@@ -72,7 +72,7 @@ $http.get(url).success(function(data) {
 ![这里写图片描述](http://img.blog.csdn.net/20160730122406705)
 ![这里写图片描述](http://img.blog.csdn.net/20160730122406705)
 
-视图如下,思路为根据点击的选项卡，用ng-if
+视图如下,思路为根据点击的选项卡，用ng-if或者ng-show实现隐藏或者出现
 ```
 <article>
 	<section>
@@ -82,4 +82,17 @@ $http.get(url).success(function(data) {
 	<section ng-if="page1">wsscat</section>
 	<section ng-if="page2">456</section>
 </article>
+```
+```
+$scope.page1 =true
+	$scope.page2 =false
+		$scope.show = function(page){
+			if(page==1){
+				$scope.page1 =true;
+				$scope.page2 =false;
+			}else if(page==2){
+		$scope.page2 = true;
+		$scope.page1 =false
+	}
+}
 ```
