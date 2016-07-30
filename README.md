@@ -52,7 +52,7 @@ $http.get(url).success(function(data) {
 		opacity: 0.5;
 	}
 	
-	.loading img {
+.loading img {
 		position: fixed;
 		left: 50%;
 		top: 50%;
