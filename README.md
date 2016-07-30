@@ -71,3 +71,15 @@ $http.get(url).success(function(data) {
 #页内切换视图
 ![这里写图片描述](http://img.blog.csdn.net/20160730122406705)
 ![这里写图片描述](http://img.blog.csdn.net/20160730122406705)
+
+视图如下,思路为根据点击的选项卡，用ng-if
+```
+<article>
+	<section>
+	<div ng-click="show(1)" ng-class="{'border':page1}">我的信息</div>
+	<div ng-click="show(2)" ng-class="{'border':page2}">我的登記</div>
+	</section>
+	<section ng-if="page1">wsscat</section>
+	<section ng-if="page2">456</section>
+</article>
+```
