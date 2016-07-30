@@ -1,4 +1,4 @@
-# 日日新闻客户端
+#日日新闻客户端
 
 效果如下
 
@@ -11,6 +11,8 @@
 
 [API来源](http://apistore.baidu.com/apiworks/servicedetail/688.html)
 
+
+#触摸滑动服务DEMO
 [触摸滑动服务DEMO](https://wscats.github.io/news/ghpage/touch.html)
 
 
@@ -32,6 +34,7 @@ swipe.method("bottom",function(e){
 ![这里写图片描述](http://img.blog.csdn.net/20160730120815011)
 ![这里写图片描述](http://img.blog.csdn.net/20160730120815011)
 
+#Loading
 loading动画在控制器进入前显示，ajax请求数据回调成功触发隐藏
 `$scope.loading = true;`
 ```
