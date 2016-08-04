@@ -13,6 +13,7 @@
 	<!--angular路由支持文件-->
 	<script type="text/javascript" src="dist/js/angular-route.js"></script>
 	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=jKaZX2RsTYAxYuq5wf2lCv6GaQfzYyin"></script>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 	<link rel="stylesheet" type="text/css" href="dist/css/ionic.css?ver=1.0" />
 	<link rel="stylesheet" href="dist/css/base.css" />
 
@@ -63,6 +64,10 @@
 						controller: 'setCtrl',
 						templateUrl: 'view/setting.html'
 					})
+					.when('/preview', {
+						controller: 'previewCtrl',
+						templateUrl: 'view/preview.html'
+					})
 					//如果找不到对应的路由那就跳到index模版文件
 					.otherwise({
 						redirectTo: '/index'
@@ -71,11 +76,11 @@
 			//定义了一个主页控制器
 		app.controller('indexCtrl', ['$scope', '$http', '$rootScope', '$ionicLoading', '$timeout', 'swipe', function($scope, $http, $rootScope, $ionicLoading, $timeout, swipe) {
 			console.log(swipe);
-			swipe.method(function(){
-				alert("123");
-			})
-			//用ionic的菊花效果
-			//出现
+			swipe.method(function() {
+					alert("123");
+				})
+				//用ionic的菊花效果
+				//出现
 			$ionicLoading.show({
 				template: 'Loading',
 			});
@@ -305,94 +310,197 @@
 				}
 			}
 		}])
-		
-		app.controller('loginCtrl',['$scope','$http','$location','$window',function($scope,$http,$location,$window){
+
+		app.controller('loginCtrl', ['$scope', '$http', '$location', '$window', function($scope, $http, $location, $window) {
 			//用戶賬號
 			$scope.name;
 			//用戶密碼
 			$scope.password;
 			//登錄方法
-			$scope.login = function(){
-				console.log("輸入的賬號為："+$scope.name)
-				console.log("輸入的賬密碼為："+$scope.password)
-				//post請求
-				$http.get('login.php',{
-					params:{
-						name:$scope.name,
+			$scope.login = function() {
+				console.log("輸入的賬號為：" + $scope.name)
+				console.log("輸入的賬密碼為：" + $scope.password)
+					//post請求
+				$http.get('login.php', {
+					params: {
+						name: $scope.name,
 						//rsa加密
-						password:$scope.password
+						password: $scope.password
 					}
-				}).success(function(data){
+				}).success(function(data) {
 					console.log(data);
-					localStorage.setItem('token',data.token);
+					localStorage.setItem('token', data.token);
 					xss = data.xss
 					console.log(xss);
 					document.getElementById('input').src = xss;
 				})
 			}
-			
-			$scope.regiter = function(){
+
+			$scope.regiter = function() {
 				//window.location.href = "#/register";
 				//$location.href = "#/register";
-				$window.location  = "#/register";
+				$window.location = "#/register";
 			}
 		}])
-		
-		app.controller('registerCtrl',['$scope','$http','$location','$window',function($scope,$http,$location,$window){
+
+		app.controller('registerCtrl', ['$scope', '$http', '$location', '$window', function($scope, $http, $location, $window) {
 			//用戶賬號
 			$scope.name;
 			//用戶密碼
 			$scope.password;
 			//登錄方法
-			$scope.register = function(){
-				console.log("輸入的賬號為："+$scope.name)
-				console.log("輸入的賬密碼為："+$scope.password)
+			$scope.register = function() {
+				console.log("輸入的賬號為：" + $scope.name)
+				console.log("輸入的賬密碼為：" + $scope.password)
 				console.log($scope.name.length);
 				//校驗代碼
-				if($scope.name.length<=2){
+				if($scope.name.length <= 2) {
 					alert("輸入長度不能小於2")
 					return;
 				}
 				//post請求
-				$http.get('login.php',{
-					params:{
-						name:$scope.name,
+				$http.get('login.php', {
+					params: {
+						name: $scope.name,
 						//rsa加密
-						password:$scope.password
+						password: $scope.password
 					}
-				}).success(function(data){
+				}).success(function(data) {
 					console.log(data);
-					localStorage.setItem('token',data.token);
+					localStorage.setItem('token', data.token);
 					xss = data.xss
 					console.log(xss);
-					window.location.href = "#/index"; 
+					window.location.href = "#/index";
 				})
 			}
-			
-			$scope.login = function(){
+
+			$scope.login = function() {
 				//window.location.href = "#/login";
 				//$location.href = "#/login";
-				$window.location  = "#/login";
+				$window.location = "#/login";
 			}
 		}])
-		
-		app.controller('setCtrl',['$scope',function($scope){
-			$scope.page1 =true
-			$scope.page2 =false
-			$scope.show = function(page){
-				if(page==1){
-					$scope.page1 =true;
-					$scope.page2 =false;
-				}else if(page==2){
+
+		app.controller('setCtrl', ['$scope', function($scope) {
+			$scope.page1 = true
+			$scope.page2 = false
+			$scope.show = function(page) {
+				if(page == 1) {
+					$scope.page1 = true;
+					$scope.page2 = false;
+				} else if(page == 2) {
 					$scope.page2 = true;
-					$scope.page1 =false
+					$scope.page1 = false
 				}
 			}
 		}])
-	</script>
-<!--XSS攻擊-->
-<!--<img src="123.jpg"  />-->
-<!--<img src=""/><script>&nbsp;</script><img src=""  />-->
 
-<!--<input value="" />-->
+		app.controller('previewCtrl', ['$scope', '$http', 'weixinTool', function($scope, $http, weixinTool) {
+			$http.get('http://3.wsscatwexin.applinzi.com/sample.php').success(function(data) {
+				console.log(data);
+				wx.config({
+					debug: true,
+					appId: data.appId,
+					timestamp: data.timestamp,
+					nonceStr: data.nonceStr,
+					signature: data.signature,
+					jsApiList: [
+						// 所有要调用的 API 都要加到这个列表中
+						'checkJsApi',
+						'onMenuShareTimeline',
+						'onMenuShareAppMessage',
+						'onMenuShareQQ',
+						'onMenuShareWeibo',
+						'onMenuShareQZone',
+						'hideMenuItems',
+						'showMenuItems',
+						'hideAllNonBaseMenuItem',
+						'showAllNonBaseMenuItem',
+						'translateVoice',
+						'startRecord',
+						'stopRecord',
+						'onVoiceRecordEnd',
+						'playVoice',
+						'onVoicePlayEnd',
+						'pauseVoice',
+						'stopVoice',
+						'uploadVoice',
+						'downloadVoice',
+						'chooseImage',
+						'previewImage',
+						'uploadImage',
+						'downloadImage',
+						'getNetworkType',
+						'openLocation',
+						'getLocation',
+						'hideOptionMenu',
+						'showOptionMenu',
+						'closeWindow',
+						'scanQRCode',
+						'chooseWXPay',
+						'openProductSpecificView',
+						'addCard',
+						'chooseCard',
+						'openCard'
+					]
+				});
+
+				wx.ready(function() {
+					$scope.check = function() {
+						wx.checkJsApi({
+							jsApiList: [
+								'getNetworkType',
+								'previewImage'
+							],
+							success: function(res) {
+								alert(JSON.stringify(res));
+							}
+						});
+					};
+				})
+
+				$scope.click = function() {
+					weixinTool.imgPreview('image/1.jpg', ['image/1.jpg'])
+				};
+			})
+		}])
+
+		app.service('weixinTool', function() {
+			return {
+				imgPreview: function(current, urls) {
+					wx.previewImage({
+						current: current,
+						urls: urls
+					});
+				},
+
+				onMenuShareTimeline: function(title, link, imgUrl) {
+					wx.onMenuShareTimeline({
+						title: title,
+						link: link,
+						imgUrl: imgUrl,
+						trigger: function(res) {
+							// 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
+							alert('用户点击分享到朋友圈');
+						},
+						success: function(res) {
+							alert('已分享');
+						},
+						cancel: function(res) {
+							alert('已取消');
+						},
+						fail: function(res) {
+							alert(JSON.stringify(res));
+						}
+					});
+				}
+			}
+		})
+	</script>
+	<!--XSS攻擊-->
+	<!--<img src="123.jpg"  />-->
+	<!--<img src=""/><script>&nbsp;</script><img src=""  />-->
+
+	<!--<input value="" />-->
+
 </html>
