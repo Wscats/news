@@ -27,7 +27,10 @@
 		</aside>
 		<!--渲染视图-->
 		<div ng-view=""></div>
+		<footer zm-footer="" hide-this="{{hideThis}}" class="zmFooter"></footer>
 	</body>
+	<style>
+	</style>
 	<script>
 		var app = angular.module('wsscat', ['ngRoute', 'ionic']);
 		app.config(function($routeProvider) {
@@ -76,7 +79,7 @@
 			//定义了一个主页控制器
 		app.controller('indexCtrl', ['$scope', '$http', '$rootScope', '$ionicLoading', '$timeout', 'swipe', function($scope, $http, $rootScope, $ionicLoading, $timeout, swipe) {
 			console.log(swipe);
-			swipe.method(function() {
+			swipe.method('top', function() {
 					alert("123");
 				})
 				//用ionic的菊花效果
@@ -251,6 +254,53 @@
 				}
 			}
 		}])
+		app.directive('zmFooter',
+			function() {
+				return {
+					scope: {
+						hideThis: '@'
+					},
+					controller: ['$scope', '$timeout', '$rootScope', '$route', '$location',
+						function(a, b, c, $route, $location) {
+							a.items = [];
+							var loadData = function() {
+								a.items = [];
+								a.items.push({
+									title: '首页',
+									link: '/index',
+								});
+								a.items.push({
+									title: '个人中心',
+									link: '/login',
+								});
+							};
+							loadData();
+							var d;
+							a.changeStage = function(b) {
+									a.currentIndex = b
+								},
+								c.$on('refreshFooter', function(b, c) {
+									loadData();
+								});
+							c.$on('$routeChangeSuccess',
+									function(b, c) {
+										d = angular.isDefined(c.depth) ? c.depth : '',
+											a.currentIndex = d
+									}),
+								a.url = function() {
+									return $location.url();
+								};
+						}
+					],
+					template: '<a href="#{{item.link}}" ng-repeat="item in items"  ng-click="changeStage($index)"><div class="ft-part" ng-class="{current:url()==item.link}"><em>{{item.title}}</em></div>',
+					link: function(a, b) {
+						a.$watch('hideThis',
+							function(a) {
+								'true' === a ? b.css('visibility', 'hidden') : b.css('visibility', 'visible')
+							})
+					}
+				}
+			})
 
 		app.service('swipe', [function() {
 			return {
@@ -381,7 +431,8 @@
 			}
 		}])
 
-		app.controller('setCtrl', ['$scope', function($scope) {
+		app.controller('setCtrl', ['$scope', 'swipe', function($scope, swipe) {
+			console.log(swipe);
 			$scope.page1 = true
 			$scope.page2 = false
 			$scope.show = function(page) {
