@@ -12,6 +12,7 @@
 	<script type="text/javascript" src="dist/js/ionic.bundle.js"></script>
 	<!--angular路由支持文件-->
 	<script type="text/javascript" src="dist/js/angular-route.js"></script>
+	<script type="text/javascript" src="dist/js/angular-animate.js"></script>
 	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=jKaZX2RsTYAxYuq5wf2lCv6GaQfzYyin"></script>
 	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 	<link rel="stylesheet" type="text/css" href="dist/css/ionic.css?ver=1.0" />
@@ -26,17 +27,54 @@
 			<isnavred></isnavred>
 		</aside>
 		<!--渲染视图-->
-		<div ng-view=""></div>
+		<div class="fad" ng-view=""></div>
 		<footer zm-footer="" hide-this="{{hideThis}}" class="zmFooter"></footer>
 	</body>
 	<style>
+		.fad {
+			bottom: 0;
+			padding-top: 200px;
+			position: absolute;
+			text-align: center;
+			top: 0;
+			width: 100%;
+		}
+		
+		@keyframes slideOutLeft {
+			to {
+				transform: translateX(-100%);
+			}
+		}
+		
+		@keyframes slideInRight {
+			from {
+				transform: translateX(100%);
+			}
+			to {
+				transform: translateX(0);
+			}
+		}
+		
+		.ng-enter {
+			animation: slideInRight 5s both ease-in;
+			/*z-index: 8888;*/
+		}
+		
+		.ng-leave {
+			animation: slideOutLeft 5s both ease-in;
+			/*z-index: 9999;*/
+		}
 	</style>
 	<script>
-		var app = angular.module('wsscat', ['ngRoute', 'ionic']);
+		var app = angular.module('wsscat', ['ngRoute', 'ionic', 'ngAnimate']);
 		app.config(function($routeProvider) {
 				$routeProvider.when('/index', {
 						controller: 'indexCtrl',
 						templateUrl: 'view/index.html'
+					})
+					.when('/hot', {
+						controller: 'hotCtrl',
+						templateUrl: 'view/hot.html'
 					})
 					//游戏焦点的路由
 					.when('/game', {
@@ -76,6 +114,26 @@
 						redirectTo: '/index'
 					})
 			})
+			/*app.animation('.fad', function() {
+					return {
+						enter: function(element, done) {
+							element.css({
+								opacity: 0
+							});
+							element.animate({
+								opacity: 1
+							}, 1000, done);
+						},
+						leave: function(element, done) {
+							element.css({
+								opacity: 1
+							});
+							element.animate({
+								opacity: 0
+							}, 1000, done);
+						}
+					}
+				})*/
 			//定义了一个主页控制器
 		app.controller('indexCtrl', ['$scope', '$http', '$rootScope', '$ionicLoading', '$timeout', 'swipe', function($scope, $http, $rootScope, $ionicLoading, $timeout, swipe) {
 			console.log(swipe);
@@ -84,17 +142,17 @@
 				})
 				//用ionic的菊花效果
 				//出现
-			$ionicLoading.show({
-				template: 'Loading',
-			});
-			//$ionicLoading.hide();
-			//进来navbar的状态
-			//推荐页的状态
-			//$rootScope.isNavRed1 = true;
-			//游戏页的状态
-			//$rootScope.isNavRed2 = false;
-			//http://10.16.151.25/news/baiduApi2.php?num=10&page=1
-			//开始显示的条数
+				/*$ionicLoading.show({
+					template: 'Loading',
+				});*/
+				//$ionicLoading.hide();
+				//进来navbar的状态
+				//推荐页的状态
+				//$rootScope.isNavRed1 = true;
+				//游戏页的状态
+				//$rootScope.isNavRed2 = false;
+				//http://10.16.151.25/news/baiduApi2.php?num=10&page=1
+				//开始显示的条数
 			$scope.offset = 5;
 			//这个是刚进入页面时候，数据没请求回来前出现一个loading
 			$scope.loading = true;
@@ -153,7 +211,7 @@
 						//这个是请求完数据之后让loading消失
 						$scope.loading = false;
 						$scope.downRefresh = false;
-						$ionicLoading.hide();
+						//$ionicLoading.hide();
 						if($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
 							$scope.$apply();
 						}
@@ -169,6 +227,38 @@
 				//自定义偏移量（点击查看更多增加的条数）
 				$scope.offset += 5;
 				//$scope.offset++;
+				loadMoreData($scope.offset);
+			}
+		}])
+
+		app.controller('hotCtrl', ['$scope', '$http', '$rootScope', '$ionicLoading', '$timeout', 'swipe', function($scope, $http, $rootScope, $ionicLoading, $timeout, swipe) {
+			$scope.offset = 5;
+			$scope.loading = true;
+			$scope.downRefresh = true;
+			$scope.doRefresh = loadMoreData = function() {
+				$http.get('baiduApi2.php', {
+						params: {
+							num: $scope.offset,
+							page: '1',
+							word: '广州',
+						}
+					})
+					.success(function(data) {
+						$scope.loading = false;
+						$scope.downRefresh = false;
+						if($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
+							$scope.$apply();
+						}
+						console.log(data);
+						$scope.news = data.newslist;
+						console.log($scope.news);
+					})
+			}
+
+			loadMoreData($scope.offset);
+			$scope.loadMore = function() {
+				$scope.loading = true;
+				$scope.offset += 5;
 				loadMoreData($scope.offset);
 			}
 		}])
@@ -227,7 +317,7 @@
 				template: '<p id="nav">' +
 					'<a ng-href="#/index" class="isNavRed"><span>推荐</span></a>' +
 					'<a ng-href="#/game"><span>游戏</span></a>' +
-					'<span>热点</span>' +
+					'<a ng-href="#/hot"><span>热点</span></a>' +
 					'<span>社会</span>' +
 					'</p>',
 				link: function(scope, element, attrs) {
