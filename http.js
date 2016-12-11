@@ -31,7 +31,7 @@ http.createServer((request, response) => {
 	var paramStr = url.parse(request.url).query;
 	//把url拿回来的参数处理成对象
 	var param = querystring.parse(paramStr)
-	console.log("路由" + pathname);
+	//console.log("路由" + pathname);
 	//判断浏览器只输入localhost:12345的情况
 	if(pathname.slice(-1) === "/") {
 		pathname = pathname + 'index.html';
@@ -87,4 +87,4 @@ http.createServer((request, response) => {
 	})
 }).listen(12345);
 //监听12345端口，端口号可以自定义
-console.log('开启服务器，然后在浏览器里面打开http://localhost:12345/news/index.html');
+console.log('在浏览器里面打开http://localhost:12345/news/index.html');

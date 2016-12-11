@@ -17,5 +17,28 @@
 				}
 			}
 		}
-	}])
+	}]);
+	
+	//选区几张照片显示在轮播图上，默认三张
+	app.service("swiperImg", [function(){
+		return {
+			get: function(data, num){
+				if(num){
+					
+				}else{
+					//如果没传参数进来则设置取图数量为2
+					num = 2;
+				}
+				var imgs = [];
+				angular.forEach(data,function(data, index){
+					if(data.havePic&&imgs.length<=num){
+						//记录有图片是出现在第几条
+						data.id = index
+						imgs.push(data)
+					}
+				})
+				return imgs;
+			}
+		}
+	}]);
 })();
