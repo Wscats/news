@@ -1,3 +1,5 @@
+🐼Angular write a news single page application DEMO, the comprehensive use of angular commonly used some of the technical points, such as filters, routing, services, controllers, etc.
+
 #日日新闻客户端
 
 效果如下
