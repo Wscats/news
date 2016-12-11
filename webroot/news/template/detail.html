@@ -1,0 +1,23 @@
+<article class="weui-article">
+    <!--<h1>大标题</h1>-->
+    <section>
+        <h2 class="title">{{new.title}}</h2>
+        <section>
+            <h3>{{'来源：'+new.source}}</h3>
+            <p>
+                {{new.desc}}
+            </p>
+            <p ng-show="new.havePic">
+                <img ng-click="showGallery(true,img.url)" ng-src="{{img.url}}" alt="" ng-repeat="img in new.imageurls">
+            </p>
+        </section>
+    </section>
+</article>
+<div class="weui-gallery" style="display:{{isShowGallery?'block':'none'}}">
+    <span class="weui-gallery__img" style="{{imgUrl}}"></span>
+    <div class="weui-gallery__opr">
+        <a ng-click="showGallery(false)" class="weui-gallery__del">
+            <i class="weui-icon-delete weui-icon_gallery-delete"></i>
+        </a>
+    </div>
+</div>
