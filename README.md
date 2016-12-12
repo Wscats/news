@@ -17,10 +17,9 @@
 
 <p>
 <a href="https://github.com/Wscats/news"><img src="https://wscats.github.io/news/news/image/npm.svg" alt="NPM version"></a>
-<a href="https://github.com/Wscats/news"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="MIT License"></a>
-<a href="https://github.com/Wscats/news"><img src="https://img.shields.io/travis/vue-bulma/vue-admin.svg?label=linux" alt="Linux Build"></a>
-<a href="https://github.com/Wscats/news"><img src="https://img.shields.io/appveyor/ci/fundon/vue-admin/master.svg?label=windows" alt="Window Build"/></a>
-<a href="https://github.com/Wscats/news"><img src="https://badges.gitter.im/fundon/vue-admin.svg" alt="Gitter"></a>
+<a href="https://github.com/Wscats/news"><img src="https://wscats.github.io/news/news/image/mit.svg" alt="MIT License"></a>
+<a href="https://github.com/Wscats/news"><img src="https://wscats.github.io/news/news/image/linux.svg" alt="Linux Build"></a>
+<a href="https://github.com/Wscats/news"><img src="https://wscats.github.io/news/news/image/windows.svg" alt="Window Build"/></a>
 </p>
 
 </div>
