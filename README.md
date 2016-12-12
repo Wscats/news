@@ -79,4 +79,4 @@ http://localhost:12345/news/index.html
 ## License
 
 [MIT](http://opensource.org/licenses/MIT)
-Copyright (c) 2016 Winds&Wscats
+Copyright (c) 2016 [Winds](https://github.com/windiest)&[Wscats](https://github.com/Wscats)
