@@ -75,3 +75,7 @@ node http
 ```
 http://localhost:12345/news/index.html
 ```
+
+## License
+
+[MIT](http://opensource.org/licenses/MIT)
