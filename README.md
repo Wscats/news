@@ -27,7 +27,7 @@
 
 ## Installation(Git)
 
-克隆项目地址并下载（需要已安装[Git](https://git-scm.com/downloads)），[项目预览（移动端效果更佳）](https://wscats.github.io/news/news/indexTest.html)
+克隆项目地址并下载（需要已安装[Git](https://git-scm.com/downloads)），[点击预览（移动端效果更佳）](https://wscats.github.io/news/news/indexTest.html)
 ```
 git clone https://github.com/Wscats/news.git
 ```
@@ -49,7 +49,7 @@ npm run test
 
 ## Installation(NPM)
 
-npm安装名为20的模块，[项目预览（移动端效果更佳）](https://wscats.github.io/news/news/indexTest.html)
+npm安装名为20的模块
 ```
 npm install 20
 ```
