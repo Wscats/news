@@ -41,7 +41,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 	})
 	$urlRouterProvider.when('', '/index/list');
 }])
-//设置api的路径
+//设置api的路径 nodejs服务器启动后的路径
 //app.value('apiUrl','https://localhost:12345/newsApi');
 app.value('apiUrl','https://wscats.github.io/news/news/dist/js/newsApi.js');
 //app.value('apiUrl','http://localhost:12345/news/dist/js/test.json');

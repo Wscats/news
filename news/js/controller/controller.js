@@ -247,15 +247,19 @@
 				channelName: '',
 				callback: 'JSON_CALLBACK'
 			}
-		}).success(function(data) {
-			//测试数据，发布时删除
-			data = json;
-			
+		}).success(function(data) {			
 			console.log(data);
 			$scope.isShow = true;
 			$scope.allNum = data.showapi_res_body.pagebean.allNum;
 			$scope.new = data.showapi_res_body.pagebean.contentlist[$state.params.id];
 			console.log($scope.new)
+		}).error(function(data) {
+			//测试数据，发布时删除
+			data = json;
+			$scope.isShow = true;
+			$scope.allNum = data.showapi_res_body.pagebean.allNum;
+			$scope.new = data.showapi_res_body.pagebean.contentlist[$state.params.id];
+			console.log($scope.new)	
 		})
 	}]);
 	
