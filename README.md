@@ -41,7 +41,7 @@ npm run dev
 ```
 npm install
 ```
-然后执行gulp构建项目文件和打开服务器等
+然后执行[gulp](https://github.com/gulpjs/gulp)构建项目文件和打开服务器等
 ```
 npm run test
 ```
