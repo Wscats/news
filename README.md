@@ -31,7 +31,7 @@ npm run test
 ```
 
 
-## Git下载安装
+## Installation Git下载安装
 
 克隆项目地址并下载（需要已安装[Git](https://git-scm.com/downloads)）
 ```
@@ -53,7 +53,7 @@ npm run test
 ```
 
 
-## NPM安装
+## Installation NPM安装
 
 npm安装名为20的模块
 ```
