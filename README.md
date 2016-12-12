@@ -42,7 +42,7 @@ git clone https://github.com/Wscats/news.git
 ```
 npm run dev
 ```
-## 开发
+## Development开发
 通过`npm`安装本地服务第三方依赖模块（需要已安装[Node.js](https://nodejs.org/)），当然也可以先不安装依赖暂时省略这步，运行`node http`直接查看项目效果
 ```
 npm install
