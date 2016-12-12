@@ -23,12 +23,6 @@
 </p>
 
 </div>
-```
-npm install
-```
-```
-npm run test
-```
 
 
 ## Installation Git下载安装
