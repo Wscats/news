@@ -5,7 +5,8 @@
 		function($scope, $rootScope, $http, cookie, $window) {
 			var token = cookie.getCookie('token');
 			var username = cookie.getCookie('username')
-			$http.post('http://localhost:81/angular/news/index.php/login_api/auto_login', {
+			//自动登陆接口
+			/*$http.post('http://localhost:81/angular/news/index.php/login_api/auto_login', {
 				params: {
 					token: token,
 					username: username
@@ -15,7 +16,7 @@
 				if(data.code) {} else {
 					window.location.href = '#/login'
 				}
-			})
+			})*/
 			$scope.tabs = [{
 				name: '国内最新',
 				id: 1,
@@ -65,15 +66,20 @@
 						channelName: '国内最新',
 						callback: 'JSON_CALLBACK'
 					}
-				}).success(function(data) {
-					//测试数据，发布时删除
-					data = json;
-					
+				}).success(function(data) {					
 					$scope.isShow = true;
 					console.log(data);
 					$scope.news = $scope.news.concat(data.showapi_res_body.pagebean.contentlist);
 					//用swiperImg自定义服务获取三张图片
 					$scope.swiperImg = swiperImg.get($scope.news);
+				}).error(function(data) {
+					//测试数据，发布时删除
+					data = json;
+					$scope.isShow = true;
+					console.log(data);
+					$scope.news = $scope.news.concat(data.showapi_res_body.pagebean.contentlist);
+					//用swiperImg自定义服务获取三张图片
+					$scope.swiperImg = swiperImg.get($scope.news);	
 				})
 			}
 			//第一次进来的时候自执行加载数据
@@ -120,15 +126,20 @@
 							channelName: '游戏焦点',
 							callback: 'JSON_CALLBACK'
 						}
-					}).success(function(data) {
-						//测试数据，发布时删除
-						data = json;
-						
+					}).success(function(data) {						
 						$scope.isShow = true;
 						console.log(data);
 						$scope.news = $scope.news.concat(data.showapi_res_body.pagebean.contentlist);
 						//用swiperImg自定义服务获取三张图片
 						$scope.swiperImg = swiperImg.get($scope.news);
+					}).error(function(data) {
+						//测试数据，发布时删除
+						data = json;
+						$scope.isShow = true;
+						console.log(data);
+						$scope.news = $scope.news.concat(data.showapi_res_body.pagebean.contentlist);
+						//用swiperImg自定义服务获取三张图片
+						$scope.swiperImg = swiperImg.get($scope.news);	
 					})
 				}
 				//第一次进来的时候自执行加载数据
@@ -174,15 +185,20 @@
 							channelName: '游戏焦点',
 							callback: 'JSON_CALLBACK'
 						}
-					}).success(function(data) {
-						//测试数据，发布时删除
-						data = json;
-						
+					}).success(function(data) {					
 						$scope.isShow = true;
 						console.log(data);
 						$scope.news = $scope.news.concat(data.showapi_res_body.pagebean.contentlist);
 						//用swiperImg自定义服务获取三张图片
 						$scope.swiperImg = swiperImg.get($scope.news);
+					}).error(function(data) {
+						//测试数据，发布时删除
+						data = json;
+						$scope.isShow = true;
+						console.log(data);
+						$scope.news = $scope.news.concat(data.showapi_res_body.pagebean.contentlist);
+						//用swiperImg自定义服务获取三张图片
+						$scope.swiperImg = swiperImg.get($scope.news);	
 					})
 				}
 				//第一次进来的时候自执行加载数据
