@@ -25,7 +25,7 @@
 </div>
 
 
-## Installation Git下载安装
+## Installation(Git)
 
 克隆项目地址并下载（需要已安装[Git](https://git-scm.com/downloads)）
 ```
@@ -36,7 +36,7 @@ git clone https://github.com/Wscats/news.git
 ```
 npm run dev
 ```
-## Development开发
+## Building
 通过`npm`安装本地服务第三方依赖模块（需要已安装[Node.js](https://nodejs.org/)），当然也可以先不安装依赖暂时省略这步，运行`node http`直接查看项目效果
 ```
 npm install
@@ -47,7 +47,7 @@ npm run test
 ```
 
 
-## Installation NPM安装
+## Installation(NPM)
 
 npm安装名为20的模块
 ```
