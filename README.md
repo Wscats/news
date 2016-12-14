@@ -5,7 +5,7 @@
 
 <p>
   <strong>Use Weui and Angular prepared by the news client</strong>,
-  <a href="https://wscats.github.io/news/news/indexTest.html#/index/list">Live Demo</a>
+  <a href="https://wscats.github.io/Angular-news/news/indexTest.html#/index/list">Live Demo</a>
 </p>
 
 <p>
@@ -27,7 +27,7 @@
 
 ## Installation(Git)
 
-克隆项目地址并下载（需要已安装[Git](https://git-scm.com/downloads)），[点击预览（移动端效果更佳）](https://wscats.github.io/news/news/indexTest.html)
+克隆项目地址并下载（需要已安装[Git](https://git-scm.com/downloads)），[点击预览（移动端效果更佳）](https://wscats.github.io/Angular-news/news/indexTest.html)
 ```
 git clone https://github.com/Wscats/news.git
 ```
