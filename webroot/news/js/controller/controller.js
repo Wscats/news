@@ -1,4 +1,5 @@
 ;
+//控制器
 (function() {
 	var app = angular.module('news.controller', []);
 	app.controller('indexCtrl', ['$scope', '$rootScope', '$http', 'cookie', '$window',
