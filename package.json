@@ -1,6 +1,6 @@
 {
   "name": "20",
-  "version": "3.1.8",
+  "version": "3.1.9",
   "description": "A use of angular framework to write the news system, I used the style of weui, production of carousel figure by swiper, using nodejs's native module to make the server, using the gulp to build the project automation, I am wscats, my master is autumnswind,",
   "main": "http.js",
   "scripts": {
