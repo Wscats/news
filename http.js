@@ -25,7 +25,6 @@ exports.turingApi = turingApi.turingApi;
 
 //引入cms的路由模块
 var newsCms = require('./webroot/cms/cms.js');
-console.log(newsCms)
 
 //用nodejs的原生模块http的createServer方法创建一个服务器
 http.createServer((request, response) => {

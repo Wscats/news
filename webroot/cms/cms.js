@@ -11,11 +11,11 @@ function curd(request, response) {
 	var param = querystring.parse(paramsStr);
 	//后端路由
 	console.log("路由：" + pathname);
-	console.log("参数：" + paramsStr);
+	console.log("Hash值：" + paramsStr);
 	response.writeHead(200, {
 		"Content-Type": "text/jsonp;charset=utf-8"
 	})
-	console.log(request.method);
+	console.log("请求方式：" + request.method);
 	if(request.method.toUpperCase() == 'POST') {
 		var postData = "";
 		/**
@@ -39,9 +39,10 @@ function curd(request, response) {
 				postData = postData.replace('%5D', '');
 			}
 			var param = querystring.parse(postData);
+			console.log("请求参数如下：");
 			console.log(param);
 			//response.end(JSON.stringify(query));
-			if(pathname == '/add') {
+			if(pathname == '/news/add') {
 				sqll.curd.add('news', param, function(err) {
 					if(err) {
 						console.log("INSERT ERROR" + err);
@@ -52,6 +53,22 @@ function curd(request, response) {
 						}
 						response.end(JSON.stringify(obj));
 					}
+				});
+			} else if(pathname == '/news/findAll') {
+				sqll.curd.findAll('news', '*', function(err, rows) {
+					//console.log(rows);
+					var obj = {};
+					obj.arr = rows;
+					response.end(JSON.stringify(obj));
+				});
+			} else if(pathname == '/news/delete') {
+				sqll.curd.delete('news', param, function(err) {
+					/*sqll.curd.find('news', '*', function(err, rows) {
+						console.log(rows);
+						var obj = {};
+						obj.arr = rows;
+						response.end(param.callback + "(" + JSON.stringify(obj) + ")");
+					});*/
 				});
 			}
 		});
