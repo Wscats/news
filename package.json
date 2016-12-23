@@ -6,7 +6,9 @@
   "scripts": {
     "gulp": "gulp",
     "test": "gulp && node http",
-    "dev": "node http"
+    "cms": "node cms/news.js",
+    "http": "node http",
+    "dev": "npm run cms && npm run http"
   },
   "repository": {
     "type": "git",

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<p>wscat's test file</p>
+	</body>
+	<script src="js/jquery.js"></script>
+	<script>
+		console.log("abc")
+		$.ajax({
+			type:"POST",
+			url:"http://localhost:12345/abc",
+			async:true,
+			data:{
+				name:'wscat'
+			},
+			success:function(data){
+				console.log(data)
+			}
+		});
+	</script>
+</html>

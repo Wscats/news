@@ -1,26 +1,16 @@
-//font-end->ajax->back-end->database
-//		<-		<-		<-
 var http = require('http');
 var url = require('url');
 var querystring = require('querystring');
-var sqll = require('./sqll');
-//输出JSON数据，API接口
-var writeOut = function(query, response) {
-	response.write(JSON.stringify(query));
-	response.end();
-}
-//request 接受请求
-//response 相应请求
-http.createServer(function(request, response) {
+//引入cms操作数据库的模块
+var sqll = require('./sqll.js');
+function curd(request, response) {
 	request.setEncoding('utf-8');
-	var pathName = url.parse(request.url).pathname;
+	var pathname = url.parse(request.url).pathname;
 	var paramsStr = url.parse(request.url).query;
 	var param = querystring.parse(paramsStr);
 	//后端路由
-	console.log("路由：" + pathName);
+	console.log("路由：" + pathname);
 	console.log("参数：" + paramsStr);
-	//解决跨域
-	response.setHeader('Access-Control-Allow-Origin', '*');
 	response.writeHead(200, {
 		"Content-Type": "text/jsonp;charset=utf-8"
 	})
@@ -48,7 +38,7 @@ http.createServer(function(request, response) {
 				postData = postData.replace('%5D', '');
 			}
 			var query = querystring.parse(postData);
-			writeOut(query, response);
+			response.end(JSON.stringify(query));
 		});
 	} else if(request.method.toUpperCase() == 'GET') {
 		/**
@@ -56,7 +46,7 @@ http.createServer(function(request, response) {
 		 * 区别就是url.parse的arguments[1]为true：
 		 * 也能达到'querystring库'的解析效果，而且不使用querystring
 		 */
-		if(pathName == '/add') {
+		if(pathname == '/add') {
 			sqll.curd.add('news', 'title,source,text', '"' + param.title + '",' + '"' + param.source + '",' + '"' + param.text + '"', function(err) {
 				if(err) {
 
@@ -68,19 +58,19 @@ http.createServer(function(request, response) {
 					response.end(param.callback + "(" + JSON.stringify(obj) + ")");
 				}
 			});
-		/*
-		 * API:http://localhost:8899/find
-		 * params:NULL
-		 * return 新闻：title:标题,source:来源,text:内容
-		 * */
-		} else if(pathName == '/find') {
+			/*
+			 * API:http://localhost:8899/find
+			 * params:NULL
+			 * return 新闻：title:标题,source:来源,text:内容
+			 * */
+		} else if(pathname == '/find') {
 			sqll.curd.find('news', '*', function(err, rows) {
 				console.log(rows);
 				var obj = {};
 				obj.arr = rows;
 				response.end(param.callback + "(" + JSON.stringify(obj) + ")");
 			});
-		} else if(pathName == '/delete') {
+		} else if(pathname == '/delete') {
 			sqll.curd.delete('news', 'id=' + param.id, function(err) {
 				sqll.curd.find('news', '*', function(err, rows) {
 					console.log(rows);
@@ -89,14 +79,14 @@ http.createServer(function(request, response) {
 					response.end(param.callback + "(" + JSON.stringify(obj) + ")");
 				});
 			});
-		} else if(pathName == '/findByPk') {
+		} else if(pathname == '/findByPk') {
 			sqll.curd.findByPk('news', '*', 'id=' + param.id, function(err, rows) {
 				console.log(rows);
 				var obj = {};
 				obj.new = rows;
 				response.end(param.callback + "(" + JSON.stringify(obj) + ")");
 			});
-		} else if(pathName == '/update') {
+		} else if(pathname == '/update') {
 			sqll.curd.update('news', 'title="' + param.title + '"' + ', text="' + param.text + '"' + ', source="' + param.source + '"', 'id=' + param.id, function(err) {
 				if(err) {} else {
 					var obj = {
@@ -106,7 +96,7 @@ http.createServer(function(request, response) {
 					response.end(param.callback + "(" + JSON.stringify(obj) + ")");
 				}
 			});
-		} else if(pathName == '/search') {
+		} else if(pathname == '/search') {
 			sqll.curd.findByPk('news', '*', 'text=' + '"' + param.search + '"', function(err, rows) {
 				console.log(rows);
 				var obj = {};
@@ -118,5 +108,6 @@ http.createServer(function(request, response) {
 		//head put delete options etc.
 		//注意angular的post请求监听到的了类型是option，所以记得处理
 	}
-}).listen(8899);
-console.log("Start server:localhost:8899");
+}
+
+exports.curd = curd;

@@ -23,16 +23,22 @@ exports.newsApi = newsApi.newsApi;
 var turingApi = require('./turingApi.js');
 exports.turingApi = turingApi.turingApi;
 
+//引入cms的路由模块
+var newsCms = require('./webroot/cms/cms.js');
+console.log(newsCms)
+
 //用nodejs的原生模块http的createServer方法创建一个服务器
 http.createServer((request, response) => {
+	//解决跨域
+	//response.setHeader('Access-Control-Allow-Origin', '*');
 	//处理字符串，避免中文或者符号的识别问题
 	var pathname = url.parse(request.url).pathname;
 	//拿url的参数
 	var paramStr = url.parse(request.url).query;
 	//把url拿回来的参数处理成对象
 	var param = querystring.parse(paramStr)
-	//console.log("路由" + pathname);
-	//判断浏览器只输入localhost:12345的情况
+		//console.log("路由" + pathname);
+		//判断浏览器只输入localhost:12345的情况
 	if(pathname.slice(-1) === "/") {
 		pathname = pathname + 'index.html';
 	}
@@ -46,7 +52,15 @@ http.createServer((request, response) => {
 		if(exists) {
 			//读取webroot服务器文件夹的某个资源，以二进制的方式读取
 			fs.readFile(absPath, 'binary', function(err, data) {
-				if(err) throw err;
+				//如果找到对应的资源文件，提示404错误
+				if(err) {
+					console.log(err);
+					//HTTP 状态码: 404 : NOT FOUND
+					//Content Type: text/plain
+					response.writeHead(404, {
+						'Content-Type': 'text/html'
+					});
+				}
 				//获取文件的后缀格式，格式如.css .html .js
 				var ext = path.extname(pathname);
 				//处理后缀，例如把.css处理成css
@@ -83,6 +97,8 @@ http.createServer((request, response) => {
 					//response.end('<p>404</p>');
 					break;
 			}
+			//新闻CMS的路由，增删查改逻辑
+			newsCms.curd(request, response)
 		}
 	})
 }).listen(12345);

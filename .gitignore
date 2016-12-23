@@ -1,0 +1,2 @@
+# 提交时候忽略node模块文件夹
+node_modules
