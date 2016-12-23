@@ -87,7 +87,7 @@ http.createServer((request, response) => {
 					//测试链接 http://localhost:12345/turingApi?callback=JSON_CALLBACK&message=%E5%A7%9A%E6%98%8E
 					turingApi.turingApi(param, function() {}, response);
 					break;
-				default:
+				/*default:
 					//在找不到任何文件的情况重定向到index.html
 					response.writeHead(302, {
 						'Location': '/index.html'
@@ -95,7 +95,7 @@ http.createServer((request, response) => {
 					//在服务器目录下找不到文件就报404错误
 					response.end();
 					//response.end('<p>404</p>');
-					break;
+					break;*/
 			}
 			//新闻CMS的路由，增删查改逻辑
 			newsCms.curd(request, response)

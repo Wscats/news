@@ -2,7 +2,8 @@ var http = require('http');
 var url = require('url');
 var querystring = require('querystring');
 //引入cms操作数据库的模块
-var sqll = require('./sqll.js');
+var sqll = require('./sql.js');
+
 function curd(request, response) {
 	request.setEncoding('utf-8');
 	var pathname = url.parse(request.url).pathname;
@@ -29,7 +30,7 @@ function curd(request, response) {
 		 * 这个是如果数据读取完毕就会执行的监听方法
 		 */
 		request.addListener("end", function() {
-			console.log(postData);
+			//console.log(postData);
 			//处理angular的post请求的，去掉"[]"，因为replace只替换一次，所以用循环替换
 			while(postData.indexOf('params%5B') >= 0) {
 				postData = postData.replace('params%5B', '');
@@ -37,8 +38,22 @@ function curd(request, response) {
 			while(postData.indexOf('%5D') >= 0) {
 				postData = postData.replace('%5D', '');
 			}
-			var query = querystring.parse(postData);
-			response.end(JSON.stringify(query));
+			var param = querystring.parse(postData);
+			console.log(param);
+			//response.end(JSON.stringify(query));
+			if(pathname == '/add') {
+				sqll.curd.add('news', param, function(err) {
+					if(err) {
+						console.log("INSERT ERROR" + err);
+					} else {
+						var obj = {
+							status: 1,
+							info: 'success'
+						}
+						response.end(JSON.stringify(obj));
+					}
+				});
+			}
 		});
 	} else if(request.method.toUpperCase() == 'GET') {
 		/**

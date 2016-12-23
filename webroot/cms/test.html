@@ -12,10 +12,12 @@
 		console.log("abc")
 		$.ajax({
 			type:"POST",
-			url:"http://localhost:12345/abc",
+			url:"http://localhost:12345/add",
 			async:true,
 			data:{
-				name:'wscat'
+				title:'wscat',
+				source:'abc',
+				text:'cba'
 			},
 			success:function(data){
 				console.log(data)
