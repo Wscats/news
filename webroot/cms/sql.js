@@ -17,14 +17,20 @@ function curd() {
 //进行查询数据
 //select 选择所在的列 from 数据库的表 where 选择条件
 curd.prototype.findAll = function(table, col, callback) {
+		console.log('SQL：' + 'select ' + col + ' from ' + table);
 		this.connection.query('select ' + col + ' from ' + table, function(err, rows, filed) {
 			callback(err, rows);
 		})
 	}
 	//根据主键获取数据
-curd.prototype.findByPk = function(table, col, statement, callback) {
-		console.log('select ' + col + ' from ' + table + ' where ' + statement);
-		this.connection.query('select ' + col + ' from ' + table + ' where ' + statement, function(err, rows) {
+curd.prototype.findByPk = function(table, col, param, callback) {
+		var arrKey = [];
+		for(p in param) {
+			arrKey.push(p + '="' + param[p] + '"');
+		}
+		var keys = arrKey.join(" AND ");
+		console.log('SQL：' + 'select ' + col + ' from ' + table + ' where ' + keys);
+		this.connection.query('select ' + col + ' from ' + table + ' where ' + keys, function(err, rows) {
 			callback(err, rows);
 		})
 	}
@@ -45,9 +51,7 @@ curd.prototype.add = function(table, param, callback) {
 		//数组转字符串
 		var keys = arrKey.join(",");
 		var values = arrValue.join(",");
-		//console.log(keys);
-		//console.log(values)
-		//console.log('INSERT INTO ' + table + ' (' + keys + ') VALUES (' + values + ')');
+		console.log('SQL：' + 'INSERT INTO ' + table + ' (' + keys + ') VALUES (' + values + ')');
 		//进行增加数据
 		this.connection.query('INSERT INTO ' + table + ' (' + keys + ') VALUES (' + values + ')', function(err) {
 			callback(err);
@@ -55,22 +59,28 @@ curd.prototype.add = function(table, param, callback) {
 	}
 	//DELETE FROM 数据库的表  WHERE 选择条件
 curd.prototype.delete = function(table, param, callback) {
-		console.log(param);
 		var arrValue = [];
 		for(p in param) {
 			arrValue.push(p + "='" + param[p] + "'");
 		}
-		var values = arrValue.join(",");
-		console.log(values);
+		//支持多个条件删除 AND OR
+		var values = arrValue.join(" AND ");
+		console.log('SQL：' + 'DELETE FROM ' + table + ' WHERE ' + values);
 		//进行删除数据
-		/*this.connection.query('DELETE FROM ' + table + ' WHERE ' + statement, function(err) {
+		this.connection.query('DELETE FROM ' + table + ' WHERE ' + values, function(err) {
 			callback(err)
-		});*/
+		});
 	}
 	//UPDATE 数据库的表 SET 列=值,列=值 WHERE 选所在行的条件
-curd.prototype.update = function(table, value, statement, callback) {
-		//进行改数据
-		this.connection.query('UPDATE ' + table + ' SET ' + value + ' WHERE ' + statement, function(err) {
+curd.prototype.update = function(table, param, callback) {
+		var arrKey = [];
+		for(p in param) {
+			arrKey.push(p + "='" + param[p] + "'");
+		}
+		var keys = arrKey.join(",");
+		console.log('SQL：' + 'UPDATE ' + table + ' SET ' + keys + ' WHERE id =' + param.id)
+			//进行改数据 根据主键来修改对应的数据
+		this.connection.query('UPDATE ' + table + ' SET ' + keys + ' WHERE id =' + param.id, function(err) {
 			callback(err);
 		})
 	}

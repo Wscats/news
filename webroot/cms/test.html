@@ -1,55 +1,86 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
 	</head>
+
 	<body>
 		<p>wscat's test file</p>
 	</body>
 	<script src="js/jquery.js"></script>
 	<script>
-		console.log("abc")
+		/*console.log("abc")
+								$.ajax({
+									type:"POST",
+									url:"http://localhost:12345/news/add",
+									async:true,
+									data:{
+										title:'wscat',
+										source:'abc',
+										text:'cba'
+									},
+									success:function(data){
+										console.log(data)
+									}
+								});
+								
+								$.ajax({
+									type:"POST",
+									url:"http://localhost:12345/news/findAll",
+									async:true,
+									data:{
+										title:'wscat',
+										source:'abc',
+										text:'cba'
+									},
+									success:function(data){
+										console.log(data)
+									}
+								});
+								
+								
+								$.ajax({
+									type:"POST",
+									url:"http://localhost:12345/news/delete",
+									async:true,
+									data:{
+										id:87,
+										//title:'wscat',
+									},
+									success:function(data){
+										console.log(data)
+									}
+								});
+
+						$.ajax({
+							type: "POST",
+							url: "http://localhost:12345/news/findByPk",
+							async: true,
+							data: {
+								id: 95,
+								text: 'cba',
+								//title:'wscat',
+							},
+							success: function(data) {
+								console.log(data)
+							}
+						});*/
+
 		$.ajax({
-			type:"POST",
-			url:"http://localhost:12345/news/add",
-			async:true,
-			data:{
-				title:'wscat',
-				source:'abc',
-				text:'cba'
+			type: "POST",
+			url: "http://localhost:12345/news/update",
+			async: true,
+			data: {
+				id: 95,
+				text: 'ABC'
+				//title:'wscat',
 			},
-			success:function(data){
-				console.log(data)
-			}
-		});
-		
-		$.ajax({
-			type:"POST",
-			url:"http://localhost:12345/news/findAll",
-			async:true,
-			data:{
-				title:'wscat',
-				source:'abc',
-				text:'cba'
-			},
-			success:function(data){
-				console.log(data)
-			}
-		});
-		
-		
-		$.ajax({
-			type:"POST",
-			url:"http://localhost:12345/news/delete",
-			async:true,
-			data:{
-				id:70,
-				name:'1',
-			},
-			success:function(data){
+			success: function(data) {
 				console.log(data)
 			}
 		});
 	</script>
+
 </html>

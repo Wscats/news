@@ -30,7 +30,6 @@ function curd(request, response) {
 		 * 这个是如果数据读取完毕就会执行的监听方法
 		 */
 		request.addListener("end", function() {
-			//console.log(postData);
 			//处理angular的post请求的，去掉"[]"，因为replace只替换一次，所以用循环替换
 			while(postData.indexOf('params%5B') >= 0) {
 				postData = postData.replace('params%5B', '');
@@ -41,7 +40,6 @@ function curd(request, response) {
 			var param = querystring.parse(postData);
 			console.log("请求参数如下：");
 			console.log(param);
-			//response.end(JSON.stringify(query));
 			if(pathname == '/news/add') {
 				sqll.curd.add('news', param, function(err) {
 					if(err) {
@@ -56,86 +54,38 @@ function curd(request, response) {
 				});
 			} else if(pathname == '/news/findAll') {
 				sqll.curd.findAll('news', '*', function(err, rows) {
-					//console.log(rows);
 					var obj = {};
 					obj.arr = rows;
 					response.end(JSON.stringify(obj));
 				});
 			} else if(pathname == '/news/delete') {
 				sqll.curd.delete('news', param, function(err) {
-					/*sqll.curd.find('news', '*', function(err, rows) {
-						console.log(rows);
+					sqll.curd.findAll('news', '*', function(err, rows) {
 						var obj = {};
 						obj.arr = rows;
-						response.end(param.callback + "(" + JSON.stringify(obj) + ")");
-					});*/
+						response.end(JSON.stringify(obj));
+					});
+				});
+			} else if(pathname == '/news/findByPk') {
+				sqll.curd.findByPk('news', '*', param, function(err, rows) {
+					var obj = {};
+					obj.new = rows;
+					response.end(JSON.stringify(obj));
+				});
+			} else if(pathname == '/news/update') {
+				sqll.curd.update('news', param, function(err) {
+					if(err) {} else {
+						var obj = {
+							status: 1,
+							info: 'success'
+						}
+						response.end(JSON.stringify(obj));
+					}
 				});
 			}
 		});
 	} else if(request.method.toUpperCase() == 'GET') {
-		/**
-		 * 也可使用var query=querystring.parse(url.parse(req.url).query);
-		 * 区别就是url.parse的arguments[1]为true：
-		 * 也能达到'querystring库'的解析效果，而且不使用querystring
-		 */
-		if(pathname == '/add') {
-			sqll.curd.add('news', 'title,source,text', '"' + param.title + '",' + '"' + param.source + '",' + '"' + param.text + '"', function(err) {
-				if(err) {
 
-				} else {
-					var obj = {
-						status: 1,
-						info: 'success'
-					}
-					response.end(param.callback + "(" + JSON.stringify(obj) + ")");
-				}
-			});
-			/*
-			 * API:http://localhost:8899/find
-			 * params:NULL
-			 * return 新闻：title:标题,source:来源,text:内容
-			 * */
-		} else if(pathname == '/find') {
-			sqll.curd.find('news', '*', function(err, rows) {
-				console.log(rows);
-				var obj = {};
-				obj.arr = rows;
-				response.end(param.callback + "(" + JSON.stringify(obj) + ")");
-			});
-		} else if(pathname == '/delete') {
-			sqll.curd.delete('news', 'id=' + param.id, function(err) {
-				sqll.curd.find('news', '*', function(err, rows) {
-					console.log(rows);
-					var obj = {};
-					obj.arr = rows;
-					response.end(param.callback + "(" + JSON.stringify(obj) + ")");
-				});
-			});
-		} else if(pathname == '/findByPk') {
-			sqll.curd.findByPk('news', '*', 'id=' + param.id, function(err, rows) {
-				console.log(rows);
-				var obj = {};
-				obj.new = rows;
-				response.end(param.callback + "(" + JSON.stringify(obj) + ")");
-			});
-		} else if(pathname == '/update') {
-			sqll.curd.update('news', 'title="' + param.title + '"' + ', text="' + param.text + '"' + ', source="' + param.source + '"', 'id=' + param.id, function(err) {
-				if(err) {} else {
-					var obj = {
-						status: 1,
-						info: 'success'
-					}
-					response.end(param.callback + "(" + JSON.stringify(obj) + ")");
-				}
-			});
-		} else if(pathname == '/search') {
-			sqll.curd.findByPk('news', '*', 'text=' + '"' + param.search + '"', function(err, rows) {
-				console.log(rows);
-				var obj = {};
-				obj.new = rows;
-				response.end(param.callback + "(" + JSON.stringify(obj) + ")");
-			});
-		}
 	} else {
 		//head put delete options etc.
 		//注意angular的post请求监听到的了类型是option，所以记得处理
