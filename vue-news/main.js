@@ -48,27 +48,23 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
 	state: {
-		userInfo: {},
-		searchName:''
+		searchName: 'hello vuex, I am wscats',
 	},
-	getters: {
-		getUserInfo(state) {
-			return state.userInfo;
-		}
-	},
+	//接受组件commit传过来的数据并保存到state中,this.$store.commit('changeSearchName', this.searchName);
 	mutations: {
-		setUserInfo(state, userInfo) {
-			state.userInfo = userInfo;
-		}
+		changeSearchName: function(state, a) {
+			state.searchName = a;
+		},
 	},
-	actions: {
-		setUserInfo({
-			commit
-		}, user) {
-			commit('setUserInfo', user);
+	//可以从组件调用此方法获取值，一般配合计算属性动态获取值
+	//(1)return this.$store.state.searchName
+	//(2)return this.$store.getters.getSearchName
+	getters: {
+		getSearchName: function(state) {
+			return state.searchName;
 		}
 	}
-});
+})
 
 /*new Vue({
 	el: '#app',

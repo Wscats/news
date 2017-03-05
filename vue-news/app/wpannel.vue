@@ -1,9 +1,12 @@
 <template>
 	<div class="weui-panel weui-panel_access">
-		<div class="weui-panel__hd">新闻列表</div>
+		<div class="weui-panel__hd">
+			新闻列表
+			<span>{{searchName}}</span>
+		</div>
 		<div class="weui-panel__bd">
 			<!--注意不要用new，new为js的关键词-->
-			<a v-for="n in news" :href="'#/detail/'+n.id" class="weui-media-box weui-media-box_appmsg">
+			<a :name="searchName" v-for="n in news" :href="'#/detail/'+n.id" class="weui-media-box weui-media-box_appmsg">
 				<div class="weui-media-box__hd">
 					<img class="weui-media-box__thumb" :src="n.image" alt="">
 				</div>
@@ -29,6 +32,12 @@
 				}
 			},
 			props: ['channel'],
+			computed: {
+				searchName: function() {
+					return this.$store.state.searchName
+					//return this.$store.getters.getSearchName
+				}
+			},
 			methods: {
 				getNews(callback) {
 					var self = this;
