@@ -19,6 +19,18 @@ module.exports = {
 		}, {
 			test: /\.vue$/,
 			loader: 'vue-loader'
+		}, {
+			test: /\.eot/,
+			loader: 'file-loader?prefix=font/'
+		}, {
+			test: /\.woff/,
+			loader: 'file-loader?prefix=font/&limit=10000&mimetype=application/font-woff'
+		}, {
+			test: /\.ttf/,
+			loader: 'file-loader?prefix=font/'
+		}, {
+			test: /\.svg/,
+			loader: 'file-loader?prefix=font/'
 		}]
 	},
 	//ES6转ES5
@@ -33,7 +45,10 @@ module.exports = {
 	},
 	resolve: {
 		alias: {
-			vue: 'vue/dist/vue.js'
+			vue: 'vue/dist/vue.js',
+			//jquery: 'jquery/dist/jquery.js',
+			//$: 'jquery/dist/jquery.js',
+			jquery: "jquery/src/jquery"//全局配置jquery
 		}
 	}
 }

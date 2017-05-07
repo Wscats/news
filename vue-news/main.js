@@ -8,14 +8,19 @@ import Vuex from 'vuex';
 //var Vuex = require('vuex')
 import $ from 'jquery'
 //var $ = require('jquery')
-window.$ = $
-window.jQuery = $
+//window.$ = $
+//window.jQuery = $
 
 var index = require('./app/index.vue')
 var wdetail = require('./app/wdetail.vue')
 var recommend = require('./app/channel/recommend.vue')
 var hot = require('./app/channel/hot.vue')
 var entertainment = require('./app/channel/entertainment.vue')
+
+//mui demo
+var muiTest = require('./app/mui/test.vue')
+//require("./mui/css/mui.css")
+//window.mui = require("./mui/js/mui.js")
 
 Vue.use(VueRouter)
 const routes = [{
@@ -35,6 +40,9 @@ const routes = [{
 	path: '/detail/:id',
 	component: wdetail
 }, {
+	path: '/mui',
+	component: muiTest
+}, {
 	//默认重定向 redirect
 	path: '/',
 	redirect: '/index/recommend/6'
@@ -49,7 +57,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
 	state: {
 		userInfo: {},
-		searchName:''
+		searchName: ''
 	},
 	getters: {
 		getUserInfo(state) {
