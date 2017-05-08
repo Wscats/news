@@ -2,7 +2,7 @@ import Vue from 'vue'
 //var Vue = require('vue')
 import VueRouter from 'vue-router'
 //var VueRouter = require('vue-router');
-import 'weui'
+//import 'weui'
 //require('weui')
 import Vuex from 'vuex';
 //var Vuex = require('vuex')
@@ -19,8 +19,9 @@ var entertainment = require('./app/channel/entertainment.vue')
 
 //mui demo
 var muiTest = require('./app/mui/test.vue')
-//require("./mui/css/mui.css")
-//window.mui = require("./mui/js/mui.js")
+var muiTest2 = require('./app/mui/test2.vue')
+require("./mui/css/mui.css")
+window.mui = require("./mui/js/mui.js")
 
 Vue.use(VueRouter)
 const routes = [{
@@ -42,6 +43,9 @@ const routes = [{
 }, {
 	path: '/mui',
 	component: muiTest
+},  {
+	path: '/mui2',
+	component: muiTest2
 }, {
 	//默认重定向 redirect
 	path: '/',

@@ -1,9 +1,23 @@
 <template>
 	<div>
+		<div class="mui-slider">
+			<div class="mui-slider-group mui-slider-loop">
+				<!--支持循环，需要重复图片节点-->
+				<div class="mui-slider-item mui-slider-item-duplicate">
+					<a href="#"><img src="images/wscats.jpg" /></a>
+				</div>
+				<div class="mui-slider-item">
+					<a href="#"><img src="images/wscats.jpg" /></a>
+				</div>
+				<!--支持循环，需要重复图片节点-->
+				<div class="mui-slider-item mui-slider-item-duplicate">
+					<a href="#"><img src="images/wscats.jpg" /></a>
+				</div>
+			</div>
+		</div>
 		<!--下拉刷新容器-->
-		<div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+		<div id="refreshContainer" class="mui-content mui-scroll-wrapper" style="top: 180px;">
 			<div class="mui-scroll">
-				<!--数据列表-->
 				<ul class="mui-table-view mui-table-view-chevron">
 
 				</ul>
@@ -20,6 +34,11 @@
 		methods: {},
 		components: {},
 		mounted() {
+			var gallery = mui('.mui-slider');
+			gallery.slider({
+				interval: 5000 //自动轮播周期，若为0则不自动播放，默认为0；
+			});
+
 			console.log($)
 			mui.init({
 				pullRefresh: {
@@ -30,10 +49,10 @@
 						contentdown: "下拉可以刷新", //可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
 						contentover: "释放立即刷新", //可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
 						contentrefresh: "正在刷新...", //可选，正在刷新状态时，下拉刷新控件上显示的标题内容
-						callback: function(){
-							mui('#refreshContainer').pullRefresh().endPulldownToRefresh();
-							console.log("hello")
-						} //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+						callback: function() {
+								mui('#refreshContainer').pullRefresh().endPulldownToRefresh();
+								console.log("hello")
+							} //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
 					}
 				}
 			});
