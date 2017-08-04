@@ -4,7 +4,7 @@
 <h1>Angular News</h1>
 
 <p>
-  <strong>Use Weui and Angular prepared by the news client</strong>,
+  <strong>Use Weui and Angular prepared by the news client 基于Angular.js,Weui和Node.js重写的新闻客户端 </strong>,
   <a href="https://wscats.github.io/Angular-news/news/indexTest.html#/index/list">Live Demo</a>
 </p>
 
