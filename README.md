@@ -12,7 +12,6 @@
 
 <p>
   <sub>Made with ❤︎ by
-    <a href="https://github.com/windiest">Winds</a> and
     <a href="https://github.com/Wscats">Wscats</a>
   </sub>
 </p>
