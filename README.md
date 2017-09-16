@@ -1,5 +1,5 @@
 <div align="center">
-<p><img width="150" src="https://wscats.github.io/Angular-news/news/image/windiest.png"></p>
+<p><img width="150" src="https://avatars2.githubusercontent.com/u/17243165"></p>
 
 <h1>Angular News</h1>
 
