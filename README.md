@@ -66,4 +66,4 @@ http://localhost:12345/news/index.html
 ## License
 
 [MIT](http://opensource.org/licenses/MIT)
-Copyright (c) 2016 ❤︎[Wscats](https://github.com/Wscats)
+Copyright (c) 2019 ❤︎[Wscats](https://github.com/Wscats)
