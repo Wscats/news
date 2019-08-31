@@ -20,7 +20,7 @@ gulp.task('minify', function() {
 		//重名名
 		.pipe(rename({
 			//修改后缀
-			suffix: '.windiest',
+			suffix: '.wscats',
 		}))
 		//导出js
 		.pipe(gulp.dest('dist/js'));
@@ -32,7 +32,7 @@ gulp.task('minify', function() {
 		//重名名
 		.pipe(rename({
 			//修改后缀
-			suffix: '.windiest',
+			suffix: '.wscats',
 		}))
 		//压缩js
 		.pipe(uglify())
@@ -46,7 +46,7 @@ gulp.task('minifycss', function() {
 		//重名名
 		.pipe(rename({
 			//修改后缀
-			suffix: '.windiest',
+			suffix: '.wscats',
 		}))
 		.pipe(minifycss())
 		.pipe(gulp.dest('dist/css'))
