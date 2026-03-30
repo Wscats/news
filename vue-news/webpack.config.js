@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
 	devtool: 'eval-source-map', //用于调试代码
 	entry: __dirname + "/main.js", //入口文件

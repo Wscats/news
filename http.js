@@ -1,48 +1,50 @@
+'use strict';
+
 /**
  * @author wsscat
  */
 //require属于AMD加载方案 seajs属于CMD加载方案
 //创建服务器模块
-var http = require('http');
+const http = require('http');
 //读取文件的模块
-var fs = require('fs');
+const fs = require('fs');
 //处理url的模块
-var url = require('url');
+const url = require('url');
 //解析url的信息
-var path = require('path');
+const path = require('path');
 //mime格式content-type格式
-var mime = require('./mime.js')
+const mime = require('./mime.js')
 	//处理字符串的模块
-var querystring = require('querystring')
+const querystring = require('querystring')
 
 //获取新闻信息的函数拿回来
-var newsApi = require('./newsApi.js');
+let newsApi = require('./newsApi.js');
 exports.newsApi = newsApi.newsApi;
 
 //获取图灵机器人信息的函数拿回来
-var turingApi = require('./turingApi.js');
+let turingApi = require('./turingApi.js');
 exports.turingApi = turingApi.turingApi;
 
 //引入cms的路由模块
-var newsCms = require('./webroot/cms/cms.js');
+const newsCms = require('./webroot/cms/cms.js');
 
 //用nodejs的原生模块http的createServer方法创建一个服务器
 http.createServer((request, response) => {
 	//解决跨域
 	//response.setHeader('Access-Control-Allow-Origin', '*');
 	//处理字符串，避免中文或者符号的识别问题
-	var pathname = url.parse(request.url).pathname;
+	let pathname = url.parse(request.url).pathname;
 	//拿url的参数
-	var paramStr = url.parse(request.url).query;
+	const paramStr = url.parse(request.url).query;
 	//把url拿回来的参数处理成对象
-	var param = querystring.parse(paramStr)
+	const param = querystring.parse(paramStr)
 		//console.log("路由" + pathname);
 		//判断浏览器只输入localhost:12345的情况
 	if(pathname.slice(-1) === "/") {
 		pathname = pathname + 'index.html';
 	}
 	//拼接绝对路径
-	var absPath = __dirname + '/webroot' + pathname
+	const absPath = __dirname + '/webroot' + pathname
 		//注意/webroot/index.html资源路径是错误的
 		//这个才是正确的./webroot/index.html
 		//判断是否存在我们要请求的文件
@@ -61,10 +63,10 @@ http.createServer((request, response) => {
 					});
 				}
 				//获取文件的后缀格式，格式如.css .html .js
-				var ext = path.extname(pathname);
+				let ext = path.extname(pathname);
 				//处理后缀，例如把.css处理成css
 				ext = ext.slice(1);
-				var contentType = mime.types[ext];
+				const contentType = mime.types[ext];
 				//写文件的请求头
 				response.writeHead(200, {
 						'Content-Type': contentType

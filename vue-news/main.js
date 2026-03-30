@@ -1,21 +1,21 @@
 import Vue from 'vue'
-//var Vue = require('vue')
+//const Vue = require('vue')
 import VueRouter from 'vue-router'
-//var VueRouter = require('vue-router');
+//const VueRouter = require('vue-router');
 import 'weui'
 //require('weui')
 import Vuex from 'vuex';
-//var Vuex = require('vuex')
+//const Vuex = require('vuex')
 import $ from 'jquery'
 //var $ = require('jquery')
 window.$ = $
 window.jQuery = $
 
-var index = require('./app/index.vue')
-var wdetail = require('./app/wdetail.vue')
-var recommend = require('./app/channel/recommend.vue')
-var hot = require('./app/channel/hot.vue')
-var entertainment = require('./app/channel/entertainment.vue')
+const index = require('./app/index.vue')
+const wdetail = require('./app/wdetail.vue')
+const recommend = require('./app/channel/recommend.vue')
+const hot = require('./app/channel/hot.vue')
+const entertainment = require('./app/channel/entertainment.vue')
 
 Vue.use(VueRouter)
 const routes = [{

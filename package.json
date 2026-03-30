@@ -10,7 +10,10 @@
     "http": "node http",
     "dev": "npm run cms && npm run http",
     "lint": "eslint src --ext .ts,.tsx,.js,.jsx --fix",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "lint:check": "eslint . --ext .ts,.tsx,.js,.jsx",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "repository": {
     "type": "git",
@@ -70,5 +73,6 @@
   "readme": "ERROR: No README data found!",
   "engines": {
     "node": ">=18.0.0"
-  }
+  },
+  "homepage": "https://github.com/wscats/news#readme"
 }

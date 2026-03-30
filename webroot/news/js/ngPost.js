@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('ng.post', [], function($httpProvider) {
 	// Use x-www-form-urlencoded Content-Type
 	$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
@@ -7,8 +9,8 @@ angular.module('ng.post', [], function($httpProvider) {
 	 * @param {Object} obj
 	 * @return {String}
 	 */
-	var param = function(obj) {
-		var query = '',
+	const param = function(obj) {
+		const query = '',
 			name, value, fullSubName, subName, subValue, innerObj, i;
 
 		for(name in obj) {

@@ -1,17 +1,19 @@
+'use strict';
+
 //引入gulp模块
-var gulp = require('gulp');
+const gulp = require('gulp');
 //压缩js代码的模块
-var uglify = require('gulp-uglify');
+const uglify = require('gulp-uglify');
 //重名名的模块
-var rename = require('gulp-rename');
+const rename = require('gulp-rename');
 //合并代码
-var concat = require('gulp-concat');
+const concat = require('gulp-concat');
 //压缩css模块
-var minifycss = require('gulp-minify-css');
+const minifycss = require('gulp-minify-css');
 //压缩html模块
-var minifyhtml = require('gulp-minify-html');
+const minifyhtml = require('gulp-minify-html');
 //压缩图片的模块
-var imagemin = require('gulp-imagemin')
+const imagemin = require('gulp-imagemin')
 	//定义一个压缩js的任务
 gulp.task('minify', function() {
 	gulp.src(['webroot/news/js/angular.js', 'webroot/news/js/ngPost.js', 'webroot/news/js/angular-ui-router.js', 'webroot/news/js/swiper.js'])

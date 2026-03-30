@@ -1,4 +1,6 @@
-var mysql = require('mysql');
+'use strict';
+
+const mysql = require('mysql');
 
 function curd() {
 	this.connection = mysql.createConnection({
@@ -24,11 +26,11 @@ curd.prototype.findAll = function(table, col, callback) {
 	}
 	//根据主键获取数据
 curd.prototype.findByPk = function(table, col, param, callback) {
-		var arrKey = [];
+		let arrKey = [];
 		for(p in param) {
 			arrKey.push(p + '="' + param[p] + '"');
 		}
-		var keys = arrKey.join(" AND ");
+		let keys = arrKey.join(" AND ");
 		console.log('SQL：' + 'select ' + col + ' from ' + table + ' where ' + keys);
 		this.connection.query('select ' + col + ' from ' + table + ' where ' + keys, function(err, rows) {
 			callback(err, rows);
@@ -37,9 +39,9 @@ curd.prototype.findByPk = function(table, col, param, callback) {
 	//INSERT INTO 数据库的表 (列名, 列名, 列名) VALUES (值, 值, 值);
 curd.prototype.add = function(table, param, callback) {
 		//需要存进数据库的列名
-		var arrKey = [];
+		let arrKey = [];
 		//需要存进数据库的值
-		var arrValue = [];
+		let arrValue = [];
 		//遍历对象
 		for(p in param) {
 			arrKey.push(p);
@@ -49,8 +51,8 @@ curd.prototype.add = function(table, param, callback) {
 			arrValue.push("'" + param[p] + "'");
 		}
 		//数组转字符串
-		var keys = arrKey.join(",");
-		var values = arrValue.join(",");
+		let keys = arrKey.join(",");
+		let values = arrValue.join(",");
 		console.log('SQL：' + 'INSERT INTO ' + table + ' (' + keys + ') VALUES (' + values + ')');
 		//进行增加数据
 		this.connection.query('INSERT INTO ' + table + ' (' + keys + ') VALUES (' + values + ')', function(err) {
@@ -59,12 +61,12 @@ curd.prototype.add = function(table, param, callback) {
 	}
 	//DELETE FROM 数据库的表  WHERE 选择条件
 curd.prototype.delete = function(table, param, callback) {
-		var arrValue = [];
+		const arrValue = [];
 		for(p in param) {
 			arrValue.push(p + "='" + param[p] + "'");
 		}
 		//支持多个条件删除 AND OR
-		var values = arrValue.join(" AND ");
+		const values = arrValue.join(" AND ");
 		console.log('SQL：' + 'DELETE FROM ' + table + ' WHERE ' + values);
 		//进行删除数据
 		this.connection.query('DELETE FROM ' + table + ' WHERE ' + values, function(err) {
@@ -73,11 +75,11 @@ curd.prototype.delete = function(table, param, callback) {
 	}
 	//UPDATE 数据库的表 SET 列=值,列=值 WHERE 选所在行的条件
 curd.prototype.update = function(table, param, callback) {
-		var arrKey = [];
+		const arrKey = [];
 		for(p in param) {
 			arrKey.push(p + "='" + param[p] + "'");
 		}
-		var keys = arrKey.join(",");
+		const keys = arrKey.join(",");
 		console.log('SQL：' + 'UPDATE ' + table + ' SET ' + keys + ' WHERE id =' + param.id)
 			//进行改数据 根据主键来修改对应的数据
 		this.connection.query('UPDATE ' + table + ' SET ' + keys + ' WHERE id =' + param.id, function(err) {

@@ -1,8 +1,10 @@
+'use strict';
+
 /**
  * @author wsscat
  */
 //引入http的nodejs原生模块
-var http = require('http');
+const http = require('http');
 //param来自于http.js从url上获取的参数 格式是一个对象
 //response来自于http.js的http.createServer的response对象
 function newsApi(param,callback,response) {
@@ -23,7 +25,7 @@ function newsApi(param,callback,response) {
 		//设置请求结果解析为utf-8编码
 		request.setEncoding('utf-8');
 		//刚开始还没拿数据的时候是为空
-		var str = '';
+		const str = '';
 		//遍历监听数据源，并存放到str里面
 		request.on('data', function(data) {
 			str += data;

@@ -1,4 +1,6 @@
-var app = angular.module('newsApp', ['ui.router', 'ng.post', 'news.controller', 'news.service', 'news.directive']);
+'use strict';
+
+const app = angular.module('newsApp', ['ui.router', 'ng.post', 'news.controller', 'news.service', 'news.directive']);
 //配置路由，
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 	$stateProvider.state('index', {
@@ -47,5 +49,5 @@ app.value('apiUrl','http://localhost:12345/newsApi');
 //设置api请求的方法，发布时候用jsonp，get只是请求用来请求测试的json文件～
 app.value('apiMethod','get');
 //测试数据
-var news = json;
+const news = json;
 console.log(news);

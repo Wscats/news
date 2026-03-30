@@ -1,4 +1,6 @@
-var mysql = require('mysql');
+'use strict';
+
+const mysql = require('mysql');
 
 function curd() {
 	this.connection = mysql.createConnection({

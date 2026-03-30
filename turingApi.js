@@ -1,11 +1,13 @@
+'use strict';
+
 /**
  * @author wsscat
  */
-var http = require('http');
-var querystring = require('querystring');
+const http = require('http');
+const querystring = require('querystring');
 function turingApi(param, callback, response) {
 	console.log(param)
-	var data = {
+	const data = {
 		//图灵机器人需要的API KEY
 		key: 'c75ba576f50ddaa5fd2a87615d144ecf',
 		//向图灵机器人发送的问题
@@ -25,7 +27,7 @@ function turingApi(param, callback, response) {
 		//console.log('HEADERS: ' + JSON.stringify(resquest.headers));
 		resquest.setEncoding('utf8');
 		//这里用str来不间断监听数据
-		var str = '';
+		const str = '';
 		resquest.on('data', function(data) {
 			console.log('相应的内容为: ' + data);
 			str += data;

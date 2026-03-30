@@ -1,11 +1,13 @@
+'use strict';
+
 ;
 //控制器
 (function() {
-	var app = angular.module('news.controller', []);
+	const app = angular.module('news.controller', []);
 	app.controller('indexCtrl', ['$scope', '$rootScope', '$http', 'cookie', '$window',
 		function($scope, $rootScope, $http, cookie, $window) {
-			var token = cookie.getCookie('token');
-			var username = cookie.getCookie('username')
+			let token = cookie.getCookie('token');
+			let username = cookie.getCookie('username')
 			/*$http.post('http://localhost:81/angular/news/index.php/login_api/auto_login', {
 				params: {
 					token: token,
@@ -58,7 +60,7 @@
 		$scope.news = [];
 		//轮播图的三张图片
 		$scope.swiperImg = [];
-		var load = function() {
+		let load = function() {
 				$http.jsonp(apiUrl, {
 					params: {
 						page: $scope.page,
@@ -122,7 +124,7 @@
 			//轮播图的三张图片
 			$scope.swiperImg = [];
 			$scope.news = [];
-			var load = function() {
+			let load = function() {
 					$http.jsonp(apiUrl, {
 						params: {
 							page: $scope.page,
@@ -185,7 +187,7 @@
 			//轮播图的三张图片
 			$scope.swiperImg = [];
 			$scope.news = [];
-			var load = function() {
+			const load = function() {
 					$http.jsonp(apiUrl, {
 						params: {
 							page: $scope.page,
@@ -284,10 +286,10 @@
 		$scope.page1 = true
 			$scope.page2 = false
 			$scope.show = function(page) {
-				if(page == 1) {
+				if(page === 1) {
 					$scope.page1 = true;
 					$scope.page2 = false;
-				} else if(page == 2) {
+				} else if(page === 2) {
 					$scope.page2 = true;
 					$scope.page1 = false
 				}
@@ -330,8 +332,8 @@
 		}
 	}]);
 	app.controller('settingCtrl', ['$scope', '$http', 'cookie', function($scope, $http, cookie) {
-		var token = cookie.getCookie('token');
-		var username = cookie.getCookie('username')
+		const token = cookie.getCookie('token');
+		const username = cookie.getCookie('username')
 		$http.post('http://localhost:81/angular/news/index.php/login_api/auto_login', {
 			params: {
 				token: token,

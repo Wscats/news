@@ -18,10 +18,10 @@
     /*===========================
     Swiper
     ===========================*/
-    var Swiper = function (container, params) {
+    let Swiper = function (container, params) {
         if (!(this instanceof Swiper)) return new Swiper(container, params);
 
-        var defaults = {
+        const defaults = {
             direction: 'horizontal',
             touchEventsTarget: 'container',
             initialSlide: 0,
@@ -245,10 +245,10 @@
             */
         
         };
-        var initialVirtualTranslate = params && params.virtualTranslate;
+        const initialVirtualTranslate = params && params.virtualTranslate;
         
         params = params || {};
-        var originalParams = {};
+        let originalParams = {};
         for (var param in params) {
             if (typeof params[param] === 'object' && params[param] !== null && !(params[param].nodeType || params[param] === window || params[param] === document || (typeof Dom7 !== 'undefined' && params[param] instanceof Dom7) || (typeof jQuery !== 'undefined' && params[param] instanceof jQuery))) {
                 originalParams[param] = {};
@@ -274,7 +274,7 @@
         }
         
         // Swiper
-        var s = this;
+        let s = this;
         
         // Params
         s.params = params;
@@ -307,8 +307,8 @@
         s.getActiveBreakpoint = function () {
             //Get breakpoint for window width
             if (!s.params.breakpoints) return false;
-            var breakpoint = false;
-            var points = [], point;
+            let breakpoint = false;
+            const points = [], point;
             for ( point in s.params.breakpoints ) {
                 if (s.params.breakpoints.hasOwnProperty(point)) {
                     points.push(point);
@@ -317,7 +317,7 @@
             points.sort(function (a, b) {
                 return parseInt(a, 10) > parseInt(b, 10);
             });
-            for (var i = 0; i < points.length; i++) {
+            for (let i = 0; i < points.length; i++) {
                 point = points[i];
                 if (point >= window.innerWidth && !breakpoint) {
                     breakpoint = point;
@@ -327,10 +327,10 @@
         };
         s.setBreakpoint = function () {
             //Set breakpoint for window width and update parameters
-            var breakpoint = s.getActiveBreakpoint();
+            const breakpoint = s.getActiveBreakpoint();
             if (breakpoint && s.currentBreakpoint !== breakpoint) {
-                var breakPointsParams = breakpoint in s.params.breakpoints ? s.params.breakpoints[breakpoint] : s.originalParams;
-                var needsReLoop = s.params.loop && (breakPointsParams.slidesPerView !== s.params.slidesPerView);
+                const breakPointsParams = breakpoint in s.params.breakpoints ? s.params.breakpoints[breakpoint] : s.originalParams;
+                const needsReLoop = s.params.loop && (breakPointsParams.slidesPerView !== s.params.slidesPerView);
                 for ( var param in breakPointsParams ) {
                     s.params[param] = breakPointsParams[param];
                 }
@@ -351,9 +351,9 @@
         s.container = $(container);
         if (s.container.length === 0) return;
         if (s.container.length > 1) {
-            var swipers = [];
+            const swipers = [];
             s.container.each(function () {
-                var container = this;
+                const container = this;
                 swipers.push(new Swiper(this, params));
             });
             return swipers;
@@ -596,7 +596,7 @@
                     s.emit('onImagesReady', s);
                 }
             }
-            for (var i = 0; i < s.imagesToLoad.length; i++) {
+            for (let i = 0; i < s.imagesToLoad.length; i++) {
                 s.loadImage(s.imagesToLoad[i], (s.imagesToLoad[i].currentSrc || s.imagesToLoad[i].getAttribute('src')), (s.imagesToLoad[i].srcset || s.imagesToLoad[i].getAttribute('srcset')), s.imagesToLoad[i].sizes || s.imagesToLoad[i].getAttribute('sizes'), true, _onReady);
             }
         };
@@ -608,8 +608,8 @@
         s.autoplaying = false;
         s.autoplayPaused = false;
         function autoplay() {
-            var autoplayDelay = s.params.autoplay;
-            var activeSlide = s.slides.eq(s.activeIndex);
+            let autoplayDelay = s.params.autoplay;
+            let activeSlide = s.slides.eq(s.activeIndex);
             if (activeSlide.attr('data-swiper-autoplay')) {
                 autoplayDelay = activeSlide.attr('data-swiper-autoplay') || s.params.autoplay;
             }
@@ -685,13 +685,13 @@
           Slider/slides sizes
           ===========================*/
         s.updateAutoHeight = function () {
-            var activeSlides = [];
-            var newHeight = 0;
+            const activeSlides = [];
+            let newHeight = 0;
         
             // Find slides currently in view
             if(s.params.slidesPerView !== 'auto' && s.params.slidesPerView > 1) {
                 for (i = 0; i < Math.ceil(s.params.slidesPerView); i++) {
-                    var index = s.activeIndex + i;
+                    let index = s.activeIndex + i;
                     if(index > s.slides.length) break;
                     activeSlides.push(s.slides.eq(index)[0]);
                 }
@@ -702,7 +702,7 @@
             // Find new height from heighest slide in view
             for (i = 0; i < activeSlides.length; i++) {
                 if (typeof activeSlides[i] !== 'undefined') {
-                    var height = activeSlides[i].offsetHeight;
+                    let height = activeSlides[i].offsetHeight;
                     newHeight = height > newHeight ? height : newHeight;
                 }
             }
@@ -744,7 +744,7 @@
             s.slidesGrid = [];
             s.slidesSizesGrid = [];
         
-            var spaceBetween = s.params.spaceBetween,
+            let spaceBetween = s.params.spaceBetween,
                 slidePosition = -s.params.slidesOffsetBefore,
                 i,
                 prevSlideSize = 0,
@@ -774,12 +774,12 @@
         
             // Calc slides
             var slideSize;
-            var slidesPerColumn = s.params.slidesPerColumn;
-            var slidesPerRow = slidesNumberEvenToRows / slidesPerColumn;
-            var numFullColumns = slidesPerRow - (s.params.slidesPerColumn * slidesPerRow - s.slides.length);
+            const slidesPerColumn = s.params.slidesPerColumn;
+            const slidesPerRow = slidesNumberEvenToRows / slidesPerColumn;
+            const numFullColumns = slidesPerRow - (s.params.slidesPerColumn * slidesPerRow - s.slides.length);
             for (i = 0; i < s.slides.length; i++) {
                 slideSize = 0;
-                var slide = s.slides.eq(i);
+                let slide = s.slides.eq(i);
                 if (s.params.slidesPerColumn > 1) {
                     // Set slides order
                     var newSlideOrderIndex;
@@ -908,7 +908,7 @@
             }
         };
         s.updateSlidesOffset = function () {
-            for (var i = 0; i < s.slides.length; i++) {
+            for (let i = 0; i < s.slides.length; i++) {
                 s.slides[i].swiperSlideOffset = s.isHorizontal() ? s.slides[i].offsetLeft : s.slides[i].offsetTop;
             }
         };
@@ -923,18 +923,18 @@
             if (s.slides.length === 0) return;
             if (typeof s.slides[0].swiperSlideOffset === 'undefined') s.updateSlidesOffset();
         
-            var offsetCenter = -translate;
+            let offsetCenter = -translate;
             if (s.rtl) offsetCenter = translate;
         
             // Visible Slides
             s.slides.removeClass(s.params.slideVisibleClass);
-            for (var i = 0; i < s.slides.length; i++) {
-                var slide = s.slides[i];
-                var slideProgress = (offsetCenter + (s.params.centeredSlides ? s.minTranslate() : 0) - slide.swiperSlideOffset) / (slide.swiperSlideSize + s.params.spaceBetween);
+            for (let i = 0; i < s.slides.length; i++) {
+                let slide = s.slides[i];
+                const slideProgress = (offsetCenter + (s.params.centeredSlides ? s.minTranslate() : 0) - slide.swiperSlideOffset) / (slide.swiperSlideSize + s.params.spaceBetween);
                 if (s.params.watchSlidesVisibility) {
-                    var slideBefore = -(offsetCenter - slide.swiperSlideOffset);
-                    var slideAfter = slideBefore + s.slidesSizesGrid[i];
-                    var isVisible =
+                    const slideBefore = -(offsetCenter - slide.swiperSlideOffset);
+                    const slideAfter = slideBefore + s.slidesSizesGrid[i];
+                    const isVisible =
                         (slideBefore >= 0 && slideBefore < s.size) ||
                         (slideAfter > 0 && slideAfter <= s.size) ||
                         (slideBefore <= 0 && slideAfter >= s.size);
@@ -949,9 +949,9 @@
             if (typeof translate === 'undefined') {
                 translate = s.translate || 0;
             }
-            var translatesDiff = s.maxTranslate() - s.minTranslate();
-            var wasBeginning = s.isBeginning;
-            var wasEnd = s.isEnd;
+            let translatesDiff = s.maxTranslate() - s.minTranslate();
+            let wasBeginning = s.isBeginning;
+            let wasEnd = s.isEnd;
             if (translatesDiff === 0) {
                 s.progress = 0;
                 s.isBeginning = s.isEnd = true;
@@ -968,7 +968,7 @@
             s.emit('onProgress', s, s.progress);
         };
         s.updateActiveIndex = function () {
-            var translate = s.rtl ? s.translate : -s.translate;
+            let translate = s.rtl ? s.translate : -s.translate;
             var newActiveIndex, i, snapIndex;
             for (i = 0; i < s.slidesGrid.length; i ++) {
                 if (typeof s.slidesGrid[i + 1] !== 'undefined') {
@@ -1015,7 +1015,7 @@
           ===========================*/
         s.updateClasses = function () {
             s.slides.removeClass(s.params.slideActiveClass + ' ' + s.params.slideNextClass + ' ' + s.params.slidePrevClass + ' ' + s.params.slideDuplicateActiveClass + ' ' + s.params.slideDuplicateNextClass + ' ' + s.params.slideDuplicatePrevClass);
-            var activeSlide = s.slides.eq(s.activeIndex);
+            const activeSlide = s.slides.eq(s.activeIndex);
             // Active classes
             activeSlide.addClass(s.params.slideActiveClass);
             if (params.loop) {
@@ -1028,13 +1028,13 @@
                 }
             }
             // Next Slide
-            var nextSlide = activeSlide.next('.' + s.params.slideClass).addClass(s.params.slideNextClass);
+            let nextSlide = activeSlide.next('.' + s.params.slideClass).addClass(s.params.slideNextClass);
             if (s.params.loop && nextSlide.length === 0) {
                 nextSlide = s.slides.eq(0);
                 nextSlide.addClass(s.params.slideNextClass);
             }
             // Prev Slide
-            var prevSlide = activeSlide.prev('.' + s.params.slideClass).addClass(s.params.slidePrevClass);
+            let prevSlide = activeSlide.prev('.' + s.params.slideClass).addClass(s.params.slidePrevClass);
             if (s.params.loop && prevSlide.length === 0) {
                 prevSlide = s.slides.eq(-1);
                 prevSlide.addClass(s.params.slidePrevClass);
@@ -1093,7 +1093,7 @@
                     s.paginationContainer.find('.' + s.params.paginationTotalClass).text(total);
                 }
                 if (s.params.paginationType === 'progress') {
-                    var scale = (current + 1) / total,
+                    let scale = (current + 1) / total,
                         scaleX = scale,
                         scaleY = 1;
                     if (!s.isHorizontal()) {
@@ -1139,10 +1139,10 @@
         s.updatePagination = function () {
             if (!s.params.pagination) return;
             if (s.paginationContainer && s.paginationContainer.length > 0) {
-                var paginationHTML = '';
+                let paginationHTML = '';
                 if (s.params.paginationType === 'bullets') {
-                    var numberOfBullets = s.params.loop ? Math.ceil((s.slides.length - s.loopedSlides * 2) / s.params.slidesPerGroup) : s.snapGrid.length;
-                    for (var i = 0; i < numberOfBullets; i++) {
+                    const numberOfBullets = s.params.loop ? Math.ceil((s.slides.length - s.loopedSlides * 2) / s.params.slidesPerGroup) : s.snapGrid.length;
+                    for (let i = 0; i < numberOfBullets; i++) {
                         if (s.params.paginationBulletRender) {
                             paginationHTML += s.params.paginationBulletRender(s, i, s.params.bulletClass);
                         }
@@ -1195,7 +1195,7 @@
                 s.scrollbar.set();
             }
             function forceSetTranslate() {
-                var translate = s.rtl ? -s.translate : s.translate;
+                let translate = s.rtl ? -s.translate : s.translate;
                 newTranslate = Math.min(Math.max(s.translate, s.maxTranslate()), s.minTranslate());
                 s.setWrapperTranslate(newTranslate);
                 s.updateActiveIndex();
@@ -1239,8 +1239,8 @@
             }
         
             // Disable locks on resize
-            var allowSwipeToPrev = s.params.allowSwipeToPrev;
-            var allowSwipeToNext = s.params.allowSwipeToNext;
+            let allowSwipeToPrev = s.params.allowSwipeToPrev;
+            let allowSwipeToNext = s.params.allowSwipeToNext;
             s.params.allowSwipeToPrev = s.params.allowSwipeToNext = true;
         
             s.updateContainerSize();
@@ -1252,9 +1252,9 @@
             if (s.controller && s.controller.spline) {
                 s.controller.spline = undefined;
             }
-            var slideChangedBySlideTo = false;
+            let slideChangedBySlideTo = false;
             if (s.params.freeMode) {
-                var newTranslate = Math.min(Math.max(s.translate, s.maxTranslate()), s.minTranslate());
+                const newTranslate = Math.min(Math.max(s.translate, s.maxTranslate()), s.minTranslate());
                 s.setWrapperTranslate(newTranslate);
                 s.updateActiveIndex();
                 s.updateClasses();
@@ -1302,12 +1302,12 @@
         
         // Attach/detach events
         s.initEvents = function (detach) {
-            var actionDom = detach ? 'off' : 'on';
-            var action = detach ? 'removeEventListener' : 'addEventListener';
-            var touchEventsTarget = s.params.touchEventsTarget === 'container' ? s.container[0] : s.wrapper[0];
-            var target = s.support.touch ? touchEventsTarget : document;
+            const actionDom = detach ? 'off' : 'on';
+            let action = detach ? 'removeEventListener' : 'addEventListener';
+            const touchEventsTarget = s.params.touchEventsTarget === 'container' ? s.container[0] : s.wrapper[0];
+            let target = s.support.touch ? touchEventsTarget : document;
         
-            var moveCapture = s.params.nested ? true : false;
+            const moveCapture = s.params.nested ? true : false;
         
             //Touch Events
             if (s.browser.ie) {
@@ -1317,7 +1317,7 @@
             }
             else {
                 if (s.support.touch) {
-                    var passiveListener = s.touchEvents.start === 'touchstart' && s.support.passiveListener && s.params.passiveListeners ? {passive: true, capture: false} : false;
+                    let passiveListener = s.touchEvents.start === 'touchstart' && s.support.passiveListener && s.params.passiveListeners ? {passive: true, capture: false} : false;
                     touchEventsTarget[action](s.touchEvents.start, s.onTouchStart, passiveListener);
                     touchEventsTarget[action](s.touchEvents.move, s.onTouchMove, moveCapture);
                     touchEventsTarget[action](s.touchEvents.end, s.onTouchEnd, passiveListener);
@@ -1381,7 +1381,7 @@
         };
         s.onClickIndex = function (e) {
             e.preventDefault();
-            var index = $(this).index() * s.params.slidesPerGroup;
+            let index = $(this).index() * s.params.slidesPerGroup;
             if (s.params.loop) index = index + s.loopedSlides;
             s.slideTo(index);
         };
@@ -1390,7 +1390,7 @@
           Handle Touches
           ===========================*/
         function findElementInEvent(e, selector) {
-            var el = $(e.target);
+            let el = $(e.target);
             if (!el.is(selector)) {
                 if (typeof selector === 'string') {
                     el = el.parents(selector);
@@ -1410,10 +1410,10 @@
             return el[0];
         }
         s.updateClickedSlide = function (e) {
-            var slide = findElementInEvent(e, '.' + s.params.slideClass);
-            var slideFound = false;
+            let slide = findElementInEvent(e, '.' + s.params.slideClass);
+            let slideFound = false;
             if (slide) {
-                for (var i = 0; i < s.slides.length; i++) {
+                for (let i = 0; i < s.slides.length; i++) {
                     if (s.slides[i] === slide) slideFound = true;
                 }
             }
@@ -1428,7 +1428,7 @@
                 return;
             }
             if (s.params.slideToClickedSlide && s.clickedIndex !== undefined && s.clickedIndex !== s.activeIndex) {
-                var slideToIndex = s.clickedIndex,
+                let slideToIndex = s.clickedIndex,
                     realIndex,
                     duplicatedSlides;
                 if (s.params.loop) {
@@ -1507,8 +1507,8 @@
                 if (!findElementInEvent(e, s.params.swipeHandler)) return;
             }
         
-            var startX = s.touches.currentX = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
-            var startY = s.touches.currentY = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+            let startX = s.touches.currentX = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
+            let startY = s.touches.currentY = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
         
             // Do NOT start if iOS edge swipe is detected. Otherwise iOS app (UIWebView) cannot swipe-to-go-back anymore
             if(s.device.ios && s.params.iOSEdgeSwipeDetection && startX <= s.params.iOSEdgeSwipeThreshold) {
@@ -1528,7 +1528,7 @@
             s.swipeDirection = undefined;
             if (s.params.threshold > 0) allowThresholdMove = false;
             if (e.type !== 'touchstart') {
-                var preventDefault = true;
+                let preventDefault = true;
                 if ($(e.target).is(formElements)) preventDefault = false;
                 if (document.activeElement && $(document.activeElement).is(formElements)) {
                     document.activeElement.blur();
@@ -1650,7 +1650,7 @@
             }
             isMoved = true;
         
-            var diff = s.touches.diff = s.isHorizontal() ? s.touches.currentX - s.touches.startX : s.touches.currentY - s.touches.startY;
+            let diff = s.touches.diff = s.isHorizontal() ? s.touches.currentX - s.touches.startX : s.touches.currentY - s.touches.startY;
         
             diff = diff * s.params.touchRatio;
             if (s.rtl) diff = -diff;
@@ -1658,7 +1658,7 @@
             s.swipeDirection = diff > 0 ? 'prev' : 'next';
             currentTranslate = diff + startTranslate;
         
-            var disableParentSwiper = true;
+            let disableParentSwiper = true;
             if ((diff > 0 && currentTranslate > s.minTranslate())) {
                 disableParentSwiper = false;
                 if (s.params.resistance) currentTranslate = s.minTranslate() - 1 + Math.pow(-s.minTranslate() + startTranslate + diff, s.params.resistanceRatio);
@@ -1736,8 +1736,8 @@
             }
         
             // Time diff
-            var touchEndTime = Date.now();
-            var timeDiff = touchEndTime - touchStartTime;
+            const touchEndTime = Date.now();
+            const timeDiff = touchEndTime - touchStartTime;
         
             // Tap, doubleTap, Click
             if (s.allowClick) {
@@ -1795,10 +1795,10 @@
         
                 if (s.params.freeModeMomentum) {
                     if (velocities.length > 1) {
-                        var lastMoveEvent = velocities.pop(), velocityEvent = velocities.pop();
+                        const lastMoveEvent = velocities.pop(), velocityEvent = velocities.pop();
         
-                        var distance = lastMoveEvent.position - velocityEvent.position;
-                        var time = lastMoveEvent.time - velocityEvent.time;
+                        let distance = lastMoveEvent.position - velocityEvent.position;
+                        const time = lastMoveEvent.time - velocityEvent.time;
                         s.velocity = distance / time;
                         s.velocity = s.velocity / 2;
                         if (Math.abs(s.velocity) < s.params.freeModeMinimumVelocity) {
@@ -1815,14 +1815,14 @@
                     s.velocity = s.velocity * s.params.freeModeMomentumVelocityRatio;
         
                     velocities.length = 0;
-                    var momentumDuration = 1000 * s.params.freeModeMomentumRatio;
-                    var momentumDistance = s.velocity * momentumDuration;
+                    let momentumDuration = 1000 * s.params.freeModeMomentumRatio;
+                    const momentumDistance = s.velocity * momentumDuration;
         
-                    var newPosition = s.translate + momentumDistance;
+                    let newPosition = s.translate + momentumDistance;
                     if (s.rtl) newPosition = - newPosition;
-                    var doBounce = false;
+                    let doBounce = false;
                     var afterBouncePosition;
-                    var bounceAmount = Math.abs(s.velocity) * 20 * s.params.freeModeMomentumBounceRatio;
+                    const bounceAmount = Math.abs(s.velocity) * 20 * s.params.freeModeMomentumBounceRatio;
                     if (newPosition < s.maxTranslate()) {
                         if (s.params.freeModeMomentumBounce) {
                             if (newPosition + s.maxTranslate() < -bounceAmount) {
@@ -1850,7 +1850,7 @@
                         }
                     }
                     else if (s.params.freeModeSticky) {
-                        var j = 0,
+                        let j = 0,
                             nextSlide;
                         for (j = 0; j < s.snapGrid.length; j += 1) {
                             if (s.snapGrid[j] > -newPosition) {
@@ -1941,7 +1941,7 @@
             }
         
             // Find current slide size
-            var ratio = (currentPos - s.slidesGrid[stopIndex]) / groupSize;
+            const ratio = (currentPos - s.slidesGrid[stopIndex]) / groupSize;
         
             if (timeDiff > s.params.longSwipesMs) {
                 // Long touches
@@ -1987,7 +1987,7 @@
             s.snapIndex = Math.floor(slideIndex / s.params.slidesPerGroup);
             if (s.snapIndex >= s.snapGrid.length) s.snapIndex = s.snapGrid.length - 1;
         
-            var translate = - s.snapGrid[s.snapIndex];
+            let translate = - s.snapGrid[s.snapIndex];
             // Stop autoplay
             if (s.params.autoplay && s.autoplaying) {
                 if (internal || !s.params.autoplayDisableOnInteraction) {
@@ -2002,7 +2002,7 @@
         
             // Normalize slideIndex
             if(s.params.normalizeSlideIndex){
-                for (var i = 0; i < s.slidesGrid.length; i++) {
+                for (let i = 0; i < s.slidesGrid.length; i++) {
                     if (- Math.floor(translate * 100) >= Math.floor(s.slidesGrid[i] * 100)) {
                         slideIndex = i;
                     }
@@ -2106,7 +2106,7 @@
             if (s.params.loop) {
                 if (s.animating) return false;
                 s.fixLoop();
-                var clientLeft = s.container[0].clientLeft;
+                let clientLeft = s.container[0].clientLeft;
                 return s.slideTo(s.activeIndex + s.params.slidesPerGroup, speed, runCallbacks, internal);
             }
             else return s.slideTo(s.activeIndex + s.params.slidesPerGroup, speed, runCallbacks, internal);
@@ -2118,7 +2118,7 @@
             if (s.params.loop) {
                 if (s.animating) return false;
                 s.fixLoop();
-                var clientLeft = s.container[0].clientLeft;
+                let clientLeft = s.container[0].clientLeft;
                 return s.slideTo(s.activeIndex - 1, speed, runCallbacks, internal);
             }
             else return s.slideTo(s.activeIndex - 1, speed, runCallbacks, internal);
@@ -2159,7 +2159,7 @@
             s.emit('onSetTransition', s, duration);
         };
         s.setWrapperTranslate = function (translate, updateActiveIndex, byController) {
-            var x = 0, y = 0, z = 0;
+            let x = 0, y = 0, z = 0;
             if (s.isHorizontal()) {
                 x = s.rtl ? -translate : translate;
             }
@@ -2181,7 +2181,7 @@
         
             // Check if we need to update progress
             var progress;
-            var translatesDiff = s.maxTranslate() - s.minTranslate();
+            const translatesDiff = s.maxTranslate() - s.minTranslate();
             if (translatesDiff === 0) {
                 progress = 0;
             }
@@ -2276,8 +2276,8 @@
         function initObserver(target, options) {
             options = options || {};
             // create an observer instance
-            var ObserverFunc = window.MutationObserver || window.WebkitMutationObserver;
-            var observer = new ObserverFunc(function (mutations) {
+            const ObserverFunc = window.MutationObserver || window.WebkitMutationObserver;
+            const observer = new ObserverFunc(function (mutations) {
                 mutations.forEach(function (mutation) {
                     s.onResize(true);
                     s.emit('onObserverUpdate', s, mutation);
@@ -2294,8 +2294,8 @@
         }
         s.initObservers = function () {
             if (s.params.observeParents) {
-                var containerParents = s.container.parents();
-                for (var i = 0; i < containerParents.length; i++) {
+                const containerParents = s.container.parents();
+                for (let i = 0; i < containerParents.length; i++) {
                     initObserver(containerParents[i]);
                 }
             }
@@ -2307,7 +2307,7 @@
             initObserver(s.wrapper[0], {attributes: false});
         };
         s.disconnectObservers = function () {
-            for (var i = 0; i < s.observers.length; i++) {
+            for (let i = 0; i < s.observers.length; i++) {
                 s.observers[i].disconnect();
             }
             s.observers = [];
@@ -2320,7 +2320,7 @@
             // Remove duplicated slides
             s.wrapper.children('.' + s.params.slideClass + '.' + s.params.slideDuplicateClass).remove();
         
-            var slides = s.wrapper.children('.' + s.params.slideClass);
+            let slides = s.wrapper.children('.' + s.params.slideClass);
         
             if(s.params.slidesPerView === 'auto' && !s.params.loopedSlides) s.params.loopedSlides = slides.length;
         
@@ -2330,9 +2330,9 @@
                 s.loopedSlides = slides.length;
             }
         
-            var prependSlides = [], appendSlides = [], i;
+            const prependSlides = [], appendSlides = [], i;
             slides.each(function (index, el) {
-                var slide = $(this);
+                let slide = $(this);
                 if (index < s.loopedSlides) appendSlides.push(el);
                 if (index < slides.length && index >= slides.length - s.loopedSlides) prependSlides.push(el);
                 slide.attr('data-swiper-slide-index', index);
@@ -2349,7 +2349,7 @@
             s.slides.removeAttr('data-swiper-slide-index');
         };
         s.reLoop = function (updatePosition) {
-            var oldIndex = s.activeIndex - s.loopedSlides;
+            const oldIndex = s.activeIndex - s.loopedSlides;
             s.destroyLoop();
             s.createLoop();
             s.updateSlidesSize();
@@ -2381,7 +2381,7 @@
                 s.destroyLoop();
             }
             if (typeof slides === 'object' && slides.length) {
-                for (var i = 0; i < slides.length; i++) {
+                for (let i = 0; i < slides.length; i++) {
                     if (slides[i]) s.wrapper.append(slides[i]);
                 }
             }
@@ -2399,9 +2399,9 @@
             if (s.params.loop) {
                 s.destroyLoop();
             }
-            var newActiveIndex = s.activeIndex + 1;
+            let newActiveIndex = s.activeIndex + 1;
             if (typeof slides === 'object' && slides.length) {
-                for (var i = 0; i < slides.length; i++) {
+                for (let i = 0; i < slides.length; i++) {
                     if (slides[i]) s.wrapper.prepend(slides[i]);
                 }
                 newActiveIndex = s.activeIndex + slides.length;
@@ -2422,10 +2422,10 @@
                 s.destroyLoop();
                 s.slides = s.wrapper.children('.' + s.params.slideClass);
             }
-            var newActiveIndex = s.activeIndex,
+            let newActiveIndex = s.activeIndex,
                 indexToRemove;
             if (typeof slidesIndexes === 'object' && slidesIndexes.length) {
-                for (var i = 0; i < slidesIndexes.length; i++) {
+                for (let i = 0; i < slidesIndexes.length; i++) {
                     indexToRemove = slidesIndexes[i];
                     if (s.slides[indexToRemove]) s.slides.eq(indexToRemove).remove();
                     if (indexToRemove < newActiveIndex) newActiveIndex--;
@@ -2455,8 +2455,8 @@
         
         };
         s.removeAllSlides = function () {
-            var slidesIndexes = [];
-            for (var i = 0; i < s.slides.length; i++) {
+            const slidesIndexes = [];
+            for (let i = 0; i < s.slides.length; i++) {
                 slidesIndexes.push(i);
             }
             s.removeSlide(slidesIndexes);
@@ -2469,17 +2469,17 @@
         s.effects = {
             fade: {
                 setTranslate: function () {
-                    for (var i = 0; i < s.slides.length; i++) {
-                        var slide = s.slides.eq(i);
-                        var offset = slide[0].swiperSlideOffset;
-                        var tx = -offset;
+                    for (let i = 0; i < s.slides.length; i++) {
+                        let slide = s.slides.eq(i);
+                        let offset = slide[0].swiperSlideOffset;
+                        let tx = -offset;
                         if (!s.params.virtualTranslate) tx = tx - s.translate;
-                        var ty = 0;
+                        let ty = 0;
                         if (!s.isHorizontal()) {
                             ty = tx;
                             tx = 0;
                         }
-                        var slideOpacity = s.params.fade.crossFade ?
+                        const slideOpacity = s.params.fade.crossFade ?
                                 Math.max(1 - Math.abs(slide[0].progress), 0) :
                                 1 + Math.min(Math.max(slide[0].progress, -1), 0);
                         slide
@@ -2494,14 +2494,14 @@
                 setTransition: function (duration) {
                     s.slides.transition(duration);
                     if (s.params.virtualTranslate && duration !== 0) {
-                        var eventTriggered = false;
+                        let eventTriggered = false;
                         s.slides.transitionEnd(function () {
                             if (eventTriggered) return;
                             if (!s) return;
                             eventTriggered = true;
                             s.animating = false;
-                            var triggerEvents = ['webkitTransitionEnd', 'transitionend', 'oTransitionEnd', 'MSTransitionEnd', 'msTransitionEnd'];
-                            for (var i = 0; i < triggerEvents.length; i++) {
+                            let triggerEvents = ['webkitTransitionEnd', 'transitionend', 'oTransitionEnd', 'MSTransitionEnd', 'msTransitionEnd'];
+                            for (let i = 0; i < triggerEvents.length; i++) {
                                 s.wrapper.trigger(triggerEvents[i]);
                             }
                         });
@@ -2510,14 +2510,14 @@
             },
             flip: {
                 setTranslate: function () {
-                    for (var i = 0; i < s.slides.length; i++) {
-                        var slide = s.slides.eq(i);
-                        var progress = slide[0].progress;
+                    for (let i = 0; i < s.slides.length; i++) {
+                        let slide = s.slides.eq(i);
+                        let progress = slide[0].progress;
                         if (s.params.flip.limitRotation) {
                             progress = Math.max(Math.min(slide[0].progress, 1), -1);
                         }
-                        var offset = slide[0].swiperSlideOffset;
-                        var rotate = -180 * progress,
+                        let offset = slide[0].swiperSlideOffset;
+                        let rotate = -180 * progress,
                             rotateY = rotate,
                             rotateX = 0,
                             tx = -offset,
@@ -2536,8 +2536,8 @@
         
                         if (s.params.flip.slideShadows) {
                             //Set shadows
-                            var shadowBefore = s.isHorizontal() ? slide.find('.swiper-slide-shadow-left') : slide.find('.swiper-slide-shadow-top');
-                            var shadowAfter = s.isHorizontal() ? slide.find('.swiper-slide-shadow-right') : slide.find('.swiper-slide-shadow-bottom');
+                            let shadowBefore = s.isHorizontal() ? slide.find('.swiper-slide-shadow-left') : slide.find('.swiper-slide-shadow-top');
+                            let shadowAfter = s.isHorizontal() ? slide.find('.swiper-slide-shadow-right') : slide.find('.swiper-slide-shadow-bottom');
                             if (shadowBefore.length === 0) {
                                 shadowBefore = $('<div class="swiper-slide-shadow-' + (s.isHorizontal() ? 'left' : 'top') + '"></div>');
                                 slide.append(shadowBefore);
@@ -2557,15 +2557,15 @@
                 setTransition: function (duration) {
                     s.slides.transition(duration).find('.swiper-slide-shadow-top, .swiper-slide-shadow-right, .swiper-slide-shadow-bottom, .swiper-slide-shadow-left').transition(duration);
                     if (s.params.virtualTranslate && duration !== 0) {
-                        var eventTriggered = false;
+                        let eventTriggered = false;
                         s.slides.eq(s.activeIndex).transitionEnd(function () {
                             if (eventTriggered) return;
                             if (!s) return;
                             if (!$(this).hasClass(s.params.slideActiveClass)) return;
                             eventTriggered = true;
                             s.animating = false;
-                            var triggerEvents = ['webkitTransitionEnd', 'transitionend', 'oTransitionEnd', 'MSTransitionEnd', 'msTransitionEnd'];
-                            for (var i = 0; i < triggerEvents.length; i++) {
+                            const triggerEvents = ['webkitTransitionEnd', 'transitionend', 'oTransitionEnd', 'MSTransitionEnd', 'msTransitionEnd'];
+                            for (let i = 0; i < triggerEvents.length; i++) {
                                 s.wrapper.trigger(triggerEvents[i]);
                             }
                         });
@@ -2574,7 +2574,7 @@
             },
             cube: {
                 setTranslate: function () {
-                    var wrapperRotate = 0, cubeShadow;
+                    let wrapperRotate = 0, cubeShadow;
                     if (s.params.cube.shadow) {
                         if (s.isHorizontal()) {
                             cubeShadow = s.wrapper.find('.swiper-cube-shadow');
@@ -2592,16 +2592,16 @@
                             }
                         }
                     }
-                    for (var i = 0; i < s.slides.length; i++) {
-                        var slide = s.slides.eq(i);
-                        var slideAngle = i * 90;
-                        var round = Math.floor(slideAngle / 360);
+                    for (let i = 0; i < s.slides.length; i++) {
+                        let slide = s.slides.eq(i);
+                        let slideAngle = i * 90;
+                        let round = Math.floor(slideAngle / 360);
                         if (s.rtl) {
                             slideAngle = -slideAngle;
                             round = Math.floor(-slideAngle / 360);
                         }
-                        var progress = Math.max(Math.min(slide[0].progress, 1), -1);
-                        var tx = 0, ty = 0, tz = 0;
+                        let progress = Math.max(Math.min(slide[0].progress, 1), -1);
+                        let tx = 0, ty = 0, tz = 0;
                         if (i % 4 === 0) {
                             tx = - round * 4 * s.size;
                             tz = 0;
@@ -2627,7 +2627,7 @@
                             tx = 0;
                         }
         
-                        var transform = 'rotateX(' + (s.isHorizontal() ? 0 : -slideAngle) + 'deg) rotateY(' + (s.isHorizontal() ? slideAngle : 0) + 'deg) translate3d(' + tx + 'px, ' + ty + 'px, ' + tz + 'px)';
+                        let transform = 'rotateX(' + (s.isHorizontal() ? 0 : -slideAngle) + 'deg) rotateY(' + (s.isHorizontal() ? slideAngle : 0) + 'deg) translate3d(' + tx + 'px, ' + ty + 'px, ' + tz + 'px)';
                         if (progress <= 1 && progress > -1) {
                             wrapperRotate = i * 90 + progress * 90;
                             if (s.rtl) wrapperRotate = -i * 90 - progress * 90;
@@ -2635,8 +2635,8 @@
                         slide.transform(transform);
                         if (s.params.cube.slideShadows) {
                             //Set shadows
-                            var shadowBefore = s.isHorizontal() ? slide.find('.swiper-slide-shadow-left') : slide.find('.swiper-slide-shadow-top');
-                            var shadowAfter = s.isHorizontal() ? slide.find('.swiper-slide-shadow-right') : slide.find('.swiper-slide-shadow-bottom');
+                            let shadowBefore = s.isHorizontal() ? slide.find('.swiper-slide-shadow-left') : slide.find('.swiper-slide-shadow-top');
+                            let shadowAfter = s.isHorizontal() ? slide.find('.swiper-slide-shadow-right') : slide.find('.swiper-slide-shadow-bottom');
                             if (shadowBefore.length === 0) {
                                 shadowBefore = $('<div class="swiper-slide-shadow-' + (s.isHorizontal() ? 'left' : 'top') + '"></div>');
                                 slide.append(shadowBefore);
@@ -2661,15 +2661,15 @@
                             cubeShadow.transform('translate3d(0px, ' + (s.width / 2 + s.params.cube.shadowOffset) + 'px, ' + (-s.width / 2) + 'px) rotateX(90deg) rotateZ(0deg) scale(' + (s.params.cube.shadowScale) + ')');
                         }
                         else {
-                            var shadowAngle = Math.abs(wrapperRotate) - Math.floor(Math.abs(wrapperRotate) / 90) * 90;
-                            var multiplier = 1.5 - (Math.sin(shadowAngle * 2 * Math.PI / 360) / 2 + Math.cos(shadowAngle * 2 * Math.PI / 360) / 2);
-                            var scale1 = s.params.cube.shadowScale,
+                            const shadowAngle = Math.abs(wrapperRotate) - Math.floor(Math.abs(wrapperRotate) / 90) * 90;
+                            let multiplier = 1.5 - (Math.sin(shadowAngle * 2 * Math.PI / 360) / 2 + Math.cos(shadowAngle * 2 * Math.PI / 360) / 2);
+                            const scale1 = s.params.cube.shadowScale,
                                 scale2 = s.params.cube.shadowScale / multiplier,
                                 offset = s.params.cube.shadowOffset;
                             cubeShadow.transform('scale3d(' + scale1 + ', 1, ' + scale2 + ') translate3d(0px, ' + (s.height / 2 + offset) + 'px, ' + (-s.height / 2 / scale2) + 'px) rotateX(-90deg)');
                         }
                     }
-                    var zFactor = (s.isSafari || s.isUiWebView) ? (-s.size / 2) : 0;
+                    const zFactor = (s.isSafari || s.isUiWebView) ? (-s.size / 2) : 0;
                     s.wrapper.transform('translate3d(0px,0,' + zFactor + 'px) rotateX(' + (s.isHorizontal() ? 0 : wrapperRotate) + 'deg) rotateY(' + (s.isHorizontal() ? -wrapperRotate : 0) + 'deg)');
                 },
                 setTransition: function (duration) {
@@ -2681,24 +2681,24 @@
             },
             coverflow: {
                 setTranslate: function () {
-                    var transform = s.translate;
-                    var center = s.isHorizontal() ? -transform + s.width / 2 : -transform + s.height / 2;
-                    var rotate = s.isHorizontal() ? s.params.coverflow.rotate: -s.params.coverflow.rotate;
-                    var translate = s.params.coverflow.depth;
+                    let transform = s.translate;
+                    const center = s.isHorizontal() ? -transform + s.width / 2 : -transform + s.height / 2;
+                    const rotate = s.isHorizontal() ? s.params.coverflow.rotate: -s.params.coverflow.rotate;
+                    let translate = s.params.coverflow.depth;
                     //Each slide offset from center
-                    for (var i = 0, length = s.slides.length; i < length; i++) {
-                        var slide = s.slides.eq(i);
-                        var slideSize = s.slidesSizesGrid[i];
-                        var slideOffset = slide[0].swiperSlideOffset;
-                        var offsetMultiplier = (center - slideOffset - slideSize / 2) / slideSize * s.params.coverflow.modifier;
+                    for (let i = 0, length = s.slides.length; i < length; i++) {
+                        let slide = s.slides.eq(i);
+                        const slideSize = s.slidesSizesGrid[i];
+                        const slideOffset = slide[0].swiperSlideOffset;
+                        const offsetMultiplier = (center - slideOffset - slideSize / 2) / slideSize * s.params.coverflow.modifier;
         
-                        var rotateY = s.isHorizontal() ? rotate * offsetMultiplier : 0;
-                        var rotateX = s.isHorizontal() ? 0 : rotate * offsetMultiplier;
-                        // var rotateZ = 0
-                        var translateZ = -translate * Math.abs(offsetMultiplier);
+                        let rotateY = s.isHorizontal() ? rotate * offsetMultiplier : 0;
+                        let rotateX = s.isHorizontal() ? 0 : rotate * offsetMultiplier;
+                        // const rotateZ = 0
+                        let translateZ = -translate * Math.abs(offsetMultiplier);
         
-                        var translateY = s.isHorizontal() ? 0 : s.params.coverflow.stretch * (offsetMultiplier);
-                        var translateX = s.isHorizontal() ? s.params.coverflow.stretch * (offsetMultiplier) : 0;
+                        let translateY = s.isHorizontal() ? 0 : s.params.coverflow.stretch * (offsetMultiplier);
+                        let translateX = s.isHorizontal() ? s.params.coverflow.stretch * (offsetMultiplier) : 0;
         
                         //Fix for ultra small values
                         if (Math.abs(translateX) < 0.001) translateX = 0;
@@ -2707,14 +2707,14 @@
                         if (Math.abs(rotateY) < 0.001) rotateY = 0;
                         if (Math.abs(rotateX) < 0.001) rotateX = 0;
         
-                        var slideTransform = 'translate3d(' + translateX + 'px,' + translateY + 'px,' + translateZ + 'px)  rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg)';
+                        const slideTransform = 'translate3d(' + translateX + 'px,' + translateY + 'px,' + translateZ + 'px)  rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg)';
         
                         slide.transform(slideTransform);
                         slide[0].style.zIndex = -Math.abs(Math.round(offsetMultiplier)) + 1;
                         if (s.params.coverflow.slideShadows) {
                             //Set shadows
-                            var shadowBefore = s.isHorizontal() ? slide.find('.swiper-slide-shadow-left') : slide.find('.swiper-slide-shadow-top');
-                            var shadowAfter = s.isHorizontal() ? slide.find('.swiper-slide-shadow-right') : slide.find('.swiper-slide-shadow-bottom');
+                            let shadowBefore = s.isHorizontal() ? slide.find('.swiper-slide-shadow-left') : slide.find('.swiper-slide-shadow-top');
+                            let shadowAfter = s.isHorizontal() ? slide.find('.swiper-slide-shadow-right') : slide.find('.swiper-slide-shadow-bottom');
                             if (shadowBefore.length === 0) {
                                 shadowBefore = $('<div class="swiper-slide-shadow-' + (s.isHorizontal() ? 'left' : 'top') + '"></div>');
                                 slide.append(shadowBefore);
@@ -2730,7 +2730,7 @@
         
                     //Set correct perspective for IE10
                     if (s.browser.ie) {
-                        var ws = s.wrapper[0].style;
+                        const ws = s.wrapper[0].style;
                         ws.perspectiveOrigin = center + 'px 50%';
                     }
                 },
@@ -2750,18 +2750,18 @@
                 if (typeof loadInDuplicate === 'undefined') loadInDuplicate = true;
                 if (s.slides.length === 0) return;
         
-                var slide = s.slides.eq(index);
-                var img = slide.find('.' + s.params.lazyLoadingClass + ':not(.' + s.params.lazyStatusLoadedClass + '):not(.' + s.params.lazyStatusLoadingClass + ')');
+                let slide = s.slides.eq(index);
+                let img = slide.find('.' + s.params.lazyLoadingClass + ':not(.' + s.params.lazyStatusLoadedClass + '):not(.' + s.params.lazyStatusLoadingClass + ')');
                 if (slide.hasClass(s.params.lazyLoadingClass) && !slide.hasClass(s.params.lazyStatusLoadedClass) && !slide.hasClass(s.params.lazyStatusLoadingClass)) {
                     img = img.add(slide[0]);
                 }
                 if (img.length === 0) return;
         
                 img.each(function () {
-                    var _img = $(this);
+                    const _img = $(this);
                     _img.addClass(s.params.lazyStatusLoadingClass);
-                    var background = _img.attr('data-background');
-                    var src = _img.attr('data-src'),
+                    const background = _img.attr('data-background');
+                    const src = _img.attr('data-src'),
                         srcset = _img.attr('data-srcset'),
                         sizes = _img.attr('data-sizes');
                     s.loadImage(_img[0], (src || background), srcset, sizes, false, function () {
@@ -2788,13 +2788,13 @@
                         _img.addClass(s.params.lazyStatusLoadedClass).removeClass(s.params.lazyStatusLoadingClass);
                         slide.find('.' + s.params.lazyPreloaderClass + ', .' + s.params.preloaderClass).remove();
                         if (s.params.loop && loadInDuplicate) {
-                            var slideOriginalIndex = slide.attr('data-swiper-slide-index');
+                            const slideOriginalIndex = slide.attr('data-swiper-slide-index');
                             if (slide.hasClass(s.params.slideDuplicateClass)) {
-                                var originalSlide = s.wrapper.children('[data-swiper-slide-index="' + slideOriginalIndex + '"]:not(.' + s.params.slideDuplicateClass + ')');
+                                const originalSlide = s.wrapper.children('[data-swiper-slide-index="' + slideOriginalIndex + '"]:not(.' + s.params.slideDuplicateClass + ')');
                                 s.lazy.loadImageInSlide(originalSlide.index(), false);
                             }
                             else {
-                                var duplicatedSlide = s.wrapper.children('.' + s.params.slideDuplicateClass + '[data-swiper-slide-index="' + slideOriginalIndex + '"]');
+                                const duplicatedSlide = s.wrapper.children('.' + s.params.slideDuplicateClass + '[data-swiper-slide-index="' + slideOriginalIndex + '"]');
                                 s.lazy.loadImageInSlide(duplicatedSlide.index(), false);
                             }
                         }
@@ -2807,7 +2807,7 @@
             },
             load: function () {
                 var i;
-                var slidesPerView = s.params.slidesPerView;
+                let slidesPerView = s.params.slidesPerView;
                 if (slidesPerView === 'auto') {
                     slidesPerView = 0;
                 }
@@ -2829,10 +2829,10 @@
                 }
                 if (s.params.lazyLoadingInPrevNext) {
                     if (slidesPerView > 1 || (s.params.lazyLoadingInPrevNextAmount && s.params.lazyLoadingInPrevNextAmount > 1)) {
-                        var amount = s.params.lazyLoadingInPrevNextAmount;
-                        var spv = slidesPerView;
-                        var maxIndex = Math.min(s.activeIndex + spv + Math.max(amount, spv), s.slides.length);
-                        var minIndex = Math.max(s.activeIndex - Math.max(spv, amount), 0);
+                        const amount = s.params.lazyLoadingInPrevNextAmount;
+                        const spv = slidesPerView;
+                        let maxIndex = Math.min(s.activeIndex + spv + Math.max(amount, spv), s.slides.length);
+                        let minIndex = Math.max(s.activeIndex - Math.max(spv, amount), 0);
                         // Next Slides
                         for (i = s.activeIndex + slidesPerView; i < maxIndex; i++) {
                             if (s.slides[i]) s.lazy.loadImageInSlide(i);
@@ -2843,10 +2843,10 @@
                         }
                     }
                     else {
-                        var nextSlide = s.wrapper.children('.' + s.params.slideNextClass);
+                        const nextSlide = s.wrapper.children('.' + s.params.slideNextClass);
                         if (nextSlide.length > 0) s.lazy.loadImageInSlide(nextSlide.index());
         
-                        var prevSlide = s.wrapper.children('.' + s.params.slidePrevClass);
+                        const prevSlide = s.wrapper.children('.' + s.params.slidePrevClass);
                         if (prevSlide.length > 0) s.lazy.loadImageInSlide(prevSlide.index());
                     }
                 }
@@ -2872,15 +2872,15 @@
         s.scrollbar = {
             isTouched: false,
             setDragPosition: function (e) {
-                var sb = s.scrollbar;
-                var x = 0, y = 0;
+                let sb = s.scrollbar;
+                let x = 0, y = 0;
                 var translate;
-                var pointerPosition = s.isHorizontal() ?
+                const pointerPosition = s.isHorizontal() ?
                     ((e.type === 'touchstart' || e.type === 'touchmove') ? e.targetTouches[0].pageX : e.pageX || e.clientX) :
                     ((e.type === 'touchstart' || e.type === 'touchmove') ? e.targetTouches[0].pageY : e.pageY || e.clientY) ;
-                var position = (pointerPosition) - sb.track.offset()[s.isHorizontal() ? 'left' : 'top'] - sb.dragSize / 2;
-                var positionMin = -s.minTranslate() * sb.moveDivider;
-                var positionMax = -s.maxTranslate() * sb.moveDivider;
+                let position = (pointerPosition) - sb.track.offset()[s.isHorizontal() ? 'left' : 'top'] - sb.dragSize / 2;
+                const positionMin = -s.minTranslate() * sb.moveDivider;
+                const positionMax = -s.maxTranslate() * sb.moveDivider;
                 if (position < positionMin) {
                     position = positionMin;
                 }
@@ -2892,7 +2892,7 @@
                 s.setWrapperTranslate(position, true);
             },
             dragStart: function (e) {
-                var sb = s.scrollbar;
+                let sb = s.scrollbar;
                 sb.isTouched = true;
                 e.preventDefault();
                 e.stopPropagation();
@@ -2909,7 +2909,7 @@
                 s.emit('onScrollbarDragStart', s);
             },
             dragMove: function (e) {
-                var sb = s.scrollbar;
+                let sb = s.scrollbar;
                 if (!sb.isTouched) return;
                 if (e.preventDefault) e.preventDefault();
                 else e.returnValue = false;
@@ -2920,7 +2920,7 @@
                 s.emit('onScrollbarDragMove', s);
             },
             dragEnd: function (e) {
-                var sb = s.scrollbar;
+                let sb = s.scrollbar;
                 if (!sb.isTouched) return;
                 sb.isTouched = false;
                 if (s.params.scrollbarHide) {
@@ -2941,22 +2941,22 @@
                 else return s.touchEvents;
             })(),
             enableDraggable: function () {
-                var sb = s.scrollbar;
-                var target = s.support.touch ? sb.track : document;
+                let sb = s.scrollbar;
+                let target = s.support.touch ? sb.track : document;
                 $(sb.track).on(sb.draggableEvents.start, sb.dragStart);
                 $(target).on(sb.draggableEvents.move, sb.dragMove);
                 $(target).on(sb.draggableEvents.end, sb.dragEnd);
             },
             disableDraggable: function () {
-                var sb = s.scrollbar;
-                var target = s.support.touch ? sb.track : document;
+                let sb = s.scrollbar;
+                let target = s.support.touch ? sb.track : document;
                 $(sb.track).off(s.draggableEvents.start, sb.dragStart);
                 $(target).off(s.draggableEvents.move, sb.dragMove);
                 $(target).off(s.draggableEvents.end, sb.dragEnd);
             },
             set: function () {
                 if (!s.params.scrollbar) return;
-                var sb = s.scrollbar;
+                let sb = s.scrollbar;
                 sb.track = $(s.params.scrollbar);
                 if (s.params.uniqueNavElements && typeof s.params.scrollbar === 'string' && sb.track.length > 1 && s.container.find(s.params.scrollbar).length === 1) {
                     sb.track = s.container.find(s.params.scrollbar);
@@ -2994,11 +2994,11 @@
             setTranslate: function () {
                 if (!s.params.scrollbar) return;
                 var diff;
-                var sb = s.scrollbar;
-                var translate = s.translate || 0;
+                const sb = s.scrollbar;
+                let translate = s.translate || 0;
                 var newPos;
         
-                var newSize = sb.dragSize;
+                let newSize = sb.dragSize;
                 newPos = (sb.trackSize - sb.dragSize) * s.progress;
                 if (s.rtl && s.isHorizontal()) {
                     newPos = -newPos;
@@ -3064,7 +3064,7 @@
                 // (x1,y1) is the known point before given value,
                 // (x3,y3) is the known point after given value.
                 var i1, i3;
-                var l = this.x.length;
+                const l = this.x.length;
         
                 this.interpolate = function (x2) {
                     if (!x2) return 0;
@@ -3078,7 +3078,7 @@
                     return ((x2 - this.x[i1]) * (this.y[i3] - this.y[i1])) / (this.x[i3] - this.x[i1]) + this.y[i1];
                 };
         
-                var binarySearch = (function() {
+                const binarySearch = (function() {
                     var maxIndex, minIndex, guess;
                     return function(array, val) {
                         minIndex = -1;
@@ -3100,7 +3100,7 @@
                     new s.controller.LinearSpline(s.snapGrid, c.snapGrid);
             },
             setTranslate: function (translate, byController) {
-               var controlled = s.params.control;
+               let controlled = s.params.control;
                var multiplier, controlledTranslate;
                function setControlledTranslate(c) {
                     // this will create an Interpolate function based on the snapGrids
@@ -3128,7 +3128,7 @@
                     c.updateActiveIndex();
                }
                if (s.isArray(controlled)) {
-                   for (var i = 0; i < controlled.length; i++) {
+                   for (let i = 0; i < controlled.length; i++) {
                        if (controlled[i] !== byController && controlled[i] instanceof Swiper) {
                            setControlledTranslate(controlled[i]);
                        }
@@ -3140,7 +3140,7 @@
                }
             },
             setTransition: function (duration, byController) {
-                var controlled = s.params.control;
+                const controlled = s.params.control;
                 var i;
                 function setControlledTransition(c) {
                     c.setWrapperTransition(duration, s);
@@ -3174,14 +3174,14 @@
           ===========================*/
         s.hashnav = {
             onHashCange: function (e, a) {
-                var newHash = document.location.hash.replace('#', '');
-                var activeSlideHash = s.slides.eq(s.activeIndex).attr('data-hash');
+                const newHash = document.location.hash.replace('#', '');
+                const activeSlideHash = s.slides.eq(s.activeIndex).attr('data-hash');
                 if (newHash !== activeSlideHash) {
                     s.slideTo(s.wrapper.children('.' + s.params.slideClass + '[data-hash="' + (newHash) + '"]').index());
                 }
             },
             attachEvents: function (detach) {
-                var action = detach ? 'off' : 'on';
+                let action = detach ? 'off' : 'on';
                 $(window)[action]('hashchange', s.hashnav.onHashCange);
             },
             setHash: function () {
@@ -3189,22 +3189,22 @@
                 if (s.params.replaceState && window.history && window.history.replaceState) {
                     window.history.replaceState(null, null, ('#' + s.slides.eq(s.activeIndex).attr('data-hash') || ''));
                 } else {
-                    var slide = s.slides.eq(s.activeIndex);
-                    var hash = slide.attr('data-hash') || slide.attr('data-history');
+                    let slide = s.slides.eq(s.activeIndex);
+                    let hash = slide.attr('data-hash') || slide.attr('data-history');
                     document.location.hash = hash || '';
                 }
             },
             init: function () {
                 if (!s.params.hashnav || s.params.history) return;
                 s.hashnav.initialized = true;
-                var hash = document.location.hash.replace('#', '');
+                const hash = document.location.hash.replace('#', '');
                 if (!hash) return;
-                var speed = 0;
-                for (var i = 0, length = s.slides.length; i < length; i++) {
-                    var slide = s.slides.eq(i);
-                    var slideHash = slide.attr('data-hash') || slide.attr('data-history');
+                const speed = 0;
+                for (let i = 0, length = s.slides.length; i < length; i++) {
+                    let slide = s.slides.eq(i);
+                    const slideHash = slide.attr('data-hash') || slide.attr('data-history');
                     if (slideHash === hash && !slide.hasClass(s.params.slideDuplicateClass)) {
-                        var index = slide.index();
+                        let index = slide.index();
                         s.slideTo(index, speed, s.params.runCallbacksOnInit, true);
                     }
                 }
@@ -3239,16 +3239,16 @@
                 s.history.scrollToSlide(s.params.speed, s.history.paths.value, false);
             },
             getPathValues: function() {
-                var pathArray = window.location.pathname.slice(1).split('/');
-                var total = pathArray.length;
-                var key = pathArray[total - 2];
-                var value = pathArray[total - 1];
+                const pathArray = window.location.pathname.slice(1).split('/');
+                const total = pathArray.length;
+                const key = pathArray[total - 2];
+                let value = pathArray[total - 1];
                 return { key: key, value: value };
             },
             setHistory: function (key, index) {
                 if (!s.history.initialized || !s.params.history) return;
-                var slide = s.slides.eq(index);
-                var value = this.slugify(slide.attr('data-history'));
+                let slide = s.slides.eq(index);
+                let value = this.slugify(slide.attr('data-history'));
                 if (!window.location.pathname.includes(key)) {
                     value = key + '/' + value;
                 }
@@ -3268,11 +3268,11 @@
             },
             scrollToSlide: function(speed, value, runCallbacks) {
                 if (value) {
-                    for (var i = 0, length = s.slides.length; i < length; i++) {
-                        var slide = s.slides.eq(i);
-                        var slideHistory = this.slugify(slide.attr('data-history'));
+                    for (let i = 0, length = s.slides.length; i < length; i++) {
+                        let slide = s.slides.eq(i);
+                        const slideHistory = this.slugify(slide.attr('data-history'));
                         if (slideHistory === value && !slide.hasClass(s.params.slideDuplicateClass)) {
-                            var index = slide.index();
+                            const index = slide.index();
                             s.slideTo(index, speed, runCallbacks);
                         }
                     }
@@ -3287,7 +3287,7 @@
           ===========================*/
         function handleKeyboard(e) {
             if (e.originalEvent) e = e.originalEvent; //jquery fix
-            var kc = e.keyCode || e.charCode;
+            const kc = e.keyCode || e.charCode;
             // Directions locks
             if (!s.params.allowSwipeToNext && (s.isHorizontal() && kc === 39 || !s.isHorizontal() && kc === 40)) {
                 return false;
@@ -3302,27 +3302,27 @@
                 return;
             }
             if (kc === 37 || kc === 39 || kc === 38 || kc === 40) {
-                var inView = false;
+                let inView = false;
                 //Check that swiper should be inside of visible area of window
                 if (s.container.parents('.' + s.params.slideClass).length > 0 && s.container.parents('.' + s.params.slideActiveClass).length === 0) {
                     return;
                 }
-                var windowScroll = {
+                const windowScroll = {
                     left: window.pageXOffset,
                     top: window.pageYOffset
                 };
-                var windowWidth = window.innerWidth;
-                var windowHeight = window.innerHeight;
-                var swiperOffset = s.container.offset();
+                const windowWidth = window.innerWidth;
+                const windowHeight = window.innerHeight;
+                const swiperOffset = s.container.offset();
                 if (s.rtl) swiperOffset.left = swiperOffset.left - s.container[0].scrollLeft;
-                var swiperCoord = [
+                const swiperCoord = [
                     [swiperOffset.left, swiperOffset.top],
                     [swiperOffset.left + s.width, swiperOffset.top],
                     [swiperOffset.left, swiperOffset.top + s.height],
                     [swiperOffset.left + s.width, swiperOffset.top + s.height]
                 ];
-                for (var i = 0; i < swiperCoord.length; i++) {
-                    var point = swiperCoord[i];
+                for (let i = 0; i < swiperCoord.length; i++) {
+                    const point = swiperCoord[i];
                     if (
                         point[0] >= windowScroll.left && point[0] <= windowScroll.left + windowWidth &&
                         point[1] >= windowScroll.top && point[1] <= windowScroll.top + windowHeight
@@ -3380,11 +3380,11 @@
         }
         
         function isEventSupported() {
-            var eventName = 'onwheel';
-            var isSupported = eventName in document;
+            let eventName = 'onwheel';
+            let isSupported = eventName in document;
         
             if (!isSupported) {
-                var element = document.createElement('div');
+                const element = document.createElement('div');
                 element.setAttribute(eventName, 'return;');
                 isSupported = typeof element[eventName] === 'function';
             }
@@ -3404,10 +3404,10 @@
         
         function handleMousewheel(e) {
             if (e.originalEvent) e = e.originalEvent; //jquery fix
-            var delta = 0;
-            var rtlFactor = s.rtl ? -1 : 1;
+            let delta = 0;
+            let rtlFactor = s.rtl ? -1 : 1;
         
-            var data = normalizeWheel( e );
+            const data = normalizeWheel( e );
         
             if (s.params.mousewheelForceToAxis) {
                 if (s.isHorizontal()) {
@@ -3449,8 +3449,8 @@
             }
             else {
                 //Freemode or scrollContainer:
-                var position = s.getWrapperTranslate() + delta * s.params.mousewheelSensitivity;
-                var wasBeginning = s.isBeginning,
+                let position = s.getWrapperTranslate() + delta * s.params.mousewheelSensitivity;
+                const wasBeginning = s.isBeginning,
                     wasEnd = s.isEnd;
         
                 if (position >= s.minTranslate()) position = s.minTranslate();
@@ -3492,7 +3492,7 @@
         }
         s.disableMousewheelControl = function () {
             if (!s.mousewheel.event) return false;
-            var target = s.container;
+            let target = s.container;
             if (s.params.mousewheelEventsTarged !== 'container') {
                 target = $(s.params.mousewheelEventsTarged);
             }
@@ -3502,7 +3502,7 @@
         
         s.enableMousewheelControl = function () {
             if (!s.mousewheel.event) return false;
-            var target = s.container;
+            let target = s.container;
             if (s.params.mousewheelEventsTarged !== 'container') {
                 target = $(s.params.mousewheelEventsTarged);
             }
@@ -3612,11 +3612,11 @@
          */
         function normalizeWheel( /*object*/ event ) /*object*/ {
             // Reasonable defaults
-            var PIXEL_STEP = 10;
-            var LINE_HEIGHT = 40;
-            var PAGE_HEIGHT = 800;
+            const PIXEL_STEP = 10;
+            const LINE_HEIGHT = 40;
+            const PAGE_HEIGHT = 800;
         
-            var sX = 0, sY = 0,       // spinX, spinY
+            let sX = 0, sY = 0,       // spinX, spinY
                 pX = 0, pY = 0;       // pixelX, pixelY
         
             // Legacy
@@ -3681,7 +3681,7 @@
         function setParallaxTransform(el, progress) {
             el = $(el);
             var p, pX, pY;
-            var rtlFactor = s.rtl ? -1 : 1;
+            const rtlFactor = s.rtl ? -1 : 1;
         
             p = el.attr('data-swiper-parallax') || '0';
             pX = el.attr('data-swiper-parallax-x');
@@ -3723,9 +3723,9 @@
         
                 });
                 s.slides.each(function () {
-                    var slide = $(this);
+                    let slide = $(this);
                     slide.find('[data-swiper-parallax], [data-swiper-parallax-x], [data-swiper-parallax-y]').each(function () {
-                        var progress = Math.min(Math.max(slide[0].progress, -1), 1);
+                        const progress = Math.min(Math.max(slide[0].progress, -1), 1);
                         setParallaxTransform(this, progress);
                     });
                 });
@@ -3733,8 +3733,8 @@
             setTransition: function (duration) {
                 if (typeof duration === 'undefined') duration = s.params.speed;
                 s.container.find('[data-swiper-parallax], [data-swiper-parallax-x], [data-swiper-parallax-y]').each(function(){
-                    var el = $(this);
-                    var parallaxDuration = parseInt(el.attr('data-swiper-parallax-duration'), 10) || duration;
+                    let el = $(this);
+                    let parallaxDuration = parseInt(el.attr('data-swiper-parallax-duration'), 10) || duration;
                     if (duration === 0) parallaxDuration = 0;
                     el.transition(parallaxDuration);
                 });
@@ -3784,16 +3784,16 @@
             // Calc Scale From Multi-touches
             getDistanceBetweenTouches: function (e) {
                 if (e.targetTouches.length < 2) return 1;
-                var x1 = e.targetTouches[0].pageX,
+                const x1 = e.targetTouches[0].pageX,
                     y1 = e.targetTouches[0].pageY,
                     x2 = e.targetTouches[1].pageX,
                     y2 = e.targetTouches[1].pageY;
-                var distance = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+                const distance = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
                 return distance;
             },
             // Events
             onGestureStart: function (e) {
-                var z = s.zoom;
+                let z = s.zoom;
                 if (!s.support.gestures) {
                     if (e.type !== 'touchstart' || e.type === 'touchstart' && e.targetTouches.length < 2) {
                         return;
@@ -3815,7 +3815,7 @@
                 z.isScaling = true;
             },
             onGestureChange: function (e) {
-                var z = s.zoom;
+                let z = s.zoom;
                 if (!s.support.gestures) {
                     if (e.type !== 'touchmove' || e.type === 'touchmove' && e.targetTouches.length < 2) {
                         return;
@@ -3838,7 +3838,7 @@
                 z.gesture.image.transform('translate3d(0,0,0) scale(' + z.scale + ')');
             },
             onGestureEnd: function (e) {
-                var z = s.zoom;
+                let z = s.zoom;
                 if (!s.support.gestures) {
                     if (e.type !== 'touchend' || e.type === 'touchend' && e.changedTouches.length < 2) {
                         return;
@@ -3852,7 +3852,7 @@
                 if (z.scale === 1) z.gesture.slide = undefined;
             },
             onTouchStart: function (s, e) {
-                var z = s.zoom;
+                let z = s.zoom;
                 if (!z.gesture.image || z.gesture.image.length === 0) return;
                 if (z.image.isTouched) return;
                 if (s.device.os === 'android') e.preventDefault();
@@ -3861,7 +3861,7 @@
                 z.image.touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
             },
             onTouchMove: function (e) {
-                var z = s.zoom;
+                let z = s.zoom;
                 if (!z.gesture.image || z.gesture.image.length === 0) return;
                 s.allowClick = false;
                 if (!z.image.isTouched || !z.gesture.slide) return;
@@ -3876,8 +3876,8 @@
                     z.gesture.imageWrap.transition(0);
                 }
                 // Define if we need image drag
-                var scaledWidth = z.image.width * z.scale;
-                var scaledHeight = z.image.height * z.scale;
+                let scaledWidth = z.image.width * z.scale;
+                let scaledHeight = z.image.height * z.scale;
         
                 if (scaledWidth < z.gesture.slideWidth && scaledHeight < z.gesture.slideHeight) return;
         
@@ -3941,7 +3941,7 @@
                 z.gesture.imageWrap.transform('translate3d(' + z.image.currentX + 'px, ' + z.image.currentY + 'px,0)');
             },
             onTouchEnd: function (s, e) {
-                var z = s.zoom;
+                let z = s.zoom;
                 if (!z.gesture.image || z.gesture.image.length === 0) return;
                 if (!z.image.isTouched || !z.image.isMoved) {
                     z.image.isTouched = false;
@@ -3950,24 +3950,24 @@
                 }
                 z.image.isTouched = false;
                 z.image.isMoved = false;
-                var momentumDurationX = 300;
-                var momentumDurationY = 300;
-                var momentumDistanceX = z.velocity.x * momentumDurationX;
-                var newPositionX = z.image.currentX + momentumDistanceX;
-                var momentumDistanceY = z.velocity.y * momentumDurationY;
-                var newPositionY = z.image.currentY + momentumDistanceY;
+                let momentumDurationX = 300;
+                let momentumDurationY = 300;
+                const momentumDistanceX = z.velocity.x * momentumDurationX;
+                const newPositionX = z.image.currentX + momentumDistanceX;
+                const momentumDistanceY = z.velocity.y * momentumDurationY;
+                const newPositionY = z.image.currentY + momentumDistanceY;
         
                 //Fix duration
                 if (z.velocity.x !== 0) momentumDurationX = Math.abs((newPositionX - z.image.currentX) / z.velocity.x);
                 if (z.velocity.y !== 0) momentumDurationY = Math.abs((newPositionY - z.image.currentY) / z.velocity.y);
-                var momentumDuration = Math.max(momentumDurationX, momentumDurationY);
+                const momentumDuration = Math.max(momentumDurationX, momentumDurationY);
         
                 z.image.currentX = newPositionX;
                 z.image.currentY = newPositionY;
         
                 // Define if we need image drag
-                var scaledWidth = z.image.width * z.scale;
-                var scaledHeight = z.image.height * z.scale;
+                let scaledWidth = z.image.width * z.scale;
+                let scaledHeight = z.image.height * z.scale;
                 z.image.minX = Math.min((z.gesture.slideWidth / 2 - scaledWidth / 2), 0);
                 z.image.maxX = -z.image.minX;
                 z.image.minY = Math.min((z.gesture.slideHeight / 2 - scaledHeight / 2), 0);
@@ -3978,7 +3978,7 @@
                 z.gesture.imageWrap.transition(momentumDuration).transform('translate3d(' + z.image.currentX + 'px, ' + z.image.currentY + 'px,0)');
             },
             onTransitionEnd: function (s) {
-                var z = s.zoom;
+                let z = s.zoom;
                 if (z.gesture.slide && s.previousIndex !== s.activeIndex) {
                     z.gesture.image.transform('translate3d(0,0,0) scale(1)');
                     z.gesture.imageWrap.transform('translate3d(0,0,0)');
@@ -3988,7 +3988,7 @@
             },
             // Toggle Zoom
             toggleZoom: function (s, e) {
-                var z = s.zoom;
+                const z = s.zoom;
                 if (!z.gesture.slide) {
                     z.gesture.slide = s.clickedSlide ? $(s.clickedSlide) : s.slides.eq(s.activeIndex);
                     z.gesture.image = z.gesture.slide.find('img, svg, canvas');
@@ -4062,11 +4062,11 @@
             },
             // Attach/Detach Events
             attachEvents: function (detach) {
-                var action = detach ? 'off' : 'on';
+                const action = detach ? 'off' : 'on';
         
                 if (s.params.zoom) {
-                    var target = s.slides;
-                    var passiveListener = s.touchEvents.start === 'touchstart' && s.support.passiveListener && s.params.passiveListeners ? {passive: true, capture: false} : false;
+                    let target = s.slides;
+                    const passiveListener = s.touchEvents.start === 'touchstart' && s.support.passiveListener && s.params.passiveListeners ? {passive: true, capture: false} : false;
                     // Scale image
                     if (s.support.gestures) {
                         s.slides[action]('gesturestart', s.zoom.onGestureStart, passiveListener);
@@ -4108,12 +4108,12 @@
           ===========================*/
         s._plugins = [];
         for (var plugin in s.plugins) {
-            var p = s.plugins[plugin](s, s.params[plugin]);
+            const p = s.plugins[plugin](s, s.params[plugin]);
             if (p) s._plugins.push(p);
         }
         // Method to call all plugins event/method
         s.callPlugins = function (eventName) {
-            for (var i = 0; i < s._plugins.length; i++) {
+            for (let i = 0; i < s._plugins.length; i++) {
                 if (eventName in s._plugins[i]) {
                     s._plugins[i][eventName](arguments[1], arguments[2], arguments[3], arguments[4], arguments[5]);
                 }
@@ -4174,7 +4174,7 @@
         };
         s.once = function (eventName, handler) {
             eventName = normalizeEventName(eventName);
-            var _handler = function () {
+            const _handler = function () {
                 handler(arguments[0], arguments[1], arguments[2], arguments[3], arguments[4]);
                 s.off(eventName, _handler);
             };
@@ -4236,7 +4236,7 @@
             liveRegion: $('<span class="' + s.params.notificationClass + '" aria-live="assertive" aria-atomic="true"></span>'),
         
             notify: function (message) {
-                var notification = s.a11y.liveRegion;
+                const notification = s.a11y.liveRegion;
                 if (notification.length === 0) return;
                 notification.html('');
                 notification.html(message);
@@ -4259,7 +4259,7 @@
             initPagination: function () {
                 if (s.params.pagination && s.params.paginationClickable && s.bullets && s.bullets.length) {
                     s.bullets.each(function () {
-                        var bullet = $(this);
+                        const bullet = $(this);
                         s.a11y.makeFocusable(bullet);
                         s.a11y.addRole(bullet, 'button');
                         s.a11y.addLabel(bullet, s.params.paginationBulletMessage.replace(/{{index}}/, bullet.index() + 1));
@@ -4440,7 +4440,7 @@
     ====================================================*/
     Swiper.prototype = {
         isSafari: (function () {
-            var ua = navigator.userAgent.toLowerCase();
+            let ua = navigator.userAgent.toLowerCase();
             return (ua.indexOf('safari') >= 0 && ua.indexOf('chrome') < 0 && ua.indexOf('android') < 0);
         })(),
         isUiWebView: /(iPhone|iPod|iPad).*AppleWebKit(?!.*Safari)/i.test(navigator.userAgent),
@@ -4455,7 +4455,7 @@
             ieTouch: (window.navigator.msPointerEnabled && window.navigator.msMaxTouchPoints > 1) || (window.navigator.pointerEnabled && window.navigator.maxTouchPoints > 1),
             lteIE9: (function() {
                 // create temporary DIV
-                var div = document.createElement('div');
+                let div = document.createElement('div');
                 // add content to tmp DIV which is wrapped into the IE HTML conditional statement
                 div.innerHTML = '<!--[if lte IE 9]><i></i><![endif]-->';
                 // return true / false value based on what will browser render
@@ -4466,11 +4466,11 @@
         Devices
         ====================================================*/
         device: (function () {
-            var ua = navigator.userAgent;
-            var android = ua.match(/(Android);?[\s\/]+([\d.]+)?/);
-            var ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
-            var ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
-            var iphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/);
+            const ua = navigator.userAgent;
+            const android = ua.match(/(Android);?[\s\/]+([\d.]+)?/);
+            const ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
+            const ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
+            const iphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/);
             return {
                 ios: ipad || iphone || ipod,
                 android: android
@@ -4485,14 +4485,14 @@
             })(),
     
             transforms3d : (window.Modernizr && Modernizr.csstransforms3d === true) || (function () {
-                var div = document.createElement('div').style;
+                let div = document.createElement('div').style;
                 return ('webkitPerspective' in div || 'MozPerspective' in div || 'OPerspective' in div || 'MsPerspective' in div || 'perspective' in div);
             })(),
     
             flexbox: (function () {
-                var div = document.createElement('div').style;
-                var styles = ('alignItems webkitAlignItems webkitBoxAlign msFlexAlign mozBoxAlign webkitFlexDirection msFlexDirection mozBoxDirection mozBoxOrient webkitBoxDirection webkitBoxOrient').split(' ');
-                for (var i = 0; i < styles.length; i++) {
+                const div = document.createElement('div').style;
+                const styles = ('alignItems webkitAlignItems webkitBoxAlign msFlexAlign mozBoxAlign webkitFlexDirection msFlexDirection mozBoxDirection mozBoxOrient webkitBoxDirection webkitBoxOrient').split(' ');
+                for (let i = 0; i < styles.length; i++) {
                     if (styles[i] in div) return true;
                 }
             })(),
@@ -4502,9 +4502,9 @@
             })(),
     
             passiveListener: (function () {
-                var supportsPassive = false;
+                let supportsPassive = false;
                 try {
-                    var opts = Object.defineProperty({}, 'passive', {
+                    const opts = Object.defineProperty({}, 'passive', {
                         get: function() {
                             supportsPassive = true;
                         }
@@ -4528,9 +4528,9 @@
     /*===========================
     Dom7 Library
     ===========================*/
-    var Dom7 = (function () {
-        var Dom7 = function (arr) {
-            var _this = this, i = 0;
+    let Dom7 = (function () {
+        const Dom7 = function (arr) {
+            const _this = this, i = 0;
             // Create array-like object
             for (i = 0; i < arr.length; i++) {
                 _this[i] = arr[i];
@@ -4540,7 +4540,7 @@
             return this;
         };
         var $ = function (selector, context) {
-            var arr = [], i = 0;
+            const arr = [], i = 0;
             if (selector && !context) {
                 if (selector instanceof Dom7) {
                     return selector;
@@ -4551,7 +4551,7 @@
                 if (typeof selector === 'string') {
                     var els, tempParent, html = selector.trim();
                     if (html.indexOf('<') >= 0 && html.indexOf('>') >= 0) {
-                        var toCreate = 'div';
+                        let toCreate = 'div';
                         if (html.indexOf('<li') === 0) toCreate = 'ul';
                         if (html.indexOf('<tr') === 0) toCreate = 'tbody';
                         if (html.indexOf('<td') === 0 || html.indexOf('<th') === 0) toCreate = 'tr';
@@ -4596,18 +4596,18 @@
                 if (typeof className === 'undefined') {
                     return this;
                 }
-                var classes = className.split(' ');
-                for (var i = 0; i < classes.length; i++) {
-                    for (var j = 0; j < this.length; j++) {
+                let classes = className.split(' ');
+                for (let i = 0; i < classes.length; i++) {
+                    for (let j = 0; j < this.length; j++) {
                         this[j].classList.add(classes[i]);
                     }
                 }
                 return this;
             },
             removeClass: function (className) {
-                var classes = className.split(' ');
-                for (var i = 0; i < classes.length; i++) {
-                    for (var j = 0; j < this.length; j++) {
+                let classes = className.split(' ');
+                for (let i = 0; i < classes.length; i++) {
+                    for (let j = 0; j < this.length; j++) {
                         this[j].classList.remove(classes[i]);
                     }
                 }
@@ -4618,9 +4618,9 @@
                 else return this[0].classList.contains(className);
             },
             toggleClass: function (className) {
-                var classes = className.split(' ');
-                for (var i = 0; i < classes.length; i++) {
-                    for (var j = 0; j < this.length; j++) {
+                const classes = className.split(' ');
+                for (let i = 0; i < classes.length; i++) {
+                    for (let j = 0; j < this.length; j++) {
                         this[j].classList.toggle(classes[i]);
                     }
                 }
@@ -4634,7 +4634,7 @@
                 }
                 else {
                     // Set attrs
-                    for (var i = 0; i < this.length; i++) {
+                    for (let i = 0; i < this.length; i++) {
                         if (arguments.length === 2) {
                             // String
                             this[i].setAttribute(attrs, value);
@@ -4651,7 +4651,7 @@
                 }
             },
             removeAttr: function (attr) {
-                for (var i = 0; i < this.length; i++) {
+                for (let i = 0; i < this.length; i++) {
                     this[i].removeAttribute(attr);
                 }
                 return this;
@@ -4660,7 +4660,7 @@
                 if (typeof value === 'undefined') {
                     // Get value
                     if (this[0]) {
-                        var dataKey = this[0].getAttribute('data-' + key);
+                        const dataKey = this[0].getAttribute('data-' + key);
                         if (dataKey) return dataKey;
                         else if (this[0].dom7ElementDataStorage && (key in this[0].dom7ElementDataStorage)) return this[0].dom7ElementDataStorage[key];
                         else return undefined;
@@ -4669,8 +4669,8 @@
                 }
                 else {
                     // Set value
-                    for (var i = 0; i < this.length; i++) {
-                        var el = this[i];
+                    for (let i = 0; i < this.length; i++) {
+                        let el = this[i];
                         if (!el.dom7ElementDataStorage) el.dom7ElementDataStorage = {};
                         el.dom7ElementDataStorage[key] = value;
                     }
@@ -4679,8 +4679,8 @@
             },
             // Transforms
             transform : function (transform) {
-                for (var i = 0; i < this.length; i++) {
-                    var elStyle = this[i].style;
+                for (let i = 0; i < this.length; i++) {
+                    let elStyle = this[i].style;
                     elStyle.webkitTransform = elStyle.MsTransform = elStyle.msTransform = elStyle.MozTransform = elStyle.OTransform = elStyle.transform = transform;
                 }
                 return this;
@@ -4689,8 +4689,8 @@
                 if (typeof duration !== 'string') {
                     duration = duration + 'ms';
                 }
-                for (var i = 0; i < this.length; i++) {
-                    var elStyle = this[i].style;
+                for (let i = 0; i < this.length; i++) {
+                    let elStyle = this[i].style;
                     elStyle.webkitTransitionDuration = elStyle.MsTransitionDuration = elStyle.msTransitionDuration = elStyle.MozTransitionDuration = elStyle.OTransitionDuration = elStyle.transitionDuration = duration;
                 }
                 return this;
@@ -4698,16 +4698,16 @@
             //Events
             on: function (eventName, targetSelector, listener, capture) {
                 function handleLiveEvent(e) {
-                    var target = e.target;
+                    const target = e.target;
                     if ($(target).is(targetSelector)) listener.call(target, e);
                     else {
-                        var parents = $(target).parents();
-                        for (var k = 0; k < parents.length; k++) {
+                        let parents = $(target).parents();
+                        for (let k = 0; k < parents.length; k++) {
                             if ($(parents[k]).is(targetSelector)) listener.call(parents[k], e);
                         }
                     }
                 }
-                var events = eventName.split(' ');
+                let events = eventName.split(' ');
                 var i, j;
                 for (i = 0; i < this.length; i++) {
                     if (typeof targetSelector === 'function' || targetSelector === false) {
@@ -4733,9 +4733,9 @@
                 return this;
             },
             off: function (eventName, targetSelector, listener, capture) {
-                var events = eventName.split(' ');
-                for (var i = 0; i < events.length; i++) {
-                    for (var j = 0; j < this.length; j++) {
+                let events = eventName.split(' ');
+                for (let i = 0; i < events.length; i++) {
+                    for (let j = 0; j < this.length; j++) {
                         if (typeof targetSelector === 'function' || targetSelector === false) {
                             // Usual events
                             if (typeof targetSelector === 'function') {
@@ -4747,7 +4747,7 @@
                         else {
                             // Live event
                             if (this[j].dom7LiveListeners) {
-                                for (var k = 0; k < this[j].dom7LiveListeners.length; k++) {
+                                for (let k = 0; k < this[j].dom7LiveListeners.length; k++) {
                                     if (this[j].dom7LiveListeners[k].listener === listener) {
                                         this[j].removeEventListener(events[i], this[j].dom7LiveListeners[k].liveListener, capture);
                                     }
@@ -4759,7 +4759,7 @@
                 return this;
             },
             once: function (eventName, targetSelector, listener, capture) {
-                var dom = this;
+                let dom = this;
                 if (typeof targetSelector === 'function') {
                     targetSelector = false;
                     listener = arguments[1];
@@ -4772,7 +4772,7 @@
                 dom.on(eventName, targetSelector, proxy, capture);
             },
             trigger: function (eventName, eventData) {
-                for (var i = 0; i < this.length; i++) {
+                for (let i = 0; i < this.length; i++) {
                     var evt;
                     try {
                         evt = new window.CustomEvent(eventName, {detail: eventData, bubbles: true, cancelable: true});
@@ -4787,7 +4787,7 @@
                 return this;
             },
             transitionEnd: function (callback) {
-                var events = ['webkitTransitionEnd', 'transitionend', 'oTransitionEnd', 'MSTransitionEnd', 'msTransitionEnd'],
+                let events = ['webkitTransitionEnd', 'transitionend', 'oTransitionEnd', 'MSTransitionEnd', 'msTransitionEnd'],
                     i, j, dom = this;
                 function fireCallBack(e) {
                     /*jshint validthis:true */
@@ -4851,13 +4851,13 @@
             },
             offset: function () {
                 if (this.length > 0) {
-                    var el = this[0];
-                    var box = el.getBoundingClientRect();
-                    var body = document.body;
-                    var clientTop  = el.clientTop  || body.clientTop  || 0;
-                    var clientLeft = el.clientLeft || body.clientLeft || 0;
-                    var scrollTop  = window.pageYOffset || el.scrollTop;
-                    var scrollLeft = window.pageXOffset || el.scrollLeft;
+                    let el = this[0];
+                    const box = el.getBoundingClientRect();
+                    const body = document.body;
+                    const clientTop  = el.clientTop  || body.clientTop  || 0;
+                    const clientLeft = el.clientLeft || body.clientLeft || 0;
+                    const scrollTop  = window.pageYOffset || el.scrollTop;
+                    const scrollLeft = window.pageXOffset || el.scrollLeft;
                     return {
                         top: box.top  + scrollTop  - clientTop,
                         left: box.left + scrollLeft - clientLeft
@@ -4893,7 +4893,7 @@
     
             //Dom manipulation
             each: function (callback) {
-                for (var i = 0; i < this.length; i++) {
+                for (let i = 0; i < this.length; i++) {
                     callback.call(this[i], i, this[i]);
                 }
                 return this;
@@ -4903,7 +4903,7 @@
                     return this[0] ? this[0].innerHTML : undefined;
                 }
                 else {
-                    for (var i = 0; i < this.length; i++) {
+                    for (let i = 0; i < this.length; i++) {
                         this[i].innerHTML = html;
                     }
                     return this;
@@ -4917,7 +4917,7 @@
                     else return null;
                 }
                 else {
-                    for (var i = 0; i < this.length; i++) {
+                    for (let i = 0; i < this.length; i++) {
                         this[i].textContent = text;
                     }
                     return this;
@@ -4927,7 +4927,7 @@
                 if (!this[0]) return false;
                 var compareWith, i;
                 if (typeof selector === 'string') {
-                    var el = this[0];
+                    let el = this[0];
                     if (el === document) return selector === document;
                     if (el === window) return selector === window;
     
@@ -4959,8 +4959,8 @@
             },
             index: function () {
                 if (this[0]) {
-                    var child = this[0];
-                    var i = 0;
+                    let child = this[0];
+                    let i = 0;
                     while ((child = child.previousSibling) !== null) {
                         if (child.nodeType === 1) i++;
                     }
@@ -4970,7 +4970,7 @@
             },
             eq: function (index) {
                 if (typeof index === 'undefined') return this;
-                var length = this.length;
+                let length = this.length;
                 var returnIndex;
                 if (index > length - 1) {
                     return new Dom7([]);
@@ -4986,7 +4986,7 @@
                 var i, j;
                 for (i = 0; i < this.length; i++) {
                     if (typeof newChild === 'string') {
-                        var tempDiv = document.createElement('div');
+                        let tempDiv = document.createElement('div');
                         tempDiv.innerHTML = newChild;
                         while (tempDiv.firstChild) {
                             this[i].appendChild(tempDiv.firstChild);
@@ -5007,7 +5007,7 @@
                 var i, j;
                 for (i = 0; i < this.length; i++) {
                     if (typeof newChild === 'string') {
-                        var tempDiv = document.createElement('div');
+                        const tempDiv = document.createElement('div');
                         tempDiv.innerHTML = newChild;
                         for (j = tempDiv.childNodes.length - 1; j >= 0; j--) {
                             this[i].insertBefore(tempDiv.childNodes[j], this[i].childNodes[0]);
@@ -5026,26 +5026,26 @@
                 return this;
             },
             insertBefore: function (selector) {
-                var before = $(selector);
-                for (var i = 0; i < this.length; i++) {
+                const before = $(selector);
+                for (let i = 0; i < this.length; i++) {
                     if (before.length === 1) {
                         before[0].parentNode.insertBefore(this[i], before[0]);
                     }
                     else if (before.length > 1) {
-                        for (var j = 0; j < before.length; j++) {
+                        for (let j = 0; j < before.length; j++) {
                             before[j].parentNode.insertBefore(this[i].cloneNode(true), before[j]);
                         }
                     }
                 }
             },
             insertAfter: function (selector) {
-                var after = $(selector);
-                for (var i = 0; i < this.length; i++) {
+                const after = $(selector);
+                for (let i = 0; i < this.length; i++) {
                     if (after.length === 1) {
                         after[0].parentNode.insertBefore(this[i], after[0].nextSibling);
                     }
                     else if (after.length > 1) {
-                        for (var j = 0; j < after.length; j++) {
+                        for (let j = 0; j < after.length; j++) {
                             after[j].parentNode.insertBefore(this[i].cloneNode(true), after[j].nextSibling);
                         }
                     }
@@ -5065,11 +5065,11 @@
                 else return new Dom7([]);
             },
             nextAll: function (selector) {
-                var nextEls = [];
-                var el = this[0];
+                const nextEls = [];
+                let el = this[0];
                 if (!el) return new Dom7([]);
                 while (el.nextElementSibling) {
-                    var next = el.nextElementSibling;
+                    const next = el.nextElementSibling;
                     if (selector) {
                         if($(next).is(selector)) nextEls.push(next);
                     }
@@ -5092,11 +5092,11 @@
                 else return new Dom7([]);
             },
             prevAll: function (selector) {
-                var prevEls = [];
-                var el = this[0];
+                const prevEls = [];
+                let el = this[0];
                 if (!el) return new Dom7([]);
                 while (el.previousElementSibling) {
-                    var prev = el.previousElementSibling;
+                    const prev = el.previousElementSibling;
                     if (selector) {
                         if($(prev).is(selector)) prevEls.push(prev);
                     }
@@ -5106,8 +5106,8 @@
                 return new Dom7(prevEls);
             },
             parent: function (selector) {
-                var parents = [];
-                for (var i = 0; i < this.length; i++) {
+                let parents = [];
+                for (let i = 0; i < this.length; i++) {
                     if (selector) {
                         if ($(this[i].parentNode).is(selector)) parents.push(this[i].parentNode);
                     }
@@ -5118,9 +5118,9 @@
                 return $($.unique(parents));
             },
             parents: function (selector) {
-                var parents = [];
-                for (var i = 0; i < this.length; i++) {
-                    var parent = this[i].parentNode;
+                const parents = [];
+                for (let i = 0; i < this.length; i++) {
+                    let parent = this[i].parentNode;
                     while (parent) {
                         if (selector) {
                             if ($(parent).is(selector)) parents.push(parent);
@@ -5134,21 +5134,21 @@
                 return $($.unique(parents));
             },
             find : function (selector) {
-                var foundElements = [];
-                for (var i = 0; i < this.length; i++) {
-                    var found = this[i].querySelectorAll(selector);
-                    for (var j = 0; j < found.length; j++) {
+                const foundElements = [];
+                for (let i = 0; i < this.length; i++) {
+                    const found = this[i].querySelectorAll(selector);
+                    for (let j = 0; j < found.length; j++) {
                         foundElements.push(found[j]);
                     }
                 }
                 return new Dom7(foundElements);
             },
             children: function (selector) {
-                var children = [];
-                for (var i = 0; i < this.length; i++) {
-                    var childNodes = this[i].childNodes;
+                const children = [];
+                for (let i = 0; i < this.length; i++) {
+                    const childNodes = this[i].childNodes;
     
-                    for (var j = 0; j < childNodes.length; j++) {
+                    for (let j = 0; j < childNodes.length; j++) {
                         if (!selector) {
                             if (childNodes[j].nodeType === 1) children.push(childNodes[j]);
                         }
@@ -5160,16 +5160,16 @@
                 return new Dom7($.unique(children));
             },
             remove: function () {
-                for (var i = 0; i < this.length; i++) {
+                for (let i = 0; i < this.length; i++) {
                     if (this[i].parentNode) this[i].parentNode.removeChild(this[i]);
                 }
                 return this;
             },
             add: function () {
-                var dom = this;
+                let dom = this;
                 var i, j;
                 for (i = 0; i < arguments.length; i++) {
-                    var toAdd = $(arguments[i]);
+                    const toAdd = $(arguments[i]);
                     for (j = 0; j < toAdd.length; j++) {
                         dom[dom.length] = toAdd[j];
                         dom.length++;
@@ -5180,8 +5180,8 @@
         };
         $.fn = Dom7.prototype;
         $.unique = function (arr) {
-            var unique = [];
-            for (var i = 0; i < arr.length; i++) {
+            const unique = [];
+            for (let i = 0; i < arr.length; i++) {
                 if (unique.indexOf(arr[i]) === -1) unique.push(arr[i]);
             }
             return unique;
@@ -5194,8 +5194,8 @@
     /*===========================
      Get Dom libraries
      ===========================*/
-    var swiperDomPlugins = ['jQuery', 'Zepto', 'Dom7'];
-    for (var i = 0; i < swiperDomPlugins.length; i++) {
+    const swiperDomPlugins = ['jQuery', 'Zepto', 'Dom7'];
+    for (let i = 0; i < swiperDomPlugins.length; i++) {
     	if (window[swiperDomPlugins[i]]) {
     		addLibraryPlugin(window[swiperDomPlugins[i]]);
     	}
@@ -5216,7 +5216,7 @@
         lib.fn.swiper = function (params) {
             var firstInstance;
             lib(this).each(function () {
-                var s = new Swiper(this, params);
+                const s = new Swiper(this, params);
                 if (!firstInstance) firstInstance = s;
             });
             return firstInstance;
@@ -5226,7 +5226,7 @@
     if (domLib) {
         if (!('transitionEnd' in domLib.fn)) {
             domLib.fn.transitionEnd = function (callback) {
-                var events = ['webkitTransitionEnd', 'transitionend', 'oTransitionEnd', 'MSTransitionEnd', 'msTransitionEnd'],
+                const events = ['webkitTransitionEnd', 'transitionend', 'oTransitionEnd', 'MSTransitionEnd', 'msTransitionEnd'],
                     i, j, dom = this;
                 function fireCallBack(e) {
                     /*jshint validthis:true */
@@ -5246,8 +5246,8 @@
         }
         if (!('transform' in domLib.fn)) {
             domLib.fn.transform = function (transform) {
-                for (var i = 0; i < this.length; i++) {
-                    var elStyle = this[i].style;
+                for (let i = 0; i < this.length; i++) {
+                    let elStyle = this[i].style;
                     elStyle.webkitTransform = elStyle.MsTransform = elStyle.msTransform = elStyle.MozTransform = elStyle.OTransform = elStyle.transform = transform;
                 }
                 return this;
@@ -5258,8 +5258,8 @@
                 if (typeof duration !== 'string') {
                     duration = duration + 'ms';
                 }
-                for (var i = 0; i < this.length; i++) {
-                    var elStyle = this[i].style;
+                for (let i = 0; i < this.length; i++) {
+                    const elStyle = this[i].style;
                     elStyle.webkitTransitionDuration = elStyle.MsTransitionDuration = elStyle.msTransitionDuration = elStyle.MozTransitionDuration = elStyle.OTransitionDuration = elStyle.transitionDuration = duration;
                 }
                 return this;
