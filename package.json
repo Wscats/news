@@ -8,7 +8,8 @@
     "test": "gulp && node http",
     "cms": "node cms/news.js",
     "http": "node http",
-    "dev": "npm run cms && npm run http"
+    "dev": "npm run cms && npm run http",
+    "lint": "eslint src --ext .ts,.tsx,.js,.jsx --fix"
   },
   "repository": {
     "type": "git",
@@ -65,5 +66,8 @@
   "bugs": {
     "url": "https://github.com/Wscats/news/issues"
   },
-  "readme": "ERROR: No README data found!"
+  "readme": "ERROR: No README data found!",
+  "engines": {
+    "node": ">=18.0.0"
+  }
 }
